@@ -1,21 +1,16 @@
+import { Raleway } from 'next/font/google'
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import '@/styles/globals.css'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-})
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const raleway = Raleway({
+  variable: '--font-raleway',
   subsets: ['latin'],
 })
 
 export const metadata: Metadata = {
-  title: 'Discounts and coupons',
+  title: 'Discounts & Deals',
   description: 'Find the best discounts and promotions online',
 }
 
@@ -26,12 +21,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${raleway.className}`}>
         <div className="flex flex-col">
           <Header />
-          <main className="flex flex-col items-center min-h-[calc(100vh-7rem)] px-6 gap-6 justify-center font-[family-name:var(--font-geist-sans)]">
+          <main className="flex flex-col items-center min-h-[calc(100vh-7rem)] px-6 gap-6 justify-center ">
             {children}
           </main>
           <Footer />
