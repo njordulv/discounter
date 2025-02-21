@@ -1,36 +1,56 @@
 import { NextResponse } from 'next/server'
-import axios from 'axios'
-import { load } from 'cheerio'
+import puppeteer from 'puppeteer'
 import getTodayDeals from '@/utils/getTodayDeals'
 
 export async function GET() {
   try {
-    const response = await axios.get(getTodayDeals())
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    })
 
-    const $ = load(response.data)
-    const categories = $('.lc-section .lc-section-title')
-      .map((_, element) => {
-        const el = $(element)
+    const page = await browser.newPage()
+    await page.goto(getTodayDeals(), { waitUntil: 'domcontentloaded' })
+
+    const categories = await page.evaluate(() => {
+      return Array.from(document.querySelectorAll('.card-item')).map((card) => {
+        const titleElement = card.querySelector(
+          '.card-v2-title'
+        ) as HTMLAnchorElement | null
+        const imageElement = card.querySelector(
+          '.img-component img'
+        ) as HTMLImageElement | null
+        const newPriceElement = card.querySelector('.product-new-price')
+        const linkElement = card.querySelector(
+          'a.card-v2-title'
+        ) as HTMLAnchorElement | null
+
         return {
-          title: el.text().trim(),
-          url: el.attr('href'),
+          title:
+            titleElement instanceof HTMLElement
+              ? titleElement.innerText.trim()
+              : '',
+          newPrice:
+            newPriceElement instanceof HTMLElement
+              ? newPriceElement.innerText.trim()
+              : '',
+          url: linkElement?.href || '',
+          image: imageElement?.src || '',
         }
       })
-      .get()
+    })
 
-    return NextResponse.json(categories)
+    const limitedCategories = categories.slice(0, 60)
+
+    await browser.close()
+
+    return NextResponse.json(limitedCategories)
   } catch (error) {
     console.error(
       'Parser error:',
       error instanceof Error ? error.message : 'Unknown error'
     )
-    if (axios.isAxiosError(error)) {
-      console.error(
-        'Axios error details:',
-        error.response?.status,
-        error.response?.data
-      )
-    }
+
     return NextResponse.json(
       {
         error: 'Parser error',
