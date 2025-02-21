@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server'
 import axios from 'axios'
 import { load } from 'cheerio'
+import getTodayDeals from '@/utils/getTodayDeals'
 
 export async function GET() {
   try {
-    const response = await axios.get(
-      'https://www.emag.bg/label-campaign/emag-deal-of-the-day-friday-21-02-2025'
-    )
+    const response = await axios.get(getTodayDeals())
 
     const $ = load(response.data)
     const categories = $('.lc-section .lc-section-title')
