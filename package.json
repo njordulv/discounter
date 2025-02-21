@@ -1,6 +1,6 @@
 {
   "name": "discounter",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.0.7",
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0",
     "next": "15.1.7",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
