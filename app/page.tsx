@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import useFetcher from '@/app/hooks/useFetcher'
 import config from '@/config'
+import Loader from '@/components/Loader'
 
 interface Deal {
   title: string
@@ -12,7 +13,7 @@ interface Deal {
 export default function Page() {
   const { data, error, isLoading } = useFetcher({ url: '/api/scrape' })
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Loader />
   if (error) return <div>Error: {error.message}</div>
 
   return (
