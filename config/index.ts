@@ -1,4 +1,8 @@
 const siteConfig = {
+  emag: {
+    title: 'eMAG',
+    url: 'https://www.emag.bg',
+  },
   weekday: [
     'sunday',
     'monday',
