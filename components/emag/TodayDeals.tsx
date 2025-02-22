@@ -1,9 +1,9 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
 import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/Loader'
+import { Button } from '@/components/ui/Button'
 import { DealProps } from '@/interfaces'
 import { ItemSkeleton } from '@/components/Skeletons'
 
@@ -33,7 +33,10 @@ function TodayDeals() {
           </ul>
         </div>
       )}
-      <Link href="/all-deals">All Deals</Link>
+      <Button
+        text="All Deals"
+        onClick={() => window.open('/all-deals', '_self')}
+      />
     </>
   )
 }

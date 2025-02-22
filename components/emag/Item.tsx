@@ -1,8 +1,8 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { TbExternalLink } from 'react-icons/tb'
 import { DealProps } from '@/interfaces'
 import { FallbackImage } from '@/components/ui/FallbackImage'
+import { Button } from '@/components/ui/Button'
 
 export const Item = ({ deal }: { deal: DealProps }) => {
   return (
@@ -21,14 +21,12 @@ export const Item = ({ deal }: { deal: DealProps }) => {
       <div className="flex flex-col gap-2">
         <h2 className="text-lg font-semibold">{deal.title}</h2>
         <p className="text-gray-400">{deal.discount || deal.price}</p>
-        <Link
-          href={`${deal.url}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-blue-500 w-fit hover:bg-blue-600 text-white px-2 py-1 rounded inline-flex items-center gap-1 transition-all"
-        >
-          View Deal <TbExternalLink size={18} />
-        </Link>
+        <Button
+          size="sm"
+          text="View Deal"
+          onClick={() => window.open(deal.url, '_blank')}
+          icon={<TbExternalLink size={18} />}
+        />
       </div>
     </li>
   )
