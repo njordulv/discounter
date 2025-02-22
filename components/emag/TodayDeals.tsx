@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import useFetcher from '@/app/hooks/useFetcher'
+import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/Loader'
 import { DealProps } from '@/interfaces'
 import { ItemSkeleton } from '@/components/Skeletons'
