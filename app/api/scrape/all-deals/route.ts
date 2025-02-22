@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import puppeteer from 'puppeteer'
-import getTodayDeals from '@/utils/getTodayDeals'
+import { getAllDeals } from '@/utils/getDeals'
 
 export async function GET() {
   try {
@@ -10,7 +10,7 @@ export async function GET() {
     })
 
     const page = await browser.newPage()
-    await page.goto(getTodayDeals(), { waitUntil: 'domcontentloaded' })
+    await page.goto(getAllDeals(), { waitUntil: 'domcontentloaded' })
 
     const categories = await page.evaluate(() => {
       return Array.from(document.querySelectorAll('.card-item')).map((card) => {
@@ -20,7 +20,7 @@ export async function GET() {
         const imageElement = card.querySelector(
           '.img-component img'
         ) as HTMLImageElement | null
-        const newPriceElement = card.querySelector('.product-new-price')
+        const priceElement = card.querySelector('.product-new-price')
         const linkElement = card.querySelector(
           'a.card-v2-title'
         ) as HTMLAnchorElement | null
@@ -30,9 +30,9 @@ export async function GET() {
             titleElement instanceof HTMLElement
               ? titleElement.innerText.trim()
               : '',
-          newPrice:
-            newPriceElement instanceof HTMLElement
-              ? newPriceElement.innerText.trim()
+          price:
+            priceElement instanceof HTMLElement
+              ? priceElement.innerText.trim()
               : '',
           url: linkElement?.href || '',
           image: imageElement?.src || '',

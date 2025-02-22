@@ -4,7 +4,7 @@ export const ItemSkeleton = () => {
       role="status"
       className="animate-pulse md:space-y-0 md:space-x-8 rtl:space-x-reverse md:flex items-start p-5 border border-slate-500 rounded-lg"
     >
-      <div className="flex items-start w-full h-24 bg-gray-300 rounded-lg sm:w-24 dark:bg-gray-700">
+      <div className="flex items-start w-24 h-24 bg-transparent rounded-l">
         <svg
           className="w-24 h-24 text-gray-200 dark:text-gray-600"
           aria-hidden="true"
@@ -16,7 +16,6 @@ export const ItemSkeleton = () => {
         </svg>
       </div>
       <div className="w-full overflow-hidden">
-        <div className="h-4 bg-gray-200 rounded-lg dark:bg-gray-700 w-full mb-3"></div>
         <div className="h-4 bg-gray-200 rounded-lg dark:bg-gray-700 w-full mb-3"></div>
         <div className="h-4 bg-gray-200 rounded-lg dark:bg-gray-700 w-full max-w-42 mb-5"></div>
         <div className="h-4 bg-gray-200 rounded-lg dark:bg-gray-700 w-full max-w-16 mb-5"></div>

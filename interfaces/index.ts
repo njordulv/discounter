@@ -1,6 +1,7 @@
 export interface DealProps {
   title: string
-  newPrice: string
+  discount: string
+  price?: string
   url: string
   image: string
 }
