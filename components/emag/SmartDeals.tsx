@@ -13,9 +13,9 @@ const Item = dynamic(
   }
 )
 
-function TodayDeals() {
+function SmartDeals() {
   const { data, error, isLoading } = useFetcher({
-    url: '/api/deals/emag',
+    url: '/api/emag/smart-deals',
   })
 
   if (isLoading) return <Loader />
@@ -48,4 +48,4 @@ function TodayDeals() {
   )
 }
 
-export default TodayDeals
+export default SmartDeals
