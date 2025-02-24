@@ -1,7 +1,8 @@
-const siteConfig = {
+const config = {
   emag: {
     title: 'eMAG',
     url: 'https://www.emag.bg',
+    deals: 'https://sapi.emag.bg/label-campaign/flash-deals?source_id=',
   },
   weekday: [
     'Sunday',
@@ -15,4 +16,4 @@ const siteConfig = {
   weekdayShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 }
 
-export default siteConfig
+export default config

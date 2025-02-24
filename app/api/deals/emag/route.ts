@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
+import config from '@/config'
 
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
     const source_id = searchParams.get('source_id') || '7'
-    const zone = searchParams.get('zone') || ''
-    const position = searchParams.get('position') || '0'
-
-    const apiUrl = `https://sapi.emag.bg/label-campaign/flash-deals?source_id=${source_id}&zone=${zone}&position=${position}`
+    const apiUrl = `${config.emag.deals}${source_id}`
 
     const response = await fetch(apiUrl)
 
