@@ -1,6 +1,6 @@
 import fs from 'fs/promises'
 import path from 'path'
-import { DealProps } from '@/interfaces'
+import { DealProps } from '@/interfaces/emag'
 
 const CACHE_FILE = path.resolve(process.cwd(), 'public/deals.json')
 

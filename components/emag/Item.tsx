@@ -1,16 +1,16 @@
 import Image from 'next/image'
 import { TbExternalLink } from 'react-icons/tb'
-import { DealProps } from '@/interfaces'
+import { DealProps } from '@/interfaces/emag'
 import { FallbackImage } from '@/components/ui/FallbackImage'
 import { Button } from '@/components/ui/Button'
 
-export const Item = ({ deal }: { deal: DealProps }) => {
+export const Item: React.FC<DealProps> = ({ name, image, url, offer }) => {
   return (
-    <li className="flex gap-5 p-5 border border-slate-500 rounded-lg shadow">
-      {deal.image ? (
+    <li className="flex gap-5 p-5 border border-slate-500 bg-gray-900 rounded-lg shadow">
+      {image ? (
         <Image
-          src={deal.image}
-          alt={deal.title}
+          src={image.resized_images[0].url}
+          alt={name}
           width={96}
           height={96}
           className="w-24 h-24 object-cover aspect-square rounded-lg"
@@ -18,13 +18,26 @@ export const Item = ({ deal }: { deal: DealProps }) => {
       ) : (
         <FallbackImage />
       )}
-      <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-semibold">{deal.title}</h2>
-        <p className="text-gray-400">{deal.discount || deal.price}</p>
+      <div className="flex flex-col gap-4 justify-between">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-lg font-semibold">{name}</h2>
+          <p className="flex gap-1 items-center text-sky-400">
+            {offer.price.current}
+            <span className="text-sky-400">
+              {offer.price.currency.name.default}
+            </span>
+            <span className="line-through text-slate-400">
+              {offer.price.lowest_price_30_days.amount}
+            </span>
+            <span className="text-sky-500 font-medium bg-sky-500/20 px-1 rounded-lg">{`-${offer.price.discount.percent}%`}</span>
+          </p>
+        </div>
         <Button
           size="sm"
-          text="View Deal"
-          onClick={() => window.open(deal.url, '_blank')}
+          text="Get Deal"
+          onClick={() =>
+            window.open(`${url.desktop_base}${url.path}`, '_blank')
+          }
           icon={<TbExternalLink size={18} />}
         />
       </div>
