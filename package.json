@@ -1,6 +1,6 @@
 {
   "name": "discounter",
-  "version": "0.3.2",
+  "version": "0.4.1",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
     "@tailwindcss/postcss": "^4.0.7",
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0",
     "next": "15.1.7",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
