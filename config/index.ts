@@ -16,6 +16,13 @@ const config = {
       toys: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Baby-Toys',
       cleaning:
         'https://www.emag.bg/label/Smart-Deals-Detergents-And-Cleaning-Products',
+      casesAndCards:
+        'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Cases-And-Memory-Cards',
+      mda: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Mda',
+      audioAndVideo:
+        'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Audio-Video-And-Photo',
+      pcComponents:
+        'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Desktop-Pcs-Components-And-Peripherals',
     },
   },
   weekday: [

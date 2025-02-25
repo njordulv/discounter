@@ -70,6 +70,10 @@ export async function GET() {
     config.emag.categories.perfumes,
     config.emag.categories.toys,
     config.emag.categories.cleaning,
+    config.emag.categories.casesAndCards,
+    config.emag.categories.mda,
+    config.emag.categories.audioAndVideo,
+    config.emag.categories.pcComponents,
   ]
 
   try {
