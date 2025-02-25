@@ -1,12 +1,21 @@
 import Image from 'next/image'
 import { TbExternalLink } from 'react-icons/tb'
-import { DealProps } from '@/interfaces/emag'
+import { DealProps } from '@/interfaces/emag/deals'
 import { FallbackImage } from '@/components/ui/FallbackImage'
+import { useLazyLoad } from '@/hooks/useLazyLoad'
+import { ItemSkeleton } from '@/components/Skeletons'
 import { Button } from '@/components/ui/Button'
 
 export const Item: React.FC<DealProps> = ({ name, image, url, offer }) => {
+  const { ref, isVisible } = useLazyLoad()
+
+  if (!isVisible) return <ItemSkeleton ref={ref} />
+
   return (
-    <li className="flex gap-5 p-5 border border-slate-500 bg-gray-900 rounded-lg shadow">
+    <div
+      ref={ref}
+      className="flex gap-5 p-4 border border-cyan-900/60 bg-cyan-800/10 rounded-lg shadow"
+    >
       {image ? (
         <Image
           src={image.resized_images[0].url}
@@ -41,6 +50,6 @@ export const Item: React.FC<DealProps> = ({ name, image, url, offer }) => {
           icon={<TbExternalLink size={18} />}
         />
       </div>
-    </li>
+    </div>
   )
 }

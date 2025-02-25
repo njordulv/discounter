@@ -3,6 +3,7 @@ import axios from 'axios'
 import * as cheerio from 'cheerio'
 import { createClient } from '@supabase/supabase-js'
 import { CardProps } from '@/interfaces/emag/categories'
+import { normalizeImageUrl } from '@/utils/functions'
 import config from '@/config'
 
 const supabaseUrl = process.env.SUPABASE_URL!
@@ -33,9 +34,7 @@ async function scrapeEmag(url: string): Promise<CardProps[]> {
         .trim()
       const rawImageUrl =
         $(element).find('.img-component img').attr('src') || ''
-      const imageUrl = rawImageUrl
-        .replace(/^https?:https?:\/\//, 'https://')
-        .replace(/^\/\//, 'https://')
+      const imageUrl = normalizeImageUrl(rawImageUrl)
       const link = $(element).find('a.js-product-url').attr('href') || ''
 
       if (title && price) {
@@ -44,7 +43,7 @@ async function scrapeEmag(url: string): Promise<CardProps[]> {
           price,
           oldPrice,
           discount,
-          imageUrl: imageUrl?.replace(/^https?:https?:\/\//, 'https://'),
+          imageUrl,
           link: link.startsWith('http')
             ? link
             : new URL(link, config.emag.url).toString(),

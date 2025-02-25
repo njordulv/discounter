@@ -3,13 +3,14 @@
 import dynamic from 'next/dynamic'
 import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/Loader'
-import { Button } from '@/components/ui/Button'
+import { ItemSkeleton } from '@/components/Skeletons'
 import { DealProps } from '@/interfaces/emag/deals'
+import { Button } from '@/components/ui/Button'
 
 const Item = dynamic(
   () => import('@/components/emag/Item').then((mod) => mod.Item),
   {
-    loading: () => <Loader />,
+    loading: () => <ItemSkeleton />,
   }
 )
 
@@ -27,7 +28,7 @@ function SmartDeals() {
     <>
       {deals && (
         <div className="m-auto w-full max-w-4xl">
-          <ul className="space-y-4 grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3">
             {deals.map((deal: DealProps) => (
               <Item
                 key={deal.id}
@@ -37,10 +38,11 @@ function SmartDeals() {
                 offer={deal.offer}
               />
             ))}
-          </ul>
+          </div>
         </div>
       )}
       <Button
+        size="lg"
         text="All Deals"
         onClick={() => window.open('/all-deals', '_self')}
       />
