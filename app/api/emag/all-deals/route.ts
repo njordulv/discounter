@@ -63,9 +63,13 @@ async function scrapeEmag(url: string): Promise<CardProps[]> {
 
 export async function GET() {
   const categories = [
-    config.emag.categories.clothing,
     config.emag.categories.livingRoom,
+    config.emag.categories.cooking,
     config.emag.categories.auto,
+    config.emag.categories.clothing,
+    config.emag.categories.perfumes,
+    config.emag.categories.toys,
+    config.emag.categories.cleaning,
   ]
 
   try {
