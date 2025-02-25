@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Discount & Promo Code Aggregator
 
-## Getting Started
+A web service that aggregates discount deals and promo codes from various sources, using web scraping and real-time data fetching.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Product & Category Scraping**: Automatically fetches discounts from categories on eMAG.
+- **Lazy Loading with Skeletons**: Improves performance and UX by displaying skeleton loaders while content is being loaded.
+- **SSR with Next.js**: Fetches data on the server-side to improve SEO and initial load speed.
+- **Dynamic Routing**: Supports navigation through different categories and product details.
+- **Database**: Integrated with Supabase for user authentication.
+- **Responsive UI**: Designed with Tailwind CSS for a mobile-friendly and modern interface.
+
+## 🛠 Tech Stack
+
+- **Frontend**: Next.js, React, TypeScript, Tailwind CSS
+- **Backend**: Node.js, Cheerio (for scraping), Supabase (for database)
+- **State Management**: Zustand
+- **Hosting**: Vercel
+
+## 📂 Project Structure
+
+```
+📦 project-root
+├── 📂 components      # UI components (buttons, cards, loaders, etc.)
+├── 📂 hooks           # Custom React hooks
+├── 📂 pages           # Next.js pages
+├── 📂 public          # Static assets
+├── 📂 styles          # Global styles
+├── 📂 utils           # Utility functions
+├── 📂 config          # App configuration
+└── next.config.js    # Next.js configuration
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔧 Setup & Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/njordulv/discounter.git
+   cd discounter
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Configure environment variables (`.env`):
+   ```sh
+   SUPABASE_URL=your_supabase_url
+   SUPABASE_KEY=your_supabase_key
+   ```
+4. Run the development server:
+   ```sh
+   npm run dev
+   ```
+5. Open `http://localhost:3000` in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📌 Roadmap
 
-## Learn More
+- [ ] Implement a bookmarking system for saving deals
+- [ ] Add user notifications for new discounts
+- [ ] Improve data fetching performance
+- [ ] Enhance accessibility (a11y improvements)
 
-To learn more about Next.js, take a look at the following resources:
+## 📜 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Licensed under the [MIT License](LICENSE).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+### 📬 Contact
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For questions or suggestions, reach out to [njordulv@gmail.com](mailto:njordulv@gmail.com).
