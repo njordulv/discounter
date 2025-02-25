@@ -3,7 +3,14 @@ const config = {
     title: 'eMAG',
     url: 'https://www.emag.bg',
     smartDeals: 'https://sapi.emag.bg/label-campaign/flash-deals?source_id=',
-    errorFetch: 'Error fetching deals.',
+    errorFetch: 'Error fetching data',
+    categories: {
+      clothing:
+        'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Men-And-Women-Clothing',
+      livingRoom:
+        'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Living-Room-Hallway-And-Office-Furniture',
+      auto: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Auto-Products',
+    },
   },
   weekday: [
     'Sunday',

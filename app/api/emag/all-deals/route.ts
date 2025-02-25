@@ -2,20 +2,13 @@ import { NextResponse } from 'next/server'
 import axios from 'axios'
 import * as cheerio from 'cheerio'
 import { createClient } from '@supabase/supabase-js'
+import { CardProps } from '@/interfaces/emag/categories'
+import config from '@/config'
 
 const supabaseUrl = process.env.SUPABASE_URL!
 const supabaseKey = process.env.SUPABASE_KEY!
 
 const supabase = createClient(supabaseUrl, supabaseKey)
-
-interface Product {
-  title: string
-  price: string
-  oldPrice: string | null
-  image?: string
-  link: string
-  timestamp: string
-}
 
 const headers = {
   'User-Agent':
@@ -23,18 +16,26 @@ const headers = {
   'Accept-Language': 'en-US,en;q=0.9',
 }
 
-async function scrapeEmag(url: string): Promise<Product[]> {
+async function scrapeEmag(url: string): Promise<CardProps[]> {
   try {
     const { data } = await axios.get(url, { headers })
     const $ = cheerio.load(data)
-    const products: Product[] = []
+    const products: CardProps[] = []
 
     $('.card-v2').each((_, element) => {
       const title = $(element).find('.card-v2-title').text().trim()
       const price = $(element).find('.product-new-price').first().text().trim()
       const oldPrice =
-        $(element).find('.product-old-price').text().trim() || null
-      const image = $(element).find('.img-component img').attr('src') || ''
+        $(element).find('.pricing .rrp-lp30d-content s').text().trim() || null
+      const discount = $(element)
+        .find('.card-v2-badge.badge-discount')
+        .text()
+        .trim()
+      const rawImageUrl =
+        $(element).find('.img-component img').attr('src') || ''
+      const imageUrl = rawImageUrl
+        .replace(/^https?:https?:\/\//, 'https://')
+        .replace(/^\/\//, 'https://')
       const link = $(element).find('a.js-product-url').attr('href') || ''
 
       if (title && price) {
@@ -42,26 +43,29 @@ async function scrapeEmag(url: string): Promise<Product[]> {
           title,
           price,
           oldPrice,
-          image: image.replace('//', 'https://'),
-          link: link.startsWith('http') ? link : `https://www.emag.bg${link}`,
+          discount,
+          imageUrl: imageUrl?.replace(/^https?:https?:\/\//, 'https://'),
+          link: link.startsWith('http')
+            ? link
+            : new URL(link, config.emag.url).toString(),
           timestamp: new Date().toISOString(),
         })
       }
     })
 
-    console.log(`Найдено ${products.length} товаров для ${url}`)
+    console.log(`Found ${products.length} products for ${url}`)
     return products
   } catch (error) {
-    console.error('Ошибка парсинга:', error)
+    console.error('Error parsing:', error)
     return []
   }
 }
 
 export async function GET() {
   const categories = [
-    'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Men-And-Women-Clothing',
-    'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Living-Room-Hallway-And-Office-Furniture',
-    'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Auto-Products',
+    config.emag.categories.clothing,
+    config.emag.categories.livingRoom,
+    config.emag.categories.auto,
   ]
 
   try {
@@ -72,25 +76,24 @@ export async function GET() {
       results.push({ category, count: products.length })
 
       if (products.length > 0) {
-        // Добавляем проверку ошибок Supabase
         const { error } = await supabase
           .from('discounts')
-          .upsert(products, { onConflict: 'link' }) // Уточняем поле для upsert
+          .upsert(products, { onConflict: 'link' })
 
         if (error) {
-          console.error('Ошибка Supabase:', error)
+          console.error('Error Supabase:', error)
           results.push({ error: error.message })
         }
       }
     }
 
     return NextResponse.json({
-      message: 'Завершено',
+      message: 'Completed',
       results,
-      supabaseKey: !!process.env.SUPABASE_KEY, // Проверка наличия ключа
+      supabaseKey: !!process.env.SUPABASE_KEY,
     })
   } catch (error) {
-    console.error('Общая ошибка:', error)
+    console.error('General Error:', error)
     return NextResponse.json(
       { error: 'Internal Server Error' },
       { status: 500 }

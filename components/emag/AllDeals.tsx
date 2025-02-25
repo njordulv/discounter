@@ -3,10 +3,10 @@
 import dynamic from 'next/dynamic'
 import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/Loader'
-import { DealProps } from '@/interfaces/emag'
+import { CardProps } from '@/interfaces/emag/categories'
 
-const Item = dynamic(
-  () => import('@/components/emag/Item').then((mod) => mod.Item),
+const Card = dynamic(
+  () => import('@/components/emag/Card').then((mod) => mod.Card),
   {
     loading: () => <Loader />,
   }
@@ -14,33 +14,22 @@ const Item = dynamic(
 
 function AllDeals() {
   const { data, error, isLoading } = useFetcher({
-    url: '/api/emag/all-deals',
+    url: '/api/emag/categories',
   })
 
   if (isLoading) return <Loader />
   if (error) return <div>Error: {error.message}</div>
 
-  const deals = data?.results[0]
+  if (!Array.isArray(data)) {
+    return <div>Data format is incorrect</div>
+  }
 
   return (
-    <>
-      {console.log(deals)}
-      {/* {deals && (
-        <div className="m-auto w-full max-w-4xl">
-          <ul className="space-y-4 grid grid-cols-2 gap-3">
-            {deals.map((deal: DealProps) => (
-              <Item
-                key={deal.id}
-                name={deal.name}
-                image={deal.image}
-                url={deal.url}
-                offer={deal.offer}
-              />
-            ))}
-          </ul>
-        </div>
-      )} */}
-    </>
+    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+      {data.map((product: CardProps) => (
+        <Card key={product.title} {...product} />
+      ))}
+    </ul>
   )
 }
 
