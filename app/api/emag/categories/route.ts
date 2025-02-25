@@ -16,7 +16,7 @@ export async function GET() {
 
     if (error) throw error
 
-    return NextResponse.json(data, { headers: { 'Cache-Control': 'no-store' } })
+    return NextResponse.json(data)
   } catch (error) {
     console.error(error)
 

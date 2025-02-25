@@ -3,12 +3,13 @@
 import dynamic from 'next/dynamic'
 import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/Loader'
+import { CardSkeleton } from '@/components/Skeletons'
 import { CardProps } from '@/interfaces/emag/categories'
 
 const Card = dynamic(
   () => import('@/components/emag/Card').then((mod) => mod.Card),
   {
-    loading: () => <Loader />,
+    loading: () => <CardSkeleton />,
   }
 )
 
@@ -25,11 +26,13 @@ function AllDeals() {
   }
 
   return (
-    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-      {data.map((product: CardProps) => (
-        <Card key={product.title} {...product} />
-      ))}
-    </ul>
+    <div className="m-auto w-full max-w-4xl">
+      <ul className="grid grid-cols-1 gap-3 p-4">
+        {data.map((product: CardProps) => (
+          <Card key={product.title} {...product} />
+        ))}
+      </ul>
+    </div>
   )
 }
 
