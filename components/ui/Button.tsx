@@ -1,21 +1,24 @@
-interface ButtonProps {
-  size?: 'sm' | 'md' | 'lg' | 'xl'
-  text: string
-  icon?: React.ReactNode
-  onClick?: () => void
-}
+import { twMerge } from 'tailwind-merge'
+import { ButtonProps } from '@/interfaces/ui'
+import config from '@/config'
 
 export const Button: React.FC<ButtonProps> = ({
-  size,
+  size = 'md',
+  color = 'orange',
   text,
   onClick,
   icon,
+  type = 'button',
 }) => {
   return (
     <button
-      type="button"
+      type={type}
       onClick={onClick}
-      className={`flex gap-2 justify-center items-center text-${size} bg-orange-500/60 border border-orange-500/70 rounded-full py-1 px-7 w-fit text-orange-50 hover:bg-orange-500/80 hover:text-white cursor-pointer transition-all`}
+      className={twMerge(
+        'flex gap-2 justify-center items-center border rounded-full py-1 px-7 w-fit cursor-pointer transition-all',
+        config.sizes[size],
+        config.colors[color]
+      )}
     >
       {text} {icon}
     </button>

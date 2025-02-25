@@ -56,9 +56,10 @@ export const Card: React.FC<CardProps> = ({
           </p>
           <Button
             size="md"
+            color="orange"
             text="Get Deal"
             onClick={() => window.open(link, '_blank')}
-            icon={<TbExternalLink size={20} />}
+            icon={<TbExternalLink size={21} />}
           />
         </div>
       </div>

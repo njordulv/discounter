@@ -1,6 +1,6 @@
 {
   "name": "discounter",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -19,6 +19,7 @@
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
     "swr": "^2.3.2",
+    "tailwind-merge": "^3.0.2",
     "tailwindcss": "^4.0.7"
   },
   "devDependencies": {

@@ -30,16 +30,15 @@ export const Item: React.FC<DealProps> = ({ name, image, url, offer }) => {
       <div className="flex flex-col gap-4 justify-between">
         <div className="flex flex-col gap-2">
           <h2 className="text-lg font-semibold">{name}</h2>
-          <p className="flex gap-1 items-center text-sky-400">
-            {offer.price.current}
-            <span className="text-sky-400">
-              {offer.price.currency.name.default}
+          <div className="flex gap-2 items-center text-cyan-400">
+            <span>
+              {offer.price.current} {offer.price.currency.name.default}
             </span>
             <span className="line-through text-slate-400">
-              {offer.price.lowest_price_30_days.amount}
+              {offer.price.lowest_price_30_days.amount} BGN
             </span>
-            <span className="text-sky-500 font-medium bg-sky-500/20 px-1 rounded-lg">{`-${offer.price.discount.percent}%`}</span>
-          </p>
+            <span className="text-cyan-500 font-medium bg-cyan-500/10 px-2 rounded-lg">{`-${offer.price.discount.percent}%`}</span>
+          </div>
         </div>
         <Button
           size="sm"
