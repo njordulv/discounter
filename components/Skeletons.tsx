@@ -30,7 +30,7 @@ export const CardSkeleton = () => {
   return (
     <div
       role="status"
-      className="animate-pulse md:space-y-0 md:flex items-start gap-4 p-4 border border-cyan-900 rounded-lg"
+      className="animate-pulse w-full space-y-3 md:flex items-start gap-4 p-4 border border-cyan-900 rounded-lg"
     >
       <div className="flex items-start w-44 h-44 bg-transparent rounded-l">
         <svg
