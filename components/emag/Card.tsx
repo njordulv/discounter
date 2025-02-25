@@ -45,7 +45,7 @@ export const Card: React.FC<CardProps> = ({
             </span>
           </p>
           <Button
-            size="lg"
+            size="md"
             text="Get Deal"
             onClick={() => window.open(link, '_blank')}
             icon={<TbExternalLink size={20} />}

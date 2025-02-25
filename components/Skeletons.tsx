@@ -47,7 +47,7 @@ export const CardSkeleton = () => {
         <div className="h-7 bg-gray-200 rounded-lg dark:bg-gray-700 w-full mb-3"></div>
         <div className="h-7 bg-gray-200 rounded-lg dark:bg-gray-700 w-full max-w-42 mb-4"></div>
         <div className="h-6 bg-gray-200 rounded-lg dark:bg-gray-700 w-full max-w-16 mb-4"></div>
-        <div className="h-11 bg-gray-200 rounded-full dark:bg-gray-700 w-full max-w-40"></div>
+        <div className="h-9 bg-gray-200 rounded-full dark:bg-gray-700 w-full max-w-40"></div>
       </div>
       <span className="sr-only">Loading...</span>
     </div>

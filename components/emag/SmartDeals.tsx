@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/Loader'
 import { Button } from '@/components/ui/Button'
-import { DealProps } from '@/interfaces/emag'
+import { DealProps } from '@/interfaces/emag/deals'
 
 const Item = dynamic(
   () => import('@/components/emag/Item').then((mod) => mod.Item),

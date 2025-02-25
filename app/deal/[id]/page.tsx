@@ -29,7 +29,7 @@ export default function DealPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">{deal.title}</h1>
+      <h1 className="text-2xl font-medium">{deal.title}</h1>
       <p className="text-gray-700">{deal.description}</p>
       <a
         href={deal.link}

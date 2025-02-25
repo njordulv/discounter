@@ -1,11 +1,11 @@
-import { Raleway } from 'next/font/google'
+import { Outfit } from 'next/font/google'
 import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import '@/styles/globals.css'
 
-const raleway = Raleway({
-  variable: '--font-raleway',
+const outfit = Outfit({
+  variable: '--font-outfit',
   subsets: ['latin'],
 })
 
@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${raleway.className}`}>
+      <body className={`${outfit.className}`}>
         <div className="flex flex-col">
           <Header />
           <main className="flex flex-col items-center min-h-[calc(100vh-7rem)] px-6 py-10 gap-6 justify-center ">
