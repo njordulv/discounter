@@ -32,7 +32,7 @@ export const Card: React.FC<CardProps> = ({
           alt={title}
           width={176}
           height={176}
-          className="object-cover aspect-square rounded-lg"
+          className="object-cover aspect-square rounded-lg w-auto h-auto"
           priority={false}
         />
       )}

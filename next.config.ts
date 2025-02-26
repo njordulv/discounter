@@ -3,7 +3,13 @@ import type { NextConfig } from 'next'
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['s13emagst.akamaized.net'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 's13emagst.akamaized.net',
+        pathname: '/products/**',
+      },
+    ],
   },
 }
 

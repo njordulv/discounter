@@ -17,43 +17,77 @@ const headers = {
   'Accept-Language': 'en-US,en;q=0.9',
 }
 
-async function scrapeEmag(url: string): Promise<CardProps[]> {
+async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
+  let allProducts: CardProps[] = []
+  let currentPage = 1
+  const maxPages = 20
+
   try {
-    const { data } = await axios.get(url, { headers })
-    const $ = cheerio.load(data)
-    const products: CardProps[] = []
+    while (currentPage <= maxPages) {
+      const url = categoryUrl + (currentPage > 1 ? `/p${currentPage}` : '')
+      console.log(`Scraping page ${currentPage}: ${url}`)
 
-    $('.card-v2').each((_, element) => {
-      const title = $(element).find('.card-v2-title').text().trim()
-      const price = $(element).find('.product-new-price').first().text().trim()
-      const oldPrice =
-        $(element).find('.pricing .rrp-lp30d-content s').text().trim() || null
-      const discount = $(element)
-        .find('.card-v2-badge.badge-discount')
-        .text()
-        .trim()
-      const rawImageUrl =
-        $(element).find('.img-component img').attr('src') || ''
-      const imageUrl = normalizeImageUrl(rawImageUrl)
-      const link = $(element).find('a.js-product-url').attr('href') || ''
+      const { data } = await axios.get(url, { headers })
+      const $ = cheerio.load(data)
+      const products: CardProps[] = []
 
-      if (title && price) {
-        products.push({
-          title,
-          price,
-          oldPrice,
-          discount,
-          imageUrl,
-          link: link.startsWith('http')
-            ? link
-            : new URL(link, config.emag.url).toString(),
-          timestamp: new Date().toISOString(),
-        })
+      $('.card-v2').each((_, element) => {
+        const title = $(element).find('.card-v2-title').text().trim()
+        const price = $(element)
+          .find('.product-new-price')
+          .first()
+          .text()
+          .trim()
+        const oldPrice =
+          $(element).find('.pricing .rrp-lp30d-content s').text().trim() || null
+        const discount = $(element)
+          .find('.card-v2-badge.badge-discount')
+          .text()
+          .trim()
+        const rawImageUrl =
+          $(element).find('.img-component img').attr('src') || ''
+        const imageUrl = normalizeImageUrl(rawImageUrl)
+        const link = $(element).find('a.js-product-url').attr('href') || ''
+
+        if (title && price) {
+          products.push({
+            title,
+            price,
+            oldPrice,
+            discount,
+            imageUrl,
+            link: link.startsWith('http')
+              ? link
+              : new URL(link, config.emag.url).toString(),
+            timestamp: new Date().toISOString(),
+          })
+        }
+      })
+
+      if (products.length === 0) {
+        console.log(`No more products found, stopping at page ${currentPage}`)
+        break
       }
-    })
 
-    console.log(`Found ${products.length} products for ${url}`)
-    return products
+      allProducts = [...allProducts, ...products]
+
+      const lastPageNumber = Math.max(
+        ...$('.pagination a.js-change-page')
+          .map((_, el) => Number($(el).attr('data-page')))
+          .get()
+          .filter((n) => !isNaN(n))
+      )
+
+      if (isNaN(lastPageNumber) || currentPage >= lastPageNumber) {
+        console.log(`Reached last page (${lastPageNumber}), stopping.`)
+        break
+      }
+
+      currentPage++
+    }
+
+    console.log(`Total ${allProducts.length} products found for ${categoryUrl}`)
+    return allProducts
   } catch (error) {
     console.error('Error parsing:', error)
     return []
@@ -63,16 +97,16 @@ async function scrapeEmag(url: string): Promise<CardProps[]> {
 export async function GET() {
   const categories = [
     config.emag.categories.livingRoom,
-    config.emag.categories.cooking,
-    config.emag.categories.auto,
-    config.emag.categories.clothing,
-    config.emag.categories.perfumes,
-    config.emag.categories.toys,
-    config.emag.categories.cleaning,
-    config.emag.categories.casesAndCards,
-    config.emag.categories.mda,
-    config.emag.categories.audioAndVideo,
-    config.emag.categories.pcComponents,
+    // config.emag.categories.cooking,
+    // config.emag.categories.auto,
+    // config.emag.categories.clothing,
+    // config.emag.categories.perfumes,
+    // config.emag.categories.toys,
+    // config.emag.categories.cleaning,
+    // config.emag.categories.casesAndCards,
+    // config.emag.categories.mda,
+    // config.emag.categories.audioAndVideo,
+    // config.emag.categories.pcComponents,
   ]
 
   try {

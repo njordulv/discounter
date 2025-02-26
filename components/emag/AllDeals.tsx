@@ -28,8 +28,8 @@ function AllDeals() {
   return (
     <div className="m-auto w-full max-w-4xl">
       <div className="grid grid-cols-1 gap-3">
-        {data.map((product: CardProps) => (
-          <Card key={product.title} {...product} />
+        {data.map((product: CardProps, index: number) => (
+          <Card key={index} {...product} />
         ))}
       </div>
     </div>
