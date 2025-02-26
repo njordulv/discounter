@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server'
+import fs from 'fs/promises'
+import path from 'path'
 import axios from 'axios'
 import * as cheerio from 'cheerio'
 import { createClient } from '@supabase/supabase-js'
@@ -8,8 +10,9 @@ import config from '@/config'
 
 const supabaseUrl = process.env.SUPABASE_URL!
 const supabaseKey = process.env.SUPABASE_KEY!
-
 const supabase = createClient(supabaseUrl, supabaseKey)
+
+const FILE_PATH = path.join(process.cwd(), 'public', 'all-deals.json')
 
 const headers = {
   'User-Agent':
@@ -94,47 +97,61 @@ async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
   }
 }
 
+async function updateDeals() {
+  const categories = [config.emag.categories.livingRoom]
+
+  let allProducts: CardProps[] = []
+
+  for (const category of categories) {
+    const products = await scrapeEmag(category)
+    allProducts = [...allProducts, ...products]
+
+    if (products.length > 0) {
+      const { error } = await supabase
+        .from('discounts')
+        .upsert(products, { onConflict: 'link' })
+
+      if (error) {
+        console.error('Error Supabase:', error)
+      }
+    }
+  }
+
+  if (allProducts.length > 0) {
+    try {
+      await fs.writeFile(FILE_PATH, JSON.stringify(allProducts, null, 2))
+      console.log('✅ Saved products to all-deals.json')
+    } catch (err) {
+      console.error('❌ Error saving JSON file:', err)
+    }
+  }
+}
+
+// Execute function once in a day at 00:00
+setInterval(updateDeals, 24 * 60 * 60 * 1000)
+
 export async function GET() {
-  const categories = [
-    config.emag.categories.livingRoom,
-    // config.emag.categories.cooking,
-    // config.emag.categories.auto,
-    // config.emag.categories.clothing,
-    // config.emag.categories.perfumes,
-    // config.emag.categories.toys,
-    // config.emag.categories.cleaning,
-    // config.emag.categories.casesAndCards,
-    // config.emag.categories.mda,
-    // config.emag.categories.audioAndVideo,
-    // config.emag.categories.pcComponents,
-  ]
-
   try {
-    const results = []
+    const { data, error } = await supabase.from('discounts').select('*')
 
-    for (const category of categories) {
-      const products = await scrapeEmag(category)
-      results.push({ category, count: products.length })
+    if (error || !data?.length) {
+      console.warn('⚠️ Supabase is down, using cached JSON')
 
-      if (products.length > 0) {
-        const { error } = await supabase
-          .from('discounts')
-          .upsert(products, { onConflict: 'link' })
-
-        if (error) {
-          console.error('Error Supabase:', error)
-          results.push({ error: error.message })
-        }
+      try {
+        const jsonData = await fs.readFile(FILE_PATH, 'utf-8')
+        return NextResponse.json(JSON.parse(jsonData))
+      } catch (err) {
+        console.error('❌ Failed to load cached JSON:', err)
+        return NextResponse.json(
+          { error: 'No data available' },
+          { status: 500 }
+        )
       }
     }
 
-    return NextResponse.json({
-      message: 'Completed',
-      results,
-      supabaseKey: !!process.env.SUPABASE_KEY,
-    })
+    return NextResponse.json(data)
   } catch (error) {
-    console.error('General Error:', error)
+    console.error('❌ General Error:', error)
     return NextResponse.json(
       { error: 'Internal Server Error' },
       { status: 500 }
