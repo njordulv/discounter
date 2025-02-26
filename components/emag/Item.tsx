@@ -5,6 +5,7 @@ import { FallbackImage } from '@/components/ui/FallbackImage'
 import { useLazyLoad } from '@/hooks/useLazyLoad'
 import { ItemSkeleton } from '@/components/Skeletons'
 import { Button } from '@/components/ui/Button'
+import config from '@/config'
 
 export const Item: React.FC<DealProps> = ({ name, image, url, offer }) => {
   const { ref, isVisible } = useLazyLoad()
@@ -23,6 +24,9 @@ export const Item: React.FC<DealProps> = ({ name, image, url, offer }) => {
           width={96}
           height={96}
           className="w-24 h-24 object-cover aspect-square rounded-lg"
+          priority={false}
+          placeholder="blur"
+          blurDataURL={config.imageBase64}
         />
       ) : (
         <FallbackImage />

@@ -9,7 +9,7 @@ export const ItemSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
     >
       <div className="flex items-start w-24 h-24 bg-transparent rounded-lg">
         <svg
-          className="w-24 h-24 text-gray-200 dark:text-gray-600"
+          className="w-24 h-24 text-gray-600"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
@@ -19,12 +19,12 @@ export const ItemSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
         </svg>
       </div>
       <div className="w-full overflow-hidden">
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-full mb-3"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-full mb-3"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-4/5 mb-3"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-2/5 mb-4"></div>
-        <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded-lg w-3/5 mb-4"></div>
-        <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded-full w-full max-w-40"></div>
+        <div className="h-4 bg-gray-700 rounded-lg w-full mb-3"></div>
+        <div className="h-4 bg-gray-700 rounded-lg w-full mb-3"></div>
+        <div className="h-4 bg-gray-700 rounded-lg w-4/5 mb-3"></div>
+        <div className="h-4 bg-gray-700 rounded-lg w-2/5 mb-4"></div>
+        <div className="h-5 bg-gray-700 rounded-lg w-3/5 mb-4"></div>
+        <div className="h-8 bg-gray-700 rounded-full w-full max-w-40"></div>
       </div>
       <span className="sr-only">Loading...</span>
     </div>
@@ -42,7 +42,7 @@ export const CardSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
     >
       <div className="flex items-start w-44 h-44 bg-transparent rounded-lg">
         <svg
-          className="w-44 h-44 text-gray-200 dark:text-gray-600"
+          className="w-44 h-44 text-gray-600"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
@@ -52,10 +52,10 @@ export const CardSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
         </svg>
       </div>
       <div className="w-full overflow-hidden">
-        <div className="h-7 bg-gray-200 dark:bg-gray-700 rounded-lg w-full mb-3"></div>
-        <div className="h-7 bg-gray-200 dark:bg-gray-700 rounded-lg w-full max-w-42 mb-4"></div>
-        <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-lg w-full max-w-16 mb-4"></div>
-        <div className="h-9 bg-gray-200 dark:bg-gray-700 rounded-full w-full max-w-40"></div>
+        <div className="h-7 bg-gray-700 rounded-lg w-full mb-3"></div>
+        <div className="h-7 bg-gray-700 rounded-lg w-full max-w-42 mb-4"></div>
+        <div className="h-6 bg-gray-700 rounded-lg w-full max-w-16 mb-4"></div>
+        <div className="h-9 bg-gray-700 rounded-full w-full max-w-40"></div>
       </div>
       <span className="sr-only">Loading...</span>
     </div>

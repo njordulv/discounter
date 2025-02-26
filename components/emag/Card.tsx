@@ -32,8 +32,10 @@ export const Card: React.FC<CardProps> = ({
           alt={title}
           width={176}
           height={176}
-          className="object-cover aspect-square rounded-lg w-auto h-auto"
+          className="w-44 h-44 object-cover aspect-square rounded-lg"
           priority={false}
+          placeholder="blur"
+          blurDataURL={config.imageBase64}
         />
       )}
       <div className="flex flex-col gap-4 justify-between">
