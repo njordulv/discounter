@@ -132,27 +132,45 @@ async function updateDeals() {
 // Execute function once in a day at 00:00
 setInterval(updateDeals, 24 * 60 * 60 * 1000)
 
-export async function GET(req: Request) {
-  const url = new URL(req.url)
-  const forceUpdate = url.searchParams.get('force') === 'true'
-
-  if (forceUpdate) {
-    console.log('🔄 Force updating deals...')
-    await updateDeals()
-  }
-
+export async function GET(request: Request) {
   try {
-    const { data, error } = await supabase
+    const { searchParams } = new URL(request.url)
+    const page = Number(searchParams.get('page')) || 1
+    const perPage = Number(searchParams.get('perPage')) || 20
+
+    if (isNaN(page) || page < 1 || isNaN(perPage) || perPage < 1) {
+      return NextResponse.json(
+        { error: 'Invalid pagination parameters' },
+        { status: 400 }
+      )
+    }
+
+    const { data, error, count } = await supabase
       .from('discounts')
-      .select('*')
-      .order('timestamp', { ascending: false })
+      .select('*', { count: 'exact' })
+      .range((page - 1) * perPage, page * perPage - 1)
 
     if (error || !data?.length) {
       console.warn('⚠️ Supabase is down, using cached JSON')
 
       try {
         const jsonData = await fs.readFile(FILE_PATH, 'utf-8')
-        return NextResponse.json(JSON.parse(jsonData))
+        const allData: CardProps[] = JSON.parse(jsonData)
+        const total = allData.length
+        const paginatedData = allData.slice(
+          (page - 1) * perPage,
+          page * perPage
+        )
+
+        return NextResponse.json({
+          data: paginatedData,
+          meta: {
+            currentPage: page,
+            perPage,
+            totalPages: Math.ceil(total / perPage),
+            totalItems: total,
+          },
+        })
       } catch (err) {
         console.error('❌ Failed to load cached JSON:', err)
         return NextResponse.json(
@@ -162,7 +180,15 @@ export async function GET(req: Request) {
       }
     }
 
-    return NextResponse.json(data)
+    return NextResponse.json({
+      data,
+      meta: {
+        currentPage: page,
+        perPage,
+        totalPages: Math.ceil((count || 0) / perPage),
+        totalItems: count,
+      },
+    })
   } catch (error) {
     console.error('❌ General Error:', error)
     return NextResponse.json(
