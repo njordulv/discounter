@@ -9,6 +9,7 @@ export const Button: React.FC<ButtonProps> = ({
   onClick,
   icon,
   type = 'button',
+  disabled,
 }) => {
   return (
     <button
@@ -17,7 +18,8 @@ export const Button: React.FC<ButtonProps> = ({
       className={twMerge(
         'flex gap-2 justify-center items-center border rounded-full py-1 px-7 w-fit cursor-pointer transition-all',
         config.sizes[size],
-        config.colors[color]
+        config.colors[color],
+        disabled && 'opacity-50 pointer-events-none'
       )}
     >
       {text} {icon}

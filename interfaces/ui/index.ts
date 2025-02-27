@@ -7,4 +7,5 @@ export interface ButtonProps {
   icon?: ReactNode
   onClick?: () => void
   type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
 }

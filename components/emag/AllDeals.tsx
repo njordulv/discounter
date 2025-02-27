@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react'
 import useFetcher from '@/hooks/useFetcher'
 import useScrollTrigger from '@/hooks/useScrollTrigger'
 import Loader from '@/components/ui/Loader'
+import { Button } from '@/components/ui/Button'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { CardProps } from '@/interfaces/emag'
 
@@ -17,7 +18,7 @@ function AllDeals() {
   const [currentPage, setCurrentPage] = useState(1)
   const [accumulatedData, setAccumulatedData] = useState<CardProps[]>([])
   const [totalPages, setTotalPages] = useState(1)
-  const isFetchingRef = useRef(false) // Флаг, чтобы избежать лишних вызовов
+  const isFetchingRef = useRef(false)
   const perPage = 20
 
   const { data, error, isLoading } = useFetcher({
@@ -30,12 +31,12 @@ function AllDeals() {
       setAccumulatedData((prev) => [...prev, ...data.data])
       setTotalPages(data.meta.totalPages)
     }
-    isFetchingRef.current = false // Сбрасываем флаг после успешной загрузки
+    isFetchingRef.current = false
   }, [data])
 
   const loadMore = () => {
     if (currentPage < totalPages && !isFetchingRef.current) {
-      isFetchingRef.current = true // Ставим флаг, чтобы избежать повторных вызовов
+      isFetchingRef.current = true
       setCurrentPage((prev) => prev + 1)
     }
   }
@@ -46,14 +47,14 @@ function AllDeals() {
 
   const handlePrevious = () => {
     if (currentPage > 1) {
-      setAccumulatedData([]) // Очищаем старые данные
+      setAccumulatedData([])
       setCurrentPage((p) => p - 1)
     }
   }
 
   const handleNext = () => {
     if (currentPage < totalPages) {
-      setAccumulatedData([]) // Очищаем старые данные
+      setAccumulatedData([])
       setCurrentPage((p) => p + 1)
     }
   }
@@ -77,23 +78,30 @@ function AllDeals() {
       )}
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-black mt-6 flex items-center justify-center gap-4">
-        <button
+        <Button
+          size="sm"
+          color="orange"
+          text="Prev"
           onClick={handlePrevious}
-          disabled={currentPage === 1 || isLoading}
-        >
-          Previous
-        </button>
-
+          disabled={currentPage === 1}
+        />
         <div className="text-sm text-muted-foreground">
-          Page {currentPage} of {totalPages}
+          Page{' '}
+          <span className="inline-flex justify-center items-center bg-cyan-300/10 rounded-full w-8 h-8">
+            {currentPage}
+          </span>{' '}
+          of{' '}
+          <span className="inline-flex justify-center items-center bg-cyan-300/10 rounded-full w-8 h-8">
+            {totalPages}
+          </span>
         </div>
-
-        <button
+        <Button
+          size="sm"
+          color="orange"
+          text="Next"
           onClick={handleNext}
-          disabled={currentPage >= totalPages || isLoading}
-        >
-          Next
-        </button>
+          disabled={currentPage >= totalPages}
+        />
       </div>
     </div>
   )
