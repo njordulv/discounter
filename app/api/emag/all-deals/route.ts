@@ -4,7 +4,7 @@ import path from 'path'
 import axios from 'axios'
 import * as cheerio from 'cheerio'
 import { createClient } from '@supabase/supabase-js'
-import { CardProps } from '@/interfaces/emag/categories'
+import { CardProps } from '@/interfaces/emag'
 import { normalizeImageUrl } from '@/utils/functions'
 import config from '@/config'
 
@@ -109,10 +109,12 @@ async function updateDeals() {
     if (products.length > 0) {
       const { error } = await supabase
         .from('discounts')
-        .upsert(products, { onConflict: 'link' })
+        .upsert(products, { onConflict: 'id' })
 
       if (error) {
-        console.error('Error Supabase:', error)
+        console.error('❌ Error Supabase:', error.message, error.details)
+      } else {
+        console.log('✅ Data saved to Supabase successfully')
       }
     }
   }
@@ -130,9 +132,20 @@ async function updateDeals() {
 // Execute function once in a day at 00:00
 setInterval(updateDeals, 24 * 60 * 60 * 1000)
 
-export async function GET() {
+export async function GET(req: Request) {
+  const url = new URL(req.url)
+  const forceUpdate = url.searchParams.get('force') === 'true'
+
+  if (forceUpdate) {
+    console.log('🔄 Force updating deals...')
+    await updateDeals()
+  }
+
   try {
-    const { data, error } = await supabase.from('discounts').select('*')
+    const { data, error } = await supabase
+      .from('discounts')
+      .select('*')
+      .order('timestamp', { ascending: false })
 
     if (error || !data?.length) {
       console.warn('⚠️ Supabase is down, using cached JSON')

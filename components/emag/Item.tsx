@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import { TbExternalLink } from 'react-icons/tb'
-import { DealProps } from '@/interfaces/emag/deals'
+import { DealProps } from '@/interfaces/emag'
 import { FallbackImage } from '@/components/ui/FallbackImage'
 import { useLazyLoad } from '@/hooks/useLazyLoad'
-import { ItemSkeleton } from '@/components/Skeletons'
+import { ItemSkeleton } from '@/components/ui/Skeletons'
 import { Button } from '@/components/ui/Button'
 import config from '@/config'
 

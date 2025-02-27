@@ -2,9 +2,9 @@
 
 import dynamic from 'next/dynamic'
 import useFetcher from '@/hooks/useFetcher'
-import Loader from '@/components/Loader'
-import { ItemSkeleton } from '@/components/Skeletons'
-import { DealProps } from '@/interfaces/emag/deals'
+import Loader from '@/components/ui/Loader'
+import { ItemSkeleton } from '@/components/ui/Skeletons'
+import { DealProps } from '@/interfaces/emag'
 import { Button } from '@/components/ui/Button'
 
 const Item = dynamic(

@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { TbExternalLink } from 'react-icons/tb'
-import { CardProps } from '@/interfaces/emag/categories'
+import { CardProps } from '@/interfaces/emag'
 import { FallbackImage } from '@/components/ui/FallbackImage'
 import { useLazyLoad } from '@/hooks/useLazyLoad'
 import { Button } from '@/components/ui/Button'
-import { CardSkeleton } from '@/components/Skeletons'
+import { CardSkeleton } from '@/components/ui/Skeletons'
 import config from '@/config'
 
 export const Card: React.FC<CardProps> = ({

@@ -2,9 +2,9 @@
 
 import dynamic from 'next/dynamic'
 import useFetcher from '@/hooks/useFetcher'
-import Loader from '@/components/Loader'
-import { CardSkeleton } from '@/components/Skeletons'
-import { CardProps } from '@/interfaces/emag/categories'
+import Loader from '@/components/ui/Loader'
+import { CardSkeleton } from '@/components/ui/Skeletons'
+import { CardProps } from '@/interfaces/emag'
 
 const Card = dynamic(
   () => import('@/components/emag/Card').then((mod) => mod.Card),
@@ -15,7 +15,7 @@ const Card = dynamic(
 
 function AllDeals() {
   const { data, error, isLoading } = useFetcher({
-    url: '/api/emag/categories',
+    url: '/api/emag/all-deals',
   })
 
   if (isLoading) return <Loader />
