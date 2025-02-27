@@ -5,9 +5,10 @@ import { useState, useEffect, useRef } from 'react'
 import useFetcher from '@/hooks/useFetcher'
 import useScrollTrigger from '@/hooks/useScrollTrigger'
 import Loader from '@/components/ui/Loader'
-import { Button } from '@/components/ui/Button'
+import { Pagination } from '@/components/emag/Pagination'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { CardProps } from '@/interfaces/emag'
+import config from '@/config'
 
 const Card = dynamic(
   () => import('@/components/emag/Card').then((mod) => mod.Card),
@@ -16,8 +17,8 @@ const Card = dynamic(
 
 function AllDeals() {
   const [currentPage, setCurrentPage] = useState(1)
-  const [accumulatedData, setAccumulatedData] = useState<CardProps[]>([])
   const [totalPages, setTotalPages] = useState(1)
+  const [accumulatedData, setAccumulatedData] = useState<CardProps[]>([])
   const isFetchingRef = useRef(false)
   const perPage = 20
 
@@ -25,6 +26,8 @@ function AllDeals() {
     url: '/api/emag/all-deals',
     params: { page: currentPage, perPage },
   })
+
+  const total = data?.meta?.totalPages
 
   useEffect(() => {
     if (data?.data) {
@@ -45,20 +48,6 @@ function AllDeals() {
     if (!isLoading) loadMore()
   }, 500)
 
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      setAccumulatedData([])
-      setCurrentPage((p) => p - 1)
-    }
-  }
-
-  const handleNext = () => {
-    if (currentPage < totalPages) {
-      setAccumulatedData([])
-      setCurrentPage((p) => p + 1)
-    }
-  }
-
   if (error) return <div>Error: {error.message}</div>
 
   return (
@@ -71,38 +60,18 @@ function AllDeals() {
 
       {isLoading && <Loader />}
 
-      {currentPage >= totalPages && (
+      {currentPage >= total && (
         <div className="mt-6 text-center text-muted-foreground">
-          Вы достигли конца списка
+          {config.messages.endOfDeals}
         </div>
       )}
 
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-black mt-6 flex items-center justify-center gap-4">
-        <Button
-          size="sm"
-          color="orange"
-          text="Prev"
-          onClick={handlePrevious}
-          disabled={currentPage === 1}
-        />
-        <div className="text-sm text-muted-foreground">
-          Page{' '}
-          <span className="inline-flex justify-center items-center bg-cyan-300/10 rounded-full w-8 h-8">
-            {currentPage}
-          </span>{' '}
-          of{' '}
-          <span className="inline-flex justify-center items-center bg-cyan-300/10 rounded-full w-8 h-8">
-            {totalPages}
-          </span>
-        </div>
-        <Button
-          size="sm"
-          color="orange"
-          text="Next"
-          onClick={handleNext}
-          disabled={currentPage >= totalPages}
-        />
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={total}
+        setAccumulatedData={setAccumulatedData}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   )
 }
