@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import useFetcher from '@/hooks/useFetcher'
 import useScrollTrigger from '@/hooks/useScrollTrigger'
 import Loader from '@/components/ui/Loader'
@@ -19,7 +19,7 @@ function AllDeals() {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [accumulatedData, setAccumulatedData] = useState<CardProps[]>([])
-  const isFetchingRef = useRef(false)
+  const [isFetching, setIsFetching] = useState(false)
   const perPage = 20
 
   const { data, error, isLoading } = useFetcher({
@@ -31,20 +31,24 @@ function AllDeals() {
     if (data?.data) {
       setAccumulatedData((prev) => [...prev, ...data.data])
       setTotalPages(data.meta.totalPages)
+      setIsFetching(false)
     }
-    isFetchingRef.current = false
   }, [data])
 
   const loadMore = () => {
-    if (currentPage < totalPages && !isFetchingRef.current) {
-      isFetchingRef.current = true
+    if (currentPage < totalPages && !isFetching && !isLoading) {
+      setIsFetching(true)
       setCurrentPage((prev) => prev + 1)
     }
   }
 
-  useScrollTrigger(() => {
-    if (!isLoading) loadMore()
-  }, 500)
+  useScrollTrigger(
+    () => {
+      loadMore()
+    },
+    200,
+    200
+  )
 
   if (error) return <div>Error: {error.message}</div>
 
@@ -58,7 +62,7 @@ function AllDeals() {
 
       {isLoading && <Loader />}
 
-      {currentPage >= totalPages && (
+      {data?.meta && currentPage >= data.meta.totalPages && (
         <div className="mt-6 text-center text-muted-foreground">
           {config.messages.endOfDeals}
         </div>

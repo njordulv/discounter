@@ -1,17 +1,30 @@
 import { useEffect } from 'react'
 
-const useScrollTrigger = (callback: () => void, offset = 200) => {
+const useScrollTrigger = (
+  callback: () => void,
+  offset = 200,
+  debounceTime = 200
+) => {
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout
+
     const handleScroll = () => {
-      const { scrollTop, clientHeight, scrollHeight } = document.documentElement
-      if (scrollTop + clientHeight >= scrollHeight - offset) {
-        callback()
-      }
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => {
+        const { scrollTop, clientHeight, scrollHeight } =
+          document.documentElement
+        if (scrollTop + clientHeight >= scrollHeight - offset) {
+          callback()
+        }
+      }, debounceTime)
     }
 
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [callback, offset])
+    return () => {
+      clearTimeout(timeoutId)
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [callback, offset, debounceTime])
 }
 
 export default useScrollTrigger
