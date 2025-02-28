@@ -28,6 +28,9 @@ const config = {
   messages: {
     endOfDeals: 'You have reached the end of the deals',
   },
+  pagination: {
+    page: 'Page',
+  },
   sizes: {
     sm: 'text-md px-4 py-1',
     md: 'text-lg px-6 py-1',

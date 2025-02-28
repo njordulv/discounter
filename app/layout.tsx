@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={`${outfit.className}`}>
         <div className="flex flex-col">
           <Header />
-          <main className="flex flex-col items-center min-h-[calc(100vh-7rem)] px-6 py-10 gap-6 justify-center relative overflow-hidden">
+          <main className="flex flex-col items-center min-h-[calc(100vh-7rem)] sm:px-6 sm:py-10 px-2 py-5 gap-6 justify-center relative overflow-hidden">
             {children}
           </main>
           <Footer />

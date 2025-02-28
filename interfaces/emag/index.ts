@@ -50,3 +50,10 @@ export interface CardProps {
   link: string
   timestamp: string
 }
+
+export interface PaginationProps {
+  currentPage: number
+  totalPages: number
+  setAccumulatedData: (data: CardProps[]) => void
+  setCurrentPage: (page: number) => void
+}

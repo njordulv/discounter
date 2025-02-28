@@ -27,8 +27,6 @@ function AllDeals() {
     params: { page: currentPage, perPage },
   })
 
-  const total = data?.meta?.totalPages
-
   useEffect(() => {
     if (data?.data) {
       setAccumulatedData((prev) => [...prev, ...data.data])
@@ -60,7 +58,7 @@ function AllDeals() {
 
       {isLoading && <Loader />}
 
-      {currentPage >= total && (
+      {currentPage >= totalPages && (
         <div className="mt-6 text-center text-muted-foreground">
           {config.messages.endOfDeals}
         </div>
@@ -68,7 +66,7 @@ function AllDeals() {
 
       <Pagination
         currentPage={currentPage}
-        totalPages={total}
+        totalPages={totalPages}
         setAccumulatedData={setAccumulatedData}
         setCurrentPage={setCurrentPage}
       />
