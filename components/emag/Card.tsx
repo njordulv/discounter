@@ -13,6 +13,7 @@ export const Card: React.FC<CardProps> = ({
   imageUrl,
   price,
   oldPrice,
+  discount,
   link,
 }) => {
   const { ref, isVisible } = useLazyLoad()
@@ -22,8 +23,15 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       ref={ref}
-      className="flex sm:gap-4 gap-3 sm:p-4 p-2 border border-cyan-900/60 bg-cyan-800/10 rounded-lg shadow"
+      className="flex sm:gap-4 gap-3 sm:p-4 p-2 relative overflow-hidden border border-cyan-900/60 bg-cyan-800/10 rounded-lg shadow"
     >
+      {discount && (
+        <span className="absolute bg-[#091b23] left-[-40px] top-[-40px] w-20 h-20 rotate-[-45deg]">
+          <b className="absolute rotate-[45deg] text-xs font-normal left-7 top-14">
+            {discount}
+          </b>
+        </span>
+      )}
       {!imageUrl || imageUrl.startsWith('https:https://') ? (
         <FallbackImage />
       ) : (
@@ -39,23 +47,27 @@ export const Card: React.FC<CardProps> = ({
         />
       )}
       <div className="flex flex-col sm:gap-4 gap-2 justify-between">
-        <div className="flex flex-col sm:gap-4 gap-1">
-          <h2 className="sm:text-lg text-md font-semibold">{title}</h2>
-          <p className="flex sm:flex-row flex-col sm:gap-2 sm:items-end text-cyan-300">
-            <span className="text-xl font-semibold">{price}</span>
-            {oldPrice && (
-              <span className="line-through text-slate-400">{oldPrice}</span>
-            )}
-            <span className="text-gray-400 text-sm sm:text-base">
-              {'Available at'}{' '}
-              <Link
-                className="text-white hover:text-orange-500 transition-all"
-                href={config.emag.url}
-              >
-                {config.emag.title}
-              </Link>
-            </span>
-          </p>
+        <div className="flex flex-col sm:gap-4 gap-1 justify-between h-full">
+          <div>
+            <h2 className="sm:text-lg text-md font-semibold sm:mb-3">
+              {title}
+            </h2>
+            <p className="flex sm:flex-row flex-col sm:gap-2 sm:items-end text-cyan-300">
+              <span className="text-xl font-semibold">{price}</span>
+              {oldPrice && (
+                <span className="line-through text-slate-400">{oldPrice}</span>
+              )}
+              <span className="text-gray-400 text-sm sm:text-base">
+                {'Available at'}{' '}
+                <Link
+                  className="text-white hover:text-orange-500 transition-all"
+                  href={config.emag.url}
+                >
+                  {config.emag.title}
+                </Link>
+              </span>
+            </p>
+          </div>
           <Button
             size="sm"
             color="orange"
