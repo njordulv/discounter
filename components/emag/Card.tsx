@@ -26,7 +26,7 @@ export const Card: React.FC<CardProps> = ({
       className="flex sm:gap-4 gap-3 sm:p-4 p-2 relative overflow-hidden border border-cyan-900/60 bg-cyan-800/10 rounded-lg shadow"
     >
       {discount && (
-        <span className="absolute bg-[#091b23] left-[-40px] top-[-40px] w-20 h-20 rotate-[-45deg]">
+        <span className="absolute bg-gradient-to-b from-cyan-600 to-cyan-900 left-[-40px] top-[-40px] w-20 h-20 rotate-[-45deg]">
           <b className="absolute rotate-[45deg] text-xs font-normal left-7 top-14">
             {discount}
           </b>

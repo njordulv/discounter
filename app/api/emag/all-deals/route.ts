@@ -1,16 +1,13 @@
+import 'dotenv/config'
 import { NextResponse } from 'next/server'
 import fs from 'fs/promises'
 import path from 'path'
 import axios from 'axios'
 import * as cheerio from 'cheerio'
-import { createClient } from '@supabase/supabase-js'
+import { supabase } from '@/utils/supabaseClient'
 import { CardProps } from '@/interfaces/emag'
 import { normalizeImageUrl } from '@/utils/functions'
 import config from '@/config'
-
-const supabaseUrl = process.env.SUPABASE_URL!
-const supabaseKey = process.env.SUPABASE_KEY!
-const supabase = createClient(supabaseUrl, supabaseKey)
 
 const FILE_PATH = path.join(process.cwd(), 'public', 'all-deals.json')
 
@@ -129,8 +126,27 @@ async function updateDeals() {
   }
 }
 
-// Execute function once in a day at 00:00
-setInterval(updateDeals, 24 * 60 * 60 * 1000)
+function scheduleNextRun() {
+  const now = new Date()
+  const nextRun = new Date(now)
+
+  nextRun.setMinutes(0, 0, 0)
+  nextRun.setHours(now.getHours() + 1)
+
+  const delay = nextRun.getTime() - now.getTime()
+  const time = Math.floor(delay / 1000 / 60)
+  console.log(
+    `🔄 Next update scheduled in ${time} minutes at ${nextRun.toISOString()}`
+  )
+
+  setTimeout(async () => {
+    console.log('🔄 Running updateDeals...')
+    await updateDeals()
+    scheduleNextRun()
+  }, delay)
+}
+
+scheduleNextRun()
 
 export async function GET(request: Request) {
   try {

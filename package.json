@@ -1,18 +1,20 @@
 {
   "name": "discounter",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "update:deals": "tsx app/api/emag/all-deals/route.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
     "@tailwindcss/postcss": "^4.0.7",
     "axios": "^1.7.9",
     "cheerio": "^1.0.0",
+    "dotenv": "^16.4.7",
     "next": "15.1.7",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
