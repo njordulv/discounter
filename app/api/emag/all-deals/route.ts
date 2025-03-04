@@ -106,7 +106,7 @@ async function updateDeals() {
     if (products.length > 0) {
       const { error } = await supabase
         .from('discounts')
-        .upsert(products, { onConflict: 'id' })
+        .upsert(products, { onConflict: 'link' })
 
       if (error) {
         console.error('❌ Error Supabase:', error.message, error.details)
