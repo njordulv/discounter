@@ -14,6 +14,10 @@ export const Card: React.FC<CardProps> = ({
   price,
   oldPrice,
   discount,
+  stock,
+  stockOut,
+  stockLimited,
+  toOrder,
   link,
 }) => {
   const { ref, isVisible } = useLazyLoad()
@@ -56,6 +60,26 @@ export const Card: React.FC<CardProps> = ({
               <span className="text-xl font-semibold">{price}</span>
               {oldPrice && (
                 <span className="line-through text-slate-400">{oldPrice}</span>
+              )}
+              {stockOut && (
+                <span className="text-green-400 text-sm sm:text-base">
+                  {stockOut}
+                </span>
+              )}
+              {stockLimited && (
+                <span className="text-red-500 text-sm sm:text-base">
+                  {stockLimited}
+                </span>
+              )}
+              {toOrder && (
+                <span className="text-orange-400 text-sm sm:text-base">
+                  {toOrder}
+                </span>
+              )}
+              {stock && (
+                <span className="text-green-400 text-sm sm:text-base">
+                  {stock}
+                </span>
               )}
               <span className="text-gray-400 text-sm sm:text-base">
                 {'Available at'}{' '}

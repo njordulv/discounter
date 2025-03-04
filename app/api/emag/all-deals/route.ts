@@ -28,26 +28,38 @@ async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
       console.log(`Scraping page ${currentPage}: ${url}`)
 
       const { data } = await axios.get(url, { headers })
-      const $ = cheerio.load(data)
+      const load = cheerio.load(data)
       const products: CardProps[] = []
+      const loadElements = load('.card-v2')
 
-      $('.card-v2').each((_, element) => {
-        const title = $(element).find('.card-v2-title').text().trim()
-        const price = $(element)
+      loadElements.each((_, element) => {
+        const title = load(element).find('.card-v2-title').text().trim()
+        const price = load(element)
           .find('.product-new-price')
           .first()
           .text()
           .trim()
         const oldPrice =
-          $(element).find('.pricing .rrp-lp30d-content s').text().trim() || null
-        const discount = $(element)
+          load(element).find('.pricing .rrp-lp30d-content s').text().trim() ||
+          null
+        const discount = load(element)
           .find('.card-v2-badge.badge-discount')
           .text()
           .trim()
+        const stock =
+          load(element).find('.text-availability-in_stock').text().trim() ||
+          null
+        const stockOut = load(element)
+          .find('.text-availability-out_of_stock')
+          .text()
+        const stockLimited = load(element)
+          .find('.text-availability-limited_stock_qty')
+          .text()
+        const toOrder = load(element).find('.text-availability-to_order').text()
         const rawImageUrl =
-          $(element).find('.img-component img').attr('src') || ''
+          load(element).find('.img-component img').attr('src') || ''
         const imageUrl = normalizeImageUrl(rawImageUrl)
-        const link = $(element).find('a.js-product-url').attr('href') || ''
+        const link = load(element).find('a.js-product-url').attr('href') || ''
 
         if (title && price) {
           products.push({
@@ -55,6 +67,10 @@ async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
             price,
             oldPrice,
             discount,
+            stock,
+            stockOut,
+            stockLimited,
+            toOrder,
             imageUrl,
             link: link.startsWith('http')
               ? link
@@ -72,8 +88,8 @@ async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
       allProducts = [...allProducts, ...products]
 
       const lastPageNumber = Math.max(
-        ...$('.pagination a.js-change-page')
-          .map((_, el) => Number($(el).attr('data-page')))
+        ...load('.pagination a.js-change-page')
+          .map((_, el) => Number(load(el).attr('data-page')))
           .get()
           .filter((n) => !isNaN(n))
       )

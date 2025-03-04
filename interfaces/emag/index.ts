@@ -46,6 +46,10 @@ export interface CardProps {
   price: string
   oldPrice: string | null
   discount: string
+  stock: string | null
+  stockOut: string
+  stockLimited: string
+  toOrder: string
   imageUrl: string
   link: string
   timestamp: string
