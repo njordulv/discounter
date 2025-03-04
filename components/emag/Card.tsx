@@ -14,6 +14,7 @@ export const Card: React.FC<CardProps> = ({
   price,
   oldPrice,
   discount,
+  isGenius,
   stock,
   stockOut,
   stockLimited,
@@ -27,15 +28,34 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       ref={ref}
-      className="flex sm:gap-4 gap-3 sm:p-4 p-2 relative overflow-hidden border border-cyan-900/60 bg-cyan-800/10 rounded-lg shadow"
+      className="flex sm:gap-4 gap-3 sm:p-4 p-2 relative overflow-hidden border border-cyan-900/60 bg-gradient-to-b from-cyan-800/10 to-cyan-800/20 rounded-lg shadow"
     >
       {discount && (
-        <span className="absolute bg-gradient-to-b from-cyan-600 to-cyan-900 left-[-40px] top-[-40px] w-20 h-20 rotate-[-45deg]">
+        <span
+          className={`absolute w-20 h-20 rotate-[-45deg] left-[-40px] top-[-40px] ${
+            isGenius
+              ? 'bg-gradient-to-b from-[#090171] to-[#ff005a]'
+              : 'bg-gradient-to-b from-cyan-600 to-cyan-900'
+          }`}
+          title={isGenius ? 'Genius Deals' : undefined}
+        >
           <b className="absolute rotate-[45deg] text-xs font-normal left-7 top-14">
             {discount}
           </b>
         </span>
       )}
+
+      {isGenius && !discount && (
+        <span
+          className="absolute bg-gradient-to-b from-[#090171] to-[#ff005a] left-[-40px] top-[-40px] w-20 h-20 rotate-[-45deg]"
+          title="Genius Deals"
+        >
+          <b className="absolute rotate-[45deg] text-xs font-normal left-7 top-14">
+            Genius
+          </b>
+        </span>
+      )}
+
       {!imageUrl || imageUrl.startsWith('https:https://') ? (
         <FallbackImage />
       ) : (

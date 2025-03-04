@@ -46,6 +46,7 @@ export interface CardProps {
   price: string
   oldPrice: string | null
   discount: string
+  isGenius?: boolean
   stock: string | null
   stockOut: string
   stockLimited: string

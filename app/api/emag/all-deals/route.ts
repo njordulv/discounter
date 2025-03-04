@@ -46,6 +46,7 @@ async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
           .find('.card-v2-badge.badge-discount')
           .text()
           .trim()
+        const isGenius = load(element).find('.badge-genius').length > 0 || false
         const stock =
           load(element).find('.text-availability-in_stock').text().trim() ||
           null
@@ -67,6 +68,7 @@ async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
             price,
             oldPrice,
             discount,
+            isGenius,
             stock,
             stockOut,
             stockLimited,
@@ -142,27 +144,29 @@ async function updateDeals() {
   }
 }
 
-function scheduleNextRun() {
-  const now = new Date()
-  const nextRun = new Date(now)
+// function scheduleNextRun() {
+//   const now = new Date()
+//   const nextRun = new Date(now)
 
-  nextRun.setMinutes(0, 0, 0)
-  nextRun.setHours(now.getHours() + 1)
+//   nextRun.setMinutes(0, 0, 0)
+//   nextRun.setHours(now.getHours() + 1)
 
-  const delay = nextRun.getTime() - now.getTime()
-  const time = Math.floor(delay / 1000 / 60)
-  console.log(
-    `🔄 Next update scheduled in ${time} minutes at ${nextRun.toISOString()}`
-  )
+//   const delay = nextRun.getTime() - now.getTime()
+//   const time = Math.floor(delay / 1000 / 60)
+//   console.log(
+//     `🔄 Next update scheduled in ${time} minutes at ${nextRun.toISOString()}`
+//   )
 
-  setTimeout(async () => {
-    console.log('🔄 Running updateDeals...')
-    await updateDeals()
-    scheduleNextRun()
-  }, delay)
-}
+//   setTimeout(async () => {
+//     console.log('🔄 Running updateDeals...')
+//     await updateDeals()
+//     scheduleNextRun()
+//   }, delay)
+// }
 
-scheduleNextRun()
+// scheduleNextRun()
+
+updateDeals()
 
 export async function GET(request: Request) {
   try {
