@@ -144,29 +144,27 @@ async function updateDeals() {
   }
 }
 
-// function scheduleNextRun() {
-//   const now = new Date()
-//   const nextRun = new Date(now)
+function scheduleNextRun() {
+  const now = new Date()
+  const nextRun = new Date(now)
 
-//   nextRun.setMinutes(0, 0, 0)
-//   nextRun.setHours(now.getHours() + 1)
+  nextRun.setMinutes(0, 0, 0)
+  nextRun.setHours(now.getHours() + 1)
 
-//   const delay = nextRun.getTime() - now.getTime()
-//   const time = Math.floor(delay / 1000 / 60)
-//   console.log(
-//     `🔄 Next update scheduled in ${time} minutes at ${nextRun.toISOString()}`
-//   )
+  const delay = nextRun.getTime() - now.getTime()
+  const time = Math.floor(delay / 1000 / 60)
+  console.log(
+    `🔄 Next update scheduled in ${time} minutes at ${nextRun.toISOString()}`
+  )
 
-//   setTimeout(async () => {
-//     console.log('🔄 Running updateDeals...')
-//     await updateDeals()
-//     scheduleNextRun()
-//   }, delay)
-// }
+  setTimeout(async () => {
+    console.log('🔄 Running updateDeals...')
+    await updateDeals()
+    scheduleNextRun()
+  }, delay)
+}
 
-// scheduleNextRun()
-
-updateDeals()
+scheduleNextRun()
 
 export async function GET(request: Request) {
   try {

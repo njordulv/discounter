@@ -11,7 +11,7 @@ import { CardProps } from '@/interfaces/emag'
 import config from '@/config'
 
 const Card = dynamic(
-  () => import('@/components/emag/Card').then((mod) => mod.Card),
+  () => import('@/components/emag/card').then((mod) => mod.Card),
   { loading: () => <CardSkeleton /> }
 )
 

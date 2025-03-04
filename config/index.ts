@@ -31,6 +31,9 @@ const config = {
   pagination: {
     page: 'Page',
   },
+  card: {
+    shop: 'Налично в: ',
+  },
   sizes: {
     sm: 'text-md px-4 py-1',
     md: 'text-lg px-6 py-1',

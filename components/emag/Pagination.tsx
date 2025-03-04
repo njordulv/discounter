@@ -39,9 +39,9 @@ export const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-3 px-3 bg-black">
+    <div className="fixed bottom-0 left-0 right-0 p-3 px-3 bg-black/80 backdrop-blur-sm">
       <div className="m-auto w-full max-w-xl flex items-center justify-between gap-3">
-        <div className="flex items-end gap-1">
+        <div className="flex items-end gap-2">
           <Button
             size="round"
             color="gray"
@@ -61,7 +61,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           />
           <div className="flex items-center gap-1">
             <span>{config.pagination.page}</span>
-            <span className="inline-flex justify-center w-6 items-center text-orange-400">
+            <span className="inline-flex justify-center w-8 items-center text-orange-400">
               {currentPage}
             </span>
           </div>
@@ -73,7 +73,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             disabled={currentPage >= totalPages}
           />
         </div>
-        <div className="flex items-end gap-1">
+        <div className="flex items-end gap-2">
           <RxDotsHorizontal />
           <Button
             size="round"

@@ -1,11 +1,11 @@
-import { Outfit } from 'next/font/google'
+import { Noto_Sans } from 'next/font/google'
 import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import '@/styles/globals.css'
 
-const outfit = Outfit({
-  variable: '--font-outfit',
+const notoSans = Noto_Sans({
+  variable: '--font-noto-sans',
   subsets: ['latin'],
 })
 
@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${outfit.className}`}>
+      <body className={`${notoSans.className}`}>
         <div className="flex flex-col">
           <Header />
           <main className="flex flex-col items-center min-h-[calc(100vh-7rem)] sm:px-6 sm:py-10 px-2 py-5 gap-6 justify-center relative overflow-hidden">

@@ -56,6 +56,13 @@ export interface CardProps {
   timestamp: string
 }
 
+export interface StockProps {
+  stockOut?: string
+  stockLimited?: string
+  toOrder?: string
+  stock?: string | null
+}
+
 export interface PaginationProps {
   currentPage: number
   totalPages: number
