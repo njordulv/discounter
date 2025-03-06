@@ -76,24 +76,34 @@ export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
   const { stockOut, stockLimited, toOrder, stock } = stockInfo
 
   return (
-    <div className="flex rounded-md px-2 py-1 text-sm bg-muted">
+    <>
       {stockOut && (
-        <span className="text-[hsl(var(--accent))]">{stockOut}</span>
+        <span className="rounded-md px-3 text-sm text-[hsl(var(--destructive-foreground))]">
+          {stockOut}
+        </span>
       )}
       {stockLimited && (
-        <span className="text-[hsl(var(--primary))]">{stockLimited}</span>
+        <span className="rounded-md px-3 text-sm bg-[hsl(var(--destructive))] text-rose-400">
+          {stockLimited}
+        </span>
       )}
-      {toOrder && <span className="text-orange-400">{toOrder}</span>}
+      {toOrder && (
+        <span className="rounded-md px-3 text-sm bg-background text-[hsl(var(--wave))]">
+          {toOrder}
+        </span>
+      )}
       {stock && (
-        <span className="text-[hsl(var(--accent-foreground))]">{stock}</span>
+        <span className="rounded-md px-3 text-sm bg-background text-[hsl(var(--wave))]">
+          {stock}
+        </span>
       )}
-    </div>
+    </>
   )
 }
 
 export const LinkToShop = () => {
   return (
-    <span className="text-[hsl(var(--muted-foreground))] text-sm sm:text-base">
+    <span className="text-[hsl(var(--muted-foreground))] text-sm sm:text-base text-muted-foreground">
       {config.card.shop}
       <Link
         className="text-white hover:text-[hsl(var(--primary))] transition-all"

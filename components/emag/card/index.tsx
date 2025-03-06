@@ -34,7 +34,7 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       ref={ref}
-      className="flex sm:gap-4 gap-3 sm:p-4 p-2 relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm"
+      className="flex sm:gap-4 gap-3 sm:p-4 p-2 relative overflow-hidden rounded-lg border bg-card/7 text-card-foreground shadow-sm backdrop-blur-sm"
     >
       {discount && <Discount discount={discount} isGenius={isGenius} />}
       {isGenius && !discount && <Genius />}
@@ -49,7 +49,7 @@ export const Card: React.FC<CardProps> = ({
             <h2 className="sm:text-lg text-md text-foreground font-semibold sm:mb-3">
               {title}
             </h2>
-            <div className="flex sm:flex-row flex-col sm:gap-2 sm:items-end">
+            <div className="flex sm:flex-row flex-col sm:gap-2 sm:items-center">
               {price && <NewPrice price={price} />}
               {oldPrice && <OldPrice oldPrice={oldPrice} />}
               <StockStatus
@@ -59,7 +59,7 @@ export const Card: React.FC<CardProps> = ({
             </div>
           </div>
           <Button
-            size="sm"
+            size="md"
             color="primary"
             text="Get Deal"
             onClick={() => window.open(link, '_blank')}

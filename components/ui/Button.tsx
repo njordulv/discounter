@@ -16,7 +16,7 @@ export const Button: React.FC<ButtonProps> = ({
       type={type}
       onClick={onClick}
       className={twMerge(
-        'flex gap-2 justify-center items-center border rounded-full py-1 px-7 sm:w-fit w-full cursor-pointer transition-all',
+        'flex gap-2 justify-center items-center h-10 px-4 py-2 w-full max-w-fit cursor-pointer transition-all hover:bg-accent',
         config.sizes[size],
         config.colors[color],
         disabled && 'opacity-50 pointer-events-none'
