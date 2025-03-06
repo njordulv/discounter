@@ -2,19 +2,6 @@
   position: absolute;
   overflow: hidden;
   isolation: isolate;
-  background: #0f2027;
-  background: -webkit-linear-gradient(
-    to bottom,
-    var(--color-asteroid-100),
-    var(--color-asteroid-200),
-    var(--color-asteroid-400)
-  );
-  background: linear-gradient(
-    to bottom,
-    var(--color-asteroid-100),
-    var(--color-asteroid-200),
-    var(--color-asteroid-400)
-  );
   margin-top: -14rem;
   padding-top: 14rem;
 

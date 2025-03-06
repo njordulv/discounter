@@ -14,12 +14,12 @@ export const Discount = ({
     <span
       className={`absolute w-20 h-20 rotate-[-45deg] left-[-40px] top-[-40px] ${
         isGenius
-          ? 'bg-gradient-to-b from-[#090171] to-[#ff005a]'
-          : 'bg-gradient-to-b from-cyan-600 to-cyan-900'
+          ? 'bg-gradient-to-b bg-gradient-genius'
+          : 'bg-gradient-to-b bg-gradient'
       }`}
       title={isGenius ? 'Genius Deals' : undefined}
     >
-      <b className="absolute rotate-[45deg] text-xs font-normal left-7 top-14">
+      <b className="absolute rotate-[45deg] text-xs text-primary-foreground font-normal left-7 top-14">
         {discount}
       </b>
     </span>
@@ -29,10 +29,10 @@ export const Discount = ({
 export const Genius = () => {
   return (
     <span
-      className="absolute bg-gradient-to-b from-[#090171] to-[#ff005a] left-[-40px] top-[-40px] w-20 h-20 rotate-[-45deg]"
+      className="absolute bg-gradient-genius left-[-40px] top-[-40px] w-20 h-20 rotate-[-45deg]"
       title="Genius Deals"
     >
-      <b className="absolute rotate-[45deg] text-xs font-normal left-3 top-14">
+      <b className="absolute rotate-[45deg] text-foreground text-xs font-normal left-3 top-14">
         Genius
       </b>
     </span>
@@ -61,11 +61,13 @@ export const Img = ({
 }
 
 export const NewPrice = ({ price }: { price: string | null }) => (
-  <span className="text-xl font-semibold text-orange-400">{price}</span>
+  <span className="text-xl font-semibold bg-gradient inline !bg-clip-text text-transparent">
+    {price}
+  </span>
 )
 
 export const OldPrice = ({ oldPrice }: { oldPrice: string | null }) => (
-  <span className="text-md line-through text-slate-400">{oldPrice}</span>
+  <span className="text-md line-through text-muted-foreground">{oldPrice}</span>
 )
 
 export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
@@ -74,31 +76,27 @@ export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
   const { stockOut, stockLimited, toOrder, stock } = stockInfo
 
   return (
-    <>
+    <div className="flex rounded-md px-2 py-1 text-sm bg-muted">
       {stockOut && (
-        <span className="text-green-400 text-sm sm:text-base">{stockOut}</span>
+        <span className="text-[hsl(var(--accent))]">{stockOut}</span>
       )}
       {stockLimited && (
-        <span className="text-red-500 text-sm sm:text-base">
-          {stockLimited}
-        </span>
+        <span className="text-[hsl(var(--primary))]">{stockLimited}</span>
       )}
-      {toOrder && (
-        <span className="text-orange-400 text-sm sm:text-base">{toOrder}</span>
-      )}
+      {toOrder && <span className="text-orange-400">{toOrder}</span>}
       {stock && (
-        <span className="text-green-400 text-sm sm:text-base">{stock}</span>
+        <span className="text-[hsl(var(--accent-foreground))]">{stock}</span>
       )}
-    </>
+    </div>
   )
 }
 
 export const LinkToShop = () => {
   return (
-    <span className="text-gray-400 text-sm sm:text-base">
+    <span className="text-[hsl(var(--muted-foreground))] text-sm sm:text-base">
       {config.card.shop}
       <Link
-        className="text-white hover:text-orange-500 transition-all"
+        className="text-white hover:text-[hsl(var(--primary))] transition-all"
         href={config.emag.url}
       >
         {config.emag.title}

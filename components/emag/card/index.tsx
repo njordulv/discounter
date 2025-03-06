@@ -34,7 +34,7 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       ref={ref}
-      className="flex sm:gap-4 gap-3 sm:p-4 p-2 relative overflow-hidden border border-cyan-900/30 bg-black/10 backdrop-blur-sm rounded-lg shadow"
+      className="flex sm:gap-4 gap-3 sm:p-4 p-2 relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm"
     >
       {discount && <Discount discount={discount} isGenius={isGenius} />}
       {isGenius && !discount && <Genius />}
@@ -46,7 +46,7 @@ export const Card: React.FC<CardProps> = ({
       <div className="flex flex-col sm:gap-4 gap-2 justify-between">
         <div className="flex flex-col sm:gap-4 gap-1 justify-between h-full">
           <div>
-            <h2 className="sm:text-lg text-md font-semibold sm:mb-3">
+            <h2 className="sm:text-lg text-md text-foreground font-semibold sm:mb-3">
               {title}
             </h2>
             <div className="flex sm:flex-row flex-col sm:gap-2 sm:items-end">
@@ -60,7 +60,7 @@ export const Card: React.FC<CardProps> = ({
           </div>
           <Button
             size="sm"
-            color="orange"
+            color="primary"
             text="Get Deal"
             onClick={() => window.open(link, '_blank')}
             icon={<TbExternalLink size={21} />}

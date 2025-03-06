@@ -1,8 +1,8 @@
 import { ReactNode } from 'react'
 
 export interface ButtonProps {
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'round'
-  color?: 'orange' | 'sky' | 'cyan' | 'gray'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'round'
+  color?: 'orange' | 'sky' | 'cyan' | 'gray' | 'primary' | 'secondary'
   text?: string | number
   icon?: ReactNode
   onClick?: () => void

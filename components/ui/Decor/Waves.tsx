@@ -3,7 +3,7 @@ import styles from '@/styles/Decor.module.scss'
 
 export const WaveOne = () => {
   return (
-    <div className={twMerge(styles.decor__waves, styles.decor__wave1)}>
+    <div className={twMerge('bg-gradient-decoration', styles.decor__waves)}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="5120"
@@ -13,7 +13,7 @@ export const WaveOne = () => {
         className={styles.decor__vector}
       >
         <path
-          fill="var(--color-asteroid-300)"
+          fill="var(--wave)"
           d="M0 170
   C 100 60, 140 120, 230 156 
   S 300 90, 400 137 
@@ -46,9 +46,9 @@ export const WaveTwo = () => {
         className={styles.decor__vector}
       >
         <path
-          fill="var(--color-asteroid-100)"
+          fill="var(--background)"
           d="M0 250 
-  C 290 30, 330 250, 660 290 
+  C 290 30, 330 250, 560 290 
   S 890 50, 1150 200 
   S 1350 90, 1500 220 
   S 1800 70, 2000 260 

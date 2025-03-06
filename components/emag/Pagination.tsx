@@ -43,8 +43,8 @@ export const Pagination: React.FC<PaginationProps> = ({
       <div className="m-auto w-full max-w-xl flex items-center justify-between gap-3">
         <div className="flex items-end gap-2">
           <Button
-            size="round"
-            color="gray"
+            size="xs"
+            color="secondary"
             text="1"
             onClick={handleFirstPage}
             disabled={currentPage === 1}
@@ -53,21 +53,21 @@ export const Pagination: React.FC<PaginationProps> = ({
         </div>
         <div className="flex items-center sm:gap-4 gap-2 text-sm text-muted-foreground">
           <Button
-            size="round"
-            color="gray"
+            size="sm"
+            color="primary"
             icon={<GrPrevious size={13} />}
             onClick={handlePrevious}
             disabled={currentPage === 1}
           />
           <div className="flex items-center gap-1">
             <span>{config.pagination.page}</span>
-            <span className="inline-flex justify-center w-8 items-center text-orange-400">
+            <span className="inline-flex justify-center w-8 items-center text-white">
               {currentPage}
             </span>
           </div>
           <Button
-            size="round"
-            color="gray"
+            size="sm"
+            color="primary"
             icon={<GrNext size={13} />}
             onClick={handleNext}
             disabled={currentPage >= totalPages}
@@ -76,8 +76,8 @@ export const Pagination: React.FC<PaginationProps> = ({
         <div className="flex items-end gap-2">
           <RxDotsHorizontal />
           <Button
-            size="round"
-            color="gray"
+            size="xs"
+            color="secondary"
             text={totalPages}
             onClick={handleLastPage}
             disabled={currentPage >= totalPages}
