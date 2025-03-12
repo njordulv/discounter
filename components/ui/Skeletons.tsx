@@ -9,7 +9,7 @@ export const ItemSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
     >
       <div className="flex items-start w-24 h-24 bg-transparent rounded-lg">
         <svg
-          className="w-24 h-24 text-gray-600"
+          className="w-24 h-24 text-primary/50"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"

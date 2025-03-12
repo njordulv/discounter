@@ -43,7 +43,7 @@ export const Card: React.FC<CardProps> = ({
       ) : (
         <Img imageUrl={imageUrl} title={title} />
       )}
-      <div className="flex flex-col sm:gap-4 gap-2 justify-between">
+      <div className="flex flex-col sm:gap-4 gap-2 justify-between w-full">
         <div className="flex flex-col sm:gap-4 gap-1 justify-between h-full">
           <div>
             <h2 className="sm:text-lg text-md text-foreground font-semibold sm:mb-3">
@@ -58,14 +58,17 @@ export const Card: React.FC<CardProps> = ({
               <LinkToShop />
             </div>
           </div>
-          <Button
-            size="md"
-            variant="default"
-            text="Get Deal"
-            disabled={false}
-            onClick={() => window.open(link, '_blank')}
-            icon={<TbExternalLink size={21} />}
-          />
+          <div className="grid grid-cols-2 items-center gap-3">
+            <Button
+              size="md"
+              variant="default"
+              text="Get Deal"
+              disabled={false}
+              onClick={() => window.open(link, '_blank')}
+              icon={<TbExternalLink size={18} />}
+            />
+            <div className="bg-transparent w-full h-full rounded-lg"></div>
+          </div>
         </div>
       </div>
     </div>

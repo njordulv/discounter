@@ -2,44 +2,41 @@
 
 @layer base {
   :root {
-    --gradient: linear-gradient(
-      to top left,
-      hsl(33, 93%, 54%),
-      hsl(207, 100%, 28%)
-    );
+    --gradient: linear-gradient(to top left, hsl(168 76% 36%), hsl(48 89% 60%));
 
-    --background: 35 60.45% 4.4%;
-    --foreground: 35 9.3% 97.75%;
+    --background: 179 49.4% 2.88%;
+    --foreground: 179 7.6% 96.8%;
 
-    --muted: 35 46.5% 16.5%;
-    --muted-foreground: 35 9.3% 55.5%;
+    --muted: 179 38% 10.799999999999999%;
+    --muted-foreground: 179 7.6% 53.6%;
 
-    --popover: 35 46.4% 7.15%;
-    --popover-foreground: 35 9.3% 97.75%;
+    --popover: 179 49.8% 4.68%;
+    --popover-foreground: 179 7.6% 96.8%;
 
-    --card: 35 46.4% 7.15%;
-    --card-foreground: 35 9.3% 97.75%;
+    --card: 179 49.8% 4.68%;
+    --card-foreground: 179 7.6% 96.8%;
 
-    --border: 35 46.5% 16.5%;
-    --input: 35 46.5% 16.5%;
+    --border: 179 38% 10.799999999999999%;
+    --input: 179 38% 10.799999999999999%;
 
-    --primary: 35 93% 55%;
-    --primary-foreground: 35 9.3% 5.5%;
+    --primary: 179 76% 36%;
+    --primary-foreground: 179 7.6% 96.8%;
 
-    --secondary: 35 46.5% 16.5%;
-    --secondary-foreground: 35 9.3% 97.75%;
+    --secondary: 179 38% 10.799999999999999%;
+    --secondary-foreground: 179 7.6% 96.8%;
 
-    --accent: 35 46.5% 16.5%;
-    --accent-foreground: 35 9.3% 97.75%;
+    --accent: 179 38% 10.799999999999999%;
+    --accent-foreground: 179 7.6% 96.8%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 35 9.3% 97.75%;
+    --destructive-foreground: 179 7.6% 96.8%;
 
-    --ring: 33 93% 54%;
+    --ring: 48 89% 60%;
 
     --gradient-decoration: linear-gradient(
       to bottom,
       hsl(var(--background)),
+      hsl(168 76% 36%),
       hsl(var(--ring))
     );
     --gradient-genius: linear-gradient(to bottom, #090171, #ff005a);
@@ -155,12 +152,11 @@ nav a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   position: relative;
   overflow: hidden;
-  border-radius: 0.5rem;
   cursor: pointer;
-  width: fit-content;
+  width: 100%;
   transition: all 0.3s ease;
   outline: none;
 }
