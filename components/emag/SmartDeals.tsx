@@ -42,7 +42,8 @@ function SmartDeals() {
         </div>
       )}
       <Button
-        size="lg"
+        size="md"
+        variant="outline"
         text="All Deals"
         onClick={() => window.open('/all-deals', '_self')}
       />

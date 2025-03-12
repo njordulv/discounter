@@ -166,3 +166,62 @@ nav a:hover {
 .text-mint-300 {
   color: var(--color-mint-300);
 }
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: fit-content;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.default {
+  background-color: hsl(var(--primary) / 30%);
+  color: hsl(var(--accent-foreground));
+}
+
+.default:hover {
+  background-color: hsl(var(--accent));
+}
+
+.outline {
+  border-width: 1px;
+  border-color: hsl(var(--border));
+  background-color: hsl(var(--background));
+  color: hsl(var(--accent-foreground));
+}
+
+.outline:hover {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+.ghost {
+  background-color: transparent;
+  color: hsl(var(--accent-foreground));
+}
+
+.ghost:hover {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+.destructive {
+  background-color: hsl(var(--destructive));
+  color: hsl(var(--accent-foreground));
+}
+
+.destructive:hover {
+  background-color: hsl(var(--destructive) / 70%);
+}

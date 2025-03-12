@@ -1,28 +1,43 @@
+import { cva } from 'class-variance-authority'
 import { twMerge } from 'tailwind-merge'
-import { ButtonProps } from '@/interfaces/ui'
-import config from '@/config'
+import { BaseButtonProps } from '@/interfaces/ui'
 
-export const Button: React.FC<ButtonProps> = ({
-  size = 'md',
-  color = 'orange',
-  text,
-  onClick,
+export const buttonVariants = cva('button', {
+  variants: {
+    variant: {
+      default: 'default',
+      outline: 'outline',
+      ghost: 'ghost',
+      destructive: 'destructive',
+    },
+    size: {
+      sm: 'h-8 px-3 text-sm',
+      md: 'h-10 px-4 text-md',
+      lg: 'h-12 px-6 text-lg',
+      icon: 'h-10 w-10 p-2',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+    size: 'md',
+  },
+})
+
+export const Button: React.FC<BaseButtonProps> = ({
+  variant,
+  size,
   icon,
-  type = 'button',
-  disabled,
+  text,
+  className,
+  ...props
 }) => {
   return (
     <button
-      type={type}
-      onClick={onClick}
-      className={twMerge(
-        'flex gap-2 justify-center items-center h-10 px-4 py-2 w-full max-w-fit cursor-pointer transition-all hover:bg-accent',
-        config.sizes[size],
-        config.colors[color],
-        disabled && 'opacity-50 pointer-events-none'
-      )}
+      className={twMerge(className, buttonVariants({ variant, size }))}
+      {...props}
     >
-      {text} {icon}
+      {text}
+      {icon ? <span>{icon}</span> : null}
     </button>
   )
 }

@@ -1,11 +1,13 @@
-import { ReactNode } from 'react'
+import { ButtonHTMLAttributes } from 'react'
+import { type VariantProps } from 'class-variance-authority'
+import { buttonVariants } from '@/components/ui/Button'
 
-export interface ButtonProps {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'round'
-  color?: 'orange' | 'sky' | 'cyan' | 'gray' | 'primary' | 'secondary'
+export interface BaseButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  icon?: React.ReactNode
   text?: string | number
-  icon?: ReactNode
-  onClick?: () => void
-  type?: 'button' | 'submit' | 'reset'
   disabled?: boolean
+  type?: 'button' | 'submit' | 'reset'
+  onClick?: () => void
 }
