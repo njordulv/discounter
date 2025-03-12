@@ -34,7 +34,7 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       ref={ref}
-      className="flex sm:gap-4 gap-3 sm:p-4 p-2 relative overflow-hidden rounded-lg border bg-card/7 text-card-foreground shadow-sm backdrop-blur-sm"
+      className="flex sm:gap-4 gap-3 sm:p-4 p-2 relative overflow-hidden rounded-lg border bg-card text-card-foreground"
     >
       {discount && <Discount discount={discount} isGenius={isGenius} />}
       {isGenius && !discount && <Genius />}
@@ -60,7 +60,7 @@ export const Card: React.FC<CardProps> = ({
           </div>
           <Button
             size="md"
-            variant="outline"
+            variant="default"
             text="Get Deal"
             disabled={false}
             onClick={() => window.open(link, '_blank')}

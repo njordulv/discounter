@@ -39,7 +39,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-3 px-3 bg-black/80 backdrop-blur-sm">
+    <div className="fixed bottom-0 left-0 right-0 p-3 px-3 bg-primary/20 backdrop-blur-sm">
       <div className="m-auto w-full max-w-xl flex items-center justify-between gap-3">
         <div className="flex items-end gap-2">
           <Button

@@ -83,17 +83,17 @@ export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
         </span>
       )}
       {stockLimited && (
-        <span className="rounded-md px-3 text-sm bg-[hsl(var(--destructive))] text-rose-400">
+        <span className="rounded-md px-3 text-sm bg-[hsl(var(--destructive))] text-destructive">
           {stockLimited}
         </span>
       )}
       {toOrder && (
-        <span className="rounded-md px-3 text-sm bg-background text-[hsl(var(--wave))]">
+        <span className="rounded-md px-3 text-sm bg-background text-[hsl(var(--ring))]">
           {toOrder}
         </span>
       )}
       {stock && (
-        <span className="rounded-md px-3 text-sm bg-background text-[hsl(var(--wave))]">
+        <span className="rounded-md px-3 text-sm bg-background text-[hsl(var(--ring))]">
           {stock}
         </span>
       )}
@@ -103,10 +103,10 @@ export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
 
 export const LinkToShop = () => {
   return (
-    <span className="text-[hsl(var(--muted-foreground))] text-sm sm:text-base text-muted-foreground">
+    <span className="text-sm sm:text-base text-muted-foreground">
       {config.card.shop}
       <Link
-        className="text-white hover:text-[hsl(var(--primary))] transition-all"
+        className="text-sm text-muted-foreground hover:text-primary transition hover:underline"
         href={config.emag.url}
       >
         {config.emag.title}

@@ -13,7 +13,7 @@ export const WaveOne = () => {
         className={styles.decor__vector}
       >
         <path
-          fill="hsl(var(--wave) / 30%)"
+          fill="hsl(var(--ring) / 30%)"
           d="M0 170
   C 100 60, 140 120, 230 156 
   S 300 90, 400 137 
