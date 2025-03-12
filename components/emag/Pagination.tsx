@@ -61,7 +61,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           />
           <div className="flex items-center gap-1">
             <span>{config.pagination.page}</span>
-            <span className="inline-flex justify-center w-8 h-8 items-centerw-full rounded-full bg-gradient !bg-cover !bg-center text-primary-foreground items-center">
+            <span className="flex-inline items-center text-center w-7 text-lg font-semibold bg-gradient !bg-clip-text text-transparent">
               {currentPage}
             </span>
           </div>

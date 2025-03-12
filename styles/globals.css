@@ -2,41 +2,40 @@
 
 @layer base {
   :root {
-    --gradient: linear-gradient(to top left, hsl(168 76% 36%), hsl(48 89% 60%));
+    --gradient: linear-gradient(to top left, hsl(138 47% 44%), hsl(55 43% 50%));
 
-    --background: 179 49.4% 2.88%;
-    --foreground: 179 7.6% 96.8%;
+    --background: 147 30.549999999999997% 3.52%;
+    --foreground: 147 4.699999999999999% 97.2%;
 
-    --muted: 179 38% 10.799999999999999%;
-    --muted-foreground: 179 7.6% 53.6%;
+    --muted: 147 23.5% 13.2%;
+    --muted-foreground: 147 4.699999999999999% 54.4%;
 
-    --popover: 179 49.8% 4.68%;
-    --popover-foreground: 179 7.6% 96.8%;
+    --popover: 147 55.6% 5.72%;
+    --popover-foreground: 147 4.699999999999999% 97.2%;
 
-    --card: 179 49.8% 4.68%;
-    --card-foreground: 179 7.6% 96.8%;
+    --card: 147 55.6% 5.72%;
+    --card-foreground: 147 4.699999999999999% 97.2%;
 
-    --border: 179 38% 10.799999999999999%;
-    --input: 179 38% 10.799999999999999%;
+    --border: 147 23.5% 13.2%;
+    --input: 147 23.5% 13.2%;
 
-    --primary: 179 76% 36%;
-    --primary-foreground: 179 7.6% 96.8%;
+    --primary: 147 47% 44%;
+    --primary-foreground: 147 4.699999999999999% 97.2%;
 
-    --secondary: 179 38% 10.799999999999999%;
-    --secondary-foreground: 179 7.6% 96.8%;
+    --secondary: 147 23.5% 13.2%;
+    --secondary-foreground: 147 4.699999999999999% 97.2%;
 
-    --accent: 179 38% 10.799999999999999%;
-    --accent-foreground: 179 7.6% 96.8%;
+    --accent: 147 23.5% 13.2%;
+    --accent-foreground: 147 4.699999999999999% 97.2%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 179 7.6% 96.8%;
+    --destructive-foreground: 147 4.699999999999999% 97.2%;
 
-    --ring: 48 89% 60%;
+    --ring: 147 47% 44%;
 
     --gradient-decoration: linear-gradient(
       to bottom,
-      hsl(var(--background)),
-      hsl(168 76% 36%),
+      hsl(55 43% 50%) 10%,
       hsl(var(--ring))
     );
     --gradient-genius: linear-gradient(to bottom, #090171, #ff005a);
@@ -65,7 +64,7 @@ nav a {
 }
 
 nav a:hover {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--secondary));
 }
 
 .bg-background {

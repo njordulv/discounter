@@ -45,6 +45,7 @@ function SmartDeals() {
         size="md"
         variant="outline"
         text="All Deals"
+        className="!w-fit"
         onClick={() => window.open('/all-deals', '_self')}
       />
     </>
