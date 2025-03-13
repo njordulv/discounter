@@ -1,4 +1,9 @@
 const config = {
+  site: {
+    name: 'DiSCOUNTER',
+    logoLabel: 'Home',
+    rel: 'Home',
+  },
   emag: {
     title: 'eMAG',
     url: 'https://www.emag.bg',

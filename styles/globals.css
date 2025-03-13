@@ -58,12 +58,12 @@ li {
   margin: 0;
 }
 
-nav a {
+nav ul li a {
   color: hsl(var(--card-foreground));
   transition: all 0.3s ease;
 }
 
-nav a:hover {
+nav ul li a:hover {
   color: hsl(var(--secondary));
 }
 
