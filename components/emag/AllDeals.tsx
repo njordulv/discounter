@@ -21,7 +21,7 @@ function AllDeals() {
   const perPage = 20
 
   const { data, error, isLoading } = useFetcher({
-    url: '/api/emag/all-deals',
+    url: '/api/update-products',
     params: { page: currentPage, perPage },
   })
 

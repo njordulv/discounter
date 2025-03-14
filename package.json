@@ -1,6 +1,6 @@
 {
   "name": "discounter",
-  "version": "0.12.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -16,7 +16,10 @@
     "cheerio": "^1.0.0",
     "class-variance-authority": "^0.7.1",
     "dotenv": "^16.4.7",
+    "mongodb": "^6.14.2",
+    "mongoose": "^8.12.1",
     "next": "15.1.7",
+    "node-cron": "^3.0.3",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -28,6 +31,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
+    "@types/node-cron": "^3.0.11",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
