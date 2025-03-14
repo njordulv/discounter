@@ -88,12 +88,12 @@ export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
         </span>
       )}
       {toOrder && (
-        <span className="rounded-md px-3 text-sm bg-background text-[hsl(var(--ring))]">
+        <span className="rounded-md px-3 text-sm bg-muted text-card-foreground">
           {toOrder}
         </span>
       )}
       {stock && (
-        <span className="rounded-md px-3 text-sm bg-background text-[hsl(var(--ring))]">
+        <span className="rounded-md px-3 text-sm bg-muted text-card-foreground">
           {stock}
         </span>
       )}

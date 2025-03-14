@@ -11,7 +11,7 @@ const Logo = () => {
       rel={config.site.rel}
       className="flex items-center justify-center gap-2 text-4xl leading-8"
     >
-      <Image priority src={SvgLogo} width={162} height={32} alt="Logo" />
+      <Image src={SvgLogo} width={162} height={32} alt="Logo" />
     </Link>
   )
 }

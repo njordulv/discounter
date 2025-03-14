@@ -2,40 +2,46 @@
 
 @layer base {
   :root {
-    --gradient: linear-gradient(to top left, hsl(138 47% 44%), hsl(55 43% 50%));
+    --gradient: linear-gradient(
+      to top left,
+      hsl(144, 100%, 89%),
+      hsl(42, 94%, 75%),
+      hsl(358, 89%, 72%)
+    );
 
-    --background: 147 30.549999999999997% 3.52%;
-    --foreground: 147 4.699999999999999% 97.2%;
+    --background: 153 65% 7.12%;
+    --foreground: 153 10% 99.45%;
 
-    --muted: 147 23.5% 13.2%;
-    --muted-foreground: 147 4.699999999999999% 54.4%;
+    --muted: 153 50% 26.7%;
+    --muted-foreground: 153 10% 58.9%;
 
-    --popover: 147 55.6% 5.72%;
-    --popover-foreground: 147 4.699999999999999% 97.2%;
+    --popover: 153 45% 11.57%;
+    --popover-foreground: 153 10% 99.45%;
 
-    --card: 147 55.6% 5.72%;
-    --card-foreground: 147 4.699999999999999% 97.2%;
+    --card: 153 45% 11.57%;
+    --card-foreground: 153 10% 99.45%;
 
-    --border: 147 23.5% 13.2%;
-    --input: 147 23.5% 13.2%;
+    --border: 153 50% 26.7%;
+    --input: 153 50% 26.7%;
 
-    --primary: 147 47% 44%;
-    --primary-foreground: 147 4.699999999999999% 97.2%;
+    --primary: 153 100% 89%;
+    --primary-foreground: 153 10% 8.9%;
 
-    --secondary: 147 23.5% 13.2%;
-    --secondary-foreground: 147 4.699999999999999% 97.2%;
+    --secondary: 153 50% 26.7%;
+    --secondary-foreground: 153 10% 99.45%;
 
-    --accent: 147 23.5% 13.2%;
-    --accent-foreground: 147 4.699999999999999% 97.2%;
+    --accent: 153 50% 26.7%;
+    --accent-foreground: 153 10% 99.45%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 147 4.699999999999999% 97.2%;
+    --destructive-foreground: 153 10% 99.45%;
 
-    --ring: 147 47% 44%;
+    --ring: 153 100% 89%;
 
     --gradient-decoration: linear-gradient(
       to bottom,
-      hsl(55 43% 50%) 10%,
+      hsl(358, 89%, 72%),
+      hsl(42, 94%, 75%),
       hsl(var(--ring))
     );
     --gradient-genius: linear-gradient(to bottom, #090171, #ff005a);
@@ -44,13 +50,8 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  color: var(--foreground);
+  color: hsl(var(--foreground));
   background: hsl(var(--background));
-}
-
-.border {
-  border-width: 1px;
-  border-color: hsl(var(--border));
 }
 
 ul,
@@ -59,12 +60,17 @@ li {
 }
 
 nav ul li a {
-  color: hsl(var(--card-foreground));
+  color: hsl(var(--popover));
   transition: all 0.3s ease;
 }
 
 nav ul li a:hover {
-  color: hsl(var(--secondary));
+  color: hsl(var(--popover-foreground));
+}
+
+.border {
+  border-width: 1px;
+  border-color: hsl(var(--border));
 }
 
 .bg-background {
@@ -141,6 +147,10 @@ nav ul li a:hover {
 
 .text-muted-foreground {
   color: hsl(var(--muted-foreground));
+}
+
+.text-card-foreground {
+  color: hsl(var(--card-foreground));
 }
 
 .border-input {
