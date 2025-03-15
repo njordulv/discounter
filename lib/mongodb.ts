@@ -1,17 +1,20 @@
-import mongoose from 'mongoose'
+import { MongoClient } from 'mongodb'
 import 'dotenv/config'
 
-const connectToDatabase = async () => {
-  try {
-    if (mongoose.connections[0].readyState) {
-      console.log('Already connected to the database')
-      return
-    }
+const MONGO_URI = process.env.MONGODB_URI as string
 
-    await mongoose.connect(process.env.MONGODB_URI || '')
-    console.log('Connected to MongoDB')
+const client = new MongoClient(MONGO_URI)
+
+async function connectToDatabase() {
+  try {
+    await client.connect()
+    console.log('✅ Successfully connected to MongoDB')
+
+    const db = client.db() // Используем db() по умолчанию из строки подключения
+    return { db }
   } catch (error) {
-    console.error('Error connecting to MongoDB', error)
+    console.error('Error connecting to MongoDB:', error)
+    throw new Error('Failed to connect to database')
   }
 }
 
