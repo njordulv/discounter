@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import { redis, collection } from '@/lib/db'
-import { updateDeals } from '@/lib/dealsService'
 
 export async function GET(request: Request) {
   try {
@@ -9,16 +8,9 @@ export async function GET(request: Request) {
     const perPage = Number(searchParams.get('perPage')) || 20
 
     // 1. Check Redis cache
-    let cachedData = await redis.get('discounts')
+    const cachedData = await redis.get('discounts')
 
-    // 2. If cache is expired, update data
-    if (!cachedData) {
-      console.log('♻️ Cache expired, updating data...')
-      await updateDeals()
-      cachedData = await redis.get('discounts')
-    }
-
-    // 3. If data exists in cache, return it
+    // 2. If data exists in cache, return it
     if (cachedData) {
       const allData = JSON.parse(cachedData)
       return NextResponse.json({
@@ -32,7 +24,7 @@ export async function GET(request: Request) {
       })
     }
 
-    // 4. If cache is empty, try MongoDB
+    // 3. If cache is empty, try MongoDB
     const total = await collection.countDocuments()
     const data = await collection
       .find()

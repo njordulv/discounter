@@ -1,5 +1,4 @@
-import puppeteer from 'puppeteer-extra'
-import StealthPlugin from 'puppeteer-extra-plugin-stealth'
+import puppeteer from 'puppeteer'
 import * as cheerio from 'cheerio'
 import { CardProps } from '@/interfaces/emag'
 import { normalizeImageUrl } from '@/utils/functions'
@@ -9,8 +8,6 @@ export async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
   let allProducts: CardProps[] = []
   let currentPage = 1
   const maxPages = 20
-
-  puppeteer.use(StealthPlugin())
 
   const browser = await puppeteer.launch({
     headless: true,
