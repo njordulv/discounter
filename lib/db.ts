@@ -1,5 +1,5 @@
-import { MongoClient } from 'mongodb'
 import Redis from 'ioredis'
+import { MongoClient } from 'mongodb'
 import { scheduleNextRun } from '@/lib/scheduler'
 
 export const redis = new Redis(process.env.REDIS_URL!)
