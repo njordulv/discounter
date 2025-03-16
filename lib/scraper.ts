@@ -1,34 +1,42 @@
-import axios from 'axios'
+import puppeteer from 'puppeteer-extra'
+import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import * as cheerio from 'cheerio'
-import { normalizeImageUrl } from '@/utils/functions'
 import { CardProps } from '@/interfaces/emag'
+import { normalizeImageUrl } from '@/utils/functions'
 import config from '@/config'
 
-const headers = {
-  'User-Agent':
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-  'Accept-Language': 'en-US,en;q=0.9',
-  'Accept-Encoding': 'gzip, deflate, br',
-  Connection: 'keep-alive',
-  Referer: 'https://www.emag.bg/',
-}
-
-export async function scrapeEmag(categoryUrl: string) {
+export async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
   let allProducts: CardProps[] = []
   let currentPage = 1
   const maxPages = 20
+
+  puppeteer.use(StealthPlugin())
+
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  })
+
+  const page = await browser.newPage()
+  await page.setUserAgent(
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+  )
 
   try {
     while (currentPage <= maxPages) {
       const url = categoryUrl + (currentPage > 1 ? `/p${currentPage}` : '')
       console.log(`Scraping page ${currentPage}: ${url}`)
 
-      const { data } = await axios.get(url, { headers })
-      const load = cheerio.load(data)
-      const products: CardProps[] = []
-      const loadElements = load('.card-v2')
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 })
 
-      loadElements.each((_, element) => {
+      // Wait for content to load (can change selector)
+      await page.waitForSelector('.card-v2', { timeout: 5000 })
+
+      const html = await page.content()
+      const load = cheerio.load(html)
+      const products: CardProps[] = []
+
+      load('.card-v2').each((_, element) => {
         const title = load(element).find('.card-v2-title').text().trim()
         const price = load(element)
           .find('.product-new-price')
@@ -78,32 +86,16 @@ export async function scrapeEmag(categoryUrl: string) {
         }
       })
 
-      if (products.length === 0) {
-        console.log(`No more products found, stopping at page ${currentPage}`)
-        break
-      }
-
+      if (products.length === 0) break
       allProducts = [...allProducts, ...products]
-
-      const lastPageNumber = Math.max(
-        ...load('.pagination a.js-change-page')
-          .map((_, el) => Number(load(el).attr('data-page')))
-          .get()
-          .filter((n) => !isNaN(n))
-      )
-
-      if (isNaN(lastPageNumber) || currentPage >= lastPageNumber) {
-        console.log(`Reached last page (${lastPageNumber}), stopping.`)
-        break
-      }
-
       currentPage++
     }
 
-    console.log(`Total ${allProducts.length} products found for ${categoryUrl}`)
     return allProducts
   } catch (error) {
-    console.error('Error parsing:', error)
+    console.error('Error scraping:', error)
     return []
+  } finally {
+    await browser.close()
   }
 }
