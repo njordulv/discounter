@@ -33,6 +33,13 @@ const config = {
   messages: {
     endOfDeals: 'You have reached the end of the deals',
   },
+  pages: {
+    notFound: {
+      error: '404',
+      title: 'This page could not be found',
+      goHome: 'Go to Home',
+    },
+  },
   pagination: {
     page: 'Page',
   },
