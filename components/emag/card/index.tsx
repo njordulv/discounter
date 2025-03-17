@@ -46,7 +46,7 @@ export const Card: React.FC<CardProps> = ({
       <div className="flex flex-col sm:gap-4 gap-2 justify-between w-full">
         <div className="flex flex-col sm:gap-4 gap-1 justify-between h-full">
           <div>
-            <h2 className="sm:text-lg text-md text-foreground font-semibold sm:mb-3">
+            <h2 className="text-md text-foreground font-semibold sm:mb-3">
               {title}
             </h2>
             <div className="flex sm:flex-row flex-col sm:gap-2 sm:items-center">

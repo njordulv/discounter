@@ -4,44 +4,42 @@
   :root {
     --gradient: linear-gradient(
       to top left,
-      hsl(144, 100%, 89%),
-      hsl(42, 94%, 75%),
-      hsl(358, 89%, 72%)
+      hsl(200 80% 69%),
+      hsl(207 100% 28%)
     );
 
-    --background: 153 65% 7.12%;
-    --foreground: 153 10% 99.45%;
+    --background: 212 52% 5.52%;
+    --foreground: 212 8% 98.45%;
 
-    --muted: 153 50% 26.7%;
-    --muted-foreground: 153 10% 58.9%;
+    --muted: 212 40% 20.7%;
+    --muted-foreground: 212 8% 56.9%;
 
-    --popover: 153 45% 11.57%;
-    --popover-foreground: 153 10% 99.45%;
+    --popover: 212 49% 8.969999999999999%;
+    --popover-foreground: 212 8% 98.45%;
 
-    --card: 153 45% 11.57%;
-    --card-foreground: 153 10% 99.45%;
+    --card: 212 49% 8.969999999999999%;
+    --card-foreground: 212 8% 98.45%;
 
-    --border: 153 50% 26.7%;
-    --input: 153 50% 26.7%;
+    --border: 212 40% 20.7%;
+    --input: 212 40% 20.7%;
 
-    --primary: 153 100% 89%;
-    --primary-foreground: 153 10% 8.9%;
+    --primary: 212 80% 69%;
+    --primary-foreground: 212 8% 6.8999999999999995%;
 
-    --secondary: 153 50% 26.7%;
-    --secondary-foreground: 153 10% 99.45%;
+    --secondary: 212 40% 20.7%;
+    --secondary-foreground: 212 8% 98.45%;
 
-    --accent: 153 50% 26.7%;
-    --accent-foreground: 153 10% 99.45%;
+    --accent: 212 40% 20.7%;
+    --accent-foreground: 212 8% 98.45%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 153 10% 99.45%;
+    --destructive-foreground: 212 8% 98.45%;
 
-    --ring: 153 100% 89%;
+    --ring: 207 100% 28%;
 
     --gradient-decoration: linear-gradient(
       to bottom,
-      hsl(358, 89%, 72%),
-      hsl(42, 94%, 75%),
+      hsl(200 80% 69%) -10%,
       hsl(var(--ring))
     );
     --gradient-genius: linear-gradient(to bottom, #090171, #ff005a);

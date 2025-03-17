@@ -4,7 +4,10 @@ import { CardProps } from '@/interfaces/emag'
 import config from '@/config'
 
 export async function updateDeals() {
-  const categories = [config.emag.categories.livingRoom]
+  const categories = [
+    config.emag.categories.livingRoom,
+    config.emag.categories.pcComponents,
+  ]
   let allProducts: CardProps[] = []
 
   for (const category of categories) {

@@ -5,5 +5,5 @@ export function scheduleNextRun() {
     console.log('🔄 Running updateDeals...')
     await updateDeals()
     scheduleNextRun()
-  }, 3600 * 1000) // Once an hour
+  }, 360 * 1000) // Once an hour
 }
