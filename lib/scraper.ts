@@ -9,7 +9,7 @@ import { connectDB } from '@/lib/mongo'
 export async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
   let allProducts: CardProps[] = []
   let currentPage = 1
-  const maxPages = 20
+  const maxPages = 40
 
   try {
     while (currentPage <= maxPages) {
