@@ -20,8 +20,9 @@ function AllDeals() {
   const [accumulatedData, setAccumulatedData] = useState<CardProps[]>([])
   const perPage = 20
 
+  // API запрос с параметрами для пагинации
   const { data, error, isLoading } = useFetcher({
-    url: '/api/emag/all-deals',
+    url: '/api/emag/all-deals', // эндпоинт для получения данных
     params: { page: currentPage, perPage },
   })
 

@@ -1,12 +1,13 @@
 {
   "name": "discounter",
-  "version": "1.3.5",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "scraper": "tsx scripts/scraper.ts"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.0.7",
@@ -16,11 +17,9 @@
     "dotenv": "^16.4.7",
     "ioredis": "^5.6.0",
     "mongodb": "^6.14.2",
+    "mongoose": "^8.12.1",
     "next": "15.1.7",
     "postcss": "^8.5.3",
-    "puppeteer": "^24.4.0",
-    "puppeteer-extra": "^3.3.6",
-    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",

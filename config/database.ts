@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 interface DatabaseConfig {
   mongo: {
     url: string
@@ -14,13 +16,13 @@ interface DatabaseConfig {
 const databaseConfig: DatabaseConfig = {
   mongo: {
     url: process.env.MONGODB_URI!,
-    defaultDb: 'productsDB',
+    defaultDb: 'allDeals',
     collections: {
       products: 'products',
     },
   },
   redis: {
-    url: process.env.REDIS_URL!,
+    url: process.env.REDIS_URL || 'redis://localhost:6379',
   },
 }
 
