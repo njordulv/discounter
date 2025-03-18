@@ -1,22 +1,23 @@
 # Discount & Promo Code Aggregator
 
-A web service that aggregates discount deals and promo codes from various sources, using web scraping and real-time data fetching.
+A web service that aggregates discount deals and promo codes from various sources, using web scraping and real-time data fetching, with caching and optimized data fetching strategies.
 
 ## 🚀 Features
 
-- **Product & Category Scraping**: Automatically fetches discounts from categories on eMAG.
+- **Product & Category Scraping**: Automatically fetches discount deals from categories on eMAG.
+- **Caching with Redis**: Uses Redis for caching scraped data, improving performance and reducing load times for frequently accessed data.
 - **Lazy Loading with Skeletons**: Improves performance and UX by displaying skeleton loaders while content is being loaded.
 - **SSR with Next.js**: Fetches data on the server-side to improve SEO and initial load speed.
 - **Dynamic Routing**: Supports navigation through different categories and product details.
-- **Database**: Integrated with Supabase for user authentication.
+- **Database**: Integrated with MongoDB to store product data and Redis for caching.
 - **Responsive UI**: Designed with Tailwind CSS for a mobile-friendly and modern interface.
 
 ## 🛠 Tech Stack
 
 - **Frontend**: Next.js, React, TypeScript, Tailwind CSS
-- **Backend**: Node.js, Cheerio (for scraping), Supabase (for database)
-- **State Management**: Zustand
-- **Hosting**: Vercel
+- **Backend**: Node.js, Cheerio (for scraping), Redis (for caching), MongoDB (for data storage)
+- **State Management**: Zustand (in the future)
+- **Hosting**: Vercel (in the future)
 
 ## 📂 Project Structure
 
@@ -45,13 +46,25 @@ A web service that aggregates discount deals and promo codes from various source
    ```
 3. Configure environment variables (`.env`):
    ```sh
-   SUPABASE_URL=your_supabase_url
-   SUPABASE_KEY=your_supabase_key
+   MONGODB_URI=your_mongodb_connection_string
+   REDIS_URL=your_redis_connection_string
    ```
 4. Run the development server:
    ```sh
    npm run dev
    ```
+
+## 🔧 Running Scraper Script
+
+- To run the scraper and save data to MongoDB:
+- Use the following command to run the scraper:
+
+  ```sh
+  npm run scraper
+  ```
+
+- This will scrape the eMAG website, store product data in MongoDB, and use Redis for caching to optimize future data fetching.
+
 5. Open `http://localhost:3000` in your browser.
 
 ## 📌 Roadmap
