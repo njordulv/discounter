@@ -69,3 +69,8 @@ export interface PaginationProps {
   setAccumulatedData: (data: CardProps[]) => void
   setCurrentPage: (page: number) => void
 }
+
+export interface EmagCats {
+  name: string
+  url: string
+}

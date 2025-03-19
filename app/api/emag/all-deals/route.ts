@@ -1,48 +1,70 @@
-// pages/api/products.ts
 import { NextResponse } from 'next/server'
-import Product from '@/models/Product'
 import { connectDB } from '@/lib/mongo'
 import { getAsync, client } from '@/lib/redis'
+import Product from '@/models/Product'
 
 const CACHE_EXPIRATION = 60 * 60 // 1 hour in seconds
 
 export async function GET(request: Request) {
-  const cacheKey = 'products_all' // Unique cache key
+  const { searchParams } = new URL(request.url)
+  const category = searchParams.get('category') || ''
+  const page = Number(searchParams.get('page')) || 1
+  const perPage = Number(searchParams.get('perPage')) || 20
+
+  // Create cache key based on category
+  const cacheKey = category ? `products_${category}` : 'products_all'
 
   try {
-    const { searchParams } = new URL(request.url)
-    const page = Number(searchParams.get('page')) || 1
-    const perPage = Number(searchParams.get('perPage')) || 20
-
     // Try to get data from Redis cache
     const cachedData = await getAsync(cacheKey)
 
     if (cachedData) {
-      // If data exists in cache, return it
+      const parsedData = JSON.parse(cachedData)
       return NextResponse.json({
-        data: JSON.parse(cachedData).slice(
-          (page - 1) * perPage,
-          page * perPage
-        ),
+        data: parsedData.slice((page - 1) * perPage, page * perPage),
         meta: {
           currentPage: page,
           perPage,
-          totalPages: Math.ceil(JSON.parse(cachedData).length / perPage),
-          totalItems: JSON.parse(cachedData).length,
+          category,
+          totalPages: Math.ceil(parsedData.length / perPage),
+          totalItems: parsedData.length,
         },
       })
     }
 
-    // If no data in cache, connect to MongoDB and get products
+    // If no data in cache, connect to MongoDB
     await connectDB()
-    const products = await Product.find({})
 
-    // Save data in Redis with 1 hour expiration
-    await client.setex(cacheKey, CACHE_EXPIRATION, JSON.stringify(products))
+    // Form query with category filter (if provided)
+    const query = category ? { category } : {}
+    const totalItems = await Product.countDocuments(query)
+    const products = await Product.find(query)
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+
+    // Save full category list in cache, but only if first page is requested
+    if (page === 1) {
+      const allProducts = await Product.find(query)
+      await client.setex(
+        cacheKey,
+        CACHE_EXPIRATION,
+        JSON.stringify(allProducts)
+      )
+    }
 
     console.log('Returning data from MongoDB')
-    return NextResponse.json(products)
+
+    return NextResponse.json({
+      data: products,
+      meta: {
+        currentPage: page,
+        perPage,
+        category,
+        totalPages: Math.ceil(totalItems / perPage),
+        totalItems,
+      },
+    })
   } catch (error) {
-    NextResponse.json({ message: 'Error fetching data', error })
+    return NextResponse.json({ message: 'Error fetching data', error })
   }
 }

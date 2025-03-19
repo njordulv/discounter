@@ -12,6 +12,7 @@ const ProductSchema = new mongoose.Schema({
   toOrder: String,
   imageUrl: String,
   link: String,
+  category: String,
   timestamp: { type: Date, default: Date.now },
 })
 

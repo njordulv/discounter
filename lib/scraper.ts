@@ -5,6 +5,7 @@ import { normalizeImageUrl } from '@/utils/functions'
 import config from '@/config'
 import Product from '@/models/Product'
 import { connectDB } from '@/lib/mongo'
+import { EmagCats } from '@/interfaces/emag'
 
 export async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
   let allProducts: CardProps[] = []
@@ -86,18 +87,28 @@ export async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
   }
 }
 
-export async function scrapeAndSaveEmag(categoryUrl: string) {
-  const products = await scrapeEmag(categoryUrl)
-
+export async function scrapeAndSaveEmag(categories: EmagCats[]) {
   await connectDB()
 
-  for (const product of products) {
-    await Product.updateOne(
-      { link: product.link }, // Check by link
-      { $set: product }, // Update data
-      { upsert: true } // Create if not exists
+  const categoriesCount: { [key: string]: number } = {}
+
+  for (const category of categories) {
+    const products = await scrapeEmag(category.url) // Scrape data
+
+    for (const product of products) {
+      await Product.updateOne(
+        { link: product.link }, // Check by link
+        { $set: { ...product, category: category.name } },
+        { upsert: true } // Create if not exist
+      )
+    }
+
+    categoriesCount[category.name] = products.length
+    const productCounts = Object.values(categoriesCount).join(', ')
+    const categoryNames = Object.keys(categoriesCount).join(', ')
+
+    console.log(
+      `Saved ${productCounts} products in categories: ${categoryNames}`
     )
   }
-
-  console.log(`Saved ${products.length} products to MongoDB`)
 }

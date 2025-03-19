@@ -14,11 +14,17 @@ async function testMongo() {
 testMongo()
 ;(async () => {
   const categories = [
-    config.emag.categories.livingRoom,
-    config.emag.categories.pcComponents,
+    {
+      name: config.emag.categories.livingRoom.name,
+      url: config.emag.categories.livingRoom.url,
+    },
+    {
+      name: config.emag.categories.pcComponents.name,
+      url: config.emag.categories.pcComponents.url,
+    },
   ]
-  for (const category of categories) {
-    await scrapeAndSaveEmag(category)
-  }
+
+  await scrapeAndSaveEmag(categories)
+
   process.exit(0)
 })()
