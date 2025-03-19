@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import Categories from '@/components/emag/Categories'
 
 export const Navigation = () => {
   return (
@@ -14,6 +15,7 @@ export const Navigation = () => {
             <Link href="/all-deals">All Deals</Link>
           </li>
         </ul>
+        <Categories />
       </div>
     </nav>
   )

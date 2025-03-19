@@ -14,15 +14,23 @@ const Card = dynamic(
   { loading: () => <CardSkeleton /> }
 )
 
-function AllDeals() {
+function AllDeals({ slug }: { slug: string }) {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [accumulatedData, setAccumulatedData] = useState<CardProps[]>([])
   const perPage = 20
+  const categoryPath = Object.values(config.emag.categories).find(
+    (cat) => cat.slug === slug
+  )?.path
 
   const { data, error, isLoading } = useFetcher({
-    url: '/api/emag/all-deals',
-    params: { page: currentPage, perPage },
+    url: categoryPath
+      ? `/api/emag/all-deals?${new URLSearchParams({
+          category: categoryPath,
+          page: currentPage.toString(),
+          perPage: perPage.toString(),
+        })}`
+      : `/api/emag/all-deals`,
   })
 
   useEffect(() => {

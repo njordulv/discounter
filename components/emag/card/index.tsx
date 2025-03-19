@@ -34,7 +34,7 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       ref={ref}
-      className="flex sm:gap-4 gap-3 sm:p-4 p-2 relative overflow-hidden rounded-lg border bg-card text-card-foreground"
+      className="flex sm:gap-4 gap-3 sm:p-4 p-2 relative overflow-hidden rounded-lg border bg-card/9 text-card-foreground"
     >
       {discount && <Discount discount={discount} isGenius={isGenius} />}
       {isGenius && !discount && <Genius />}

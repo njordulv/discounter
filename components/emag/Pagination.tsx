@@ -1,7 +1,6 @@
 'use client'
 
 import { GrNext, GrPrevious } from 'react-icons/gr'
-import { RxDotsHorizontal } from 'react-icons/rx'
 import { Button } from '@/components/ui/Button'
 import { PaginationProps } from '@/interfaces/emag'
 import config from '@/config'
@@ -49,7 +48,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             onClick={handleFirstPage}
             disabled={currentPage === 1}
           />
-          <RxDotsHorizontal />
+          <span className="text-muted-foreground tracking-wide">...</span>
         </div>
         <div className="flex items-center sm:gap-4 gap-2 text-sm text-muted-foreground">
           <Button
@@ -74,7 +73,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           />
         </div>
         <div className="flex items-end gap-2">
-          <RxDotsHorizontal />
+          <span className="text-muted-foreground tracking-wide">...</span>
           <Button
             size="sm"
             variant="outline"

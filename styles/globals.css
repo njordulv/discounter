@@ -39,7 +39,7 @@
 
     --gradient-decoration: linear-gradient(
       to bottom,
-      hsl(200 80% 69%) -10%,
+      hsl(200 80% 69%),
       hsl(var(--ring))
     );
     --gradient-genius: linear-gradient(to bottom, #090171, #ff005a);
@@ -93,6 +93,10 @@ nav ul li a:hover {
 
 .bg-card\/7 {
   background-color: hsl(var(--card) / 0.7);
+}
+
+.bg-card\/9 {
+  background-color: hsl(var(--card) / 0.9);
 }
 
 .bg-primary {

@@ -11,47 +11,69 @@ const config = {
     errorFetch: 'Error fetching data',
     categories: {
       livingRoom: {
-        name: 'Living room, hallway and office furniture',
+        name: 'Smart Home',
+        slug: 'smart-home',
+        path: 'Living room, hallway and office furniture',
         url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Living-Room-Hallway-And-Office-Furniture',
       },
       cooking: {
-        name: 'Cooking and serving items',
+        name: 'Cooking',
+        slug: 'kitchen',
+        path: 'Cooking and serving items',
         url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Cooking-And-Serving-Items',
       },
       auto: {
-        name: 'Auto products',
+        name: 'Auto Products',
+        slug: 'auto-products',
+        path: 'Auto products',
         url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Auto-Products',
       },
       clothing: {
-        name: 'Men and women clothing',
+        name: 'Clothing',
+        slug: 'clothing',
+        path: 'Men and Women Clothing',
         url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Men-And-Women-Clothing',
       },
       perfumes: {
         name: 'Perfumes',
+        slug: 'perfumes',
+        path: 'Perfumes',
         url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Perfumes',
       },
       toys: {
-        name: 'Baby toys',
+        name: 'Toys',
+        slug: 'toys',
+        path: 'Baby Toys',
         url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Baby-Toys',
       },
       cleaning: {
-        name: 'Detergents and cleaning products',
+        name: 'Cleaning',
+        slug: 'cleaning',
+        path: 'Detergents and cleaning products',
         url: 'https://www.emag.bg/label/Smart-Deals-Detergents-And-Cleaning-Products',
       },
       casesAndCards: {
-        name: 'Cases and memory cards',
+        name: 'Phones & Accessories',
+        slug: 'cases-and-cards',
+        path: 'Cases and memory cards',
         url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Cases-And-Memory-Cards',
       },
       mda: {
-        name: 'Electric devices',
+        name: 'Electric Accessories',
+        slug: 'electronics-accessories',
+        path: 'Mda',
         url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Mda',
       },
       audioAndVideo: {
-        name: 'Audio video and photo',
+        name: 'Audio & Video',
+        slug: 'audio-video',
+        path: 'Audio Video And Photo',
         url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Audio-Video-And-Photo',
       },
       pcComponents: {
-        name: "Desktop PC's components and peripherals",
+        name: 'Computer & Tablets',
+        slug: 'pc-components',
+        path: "Desktop PC's components and peripherals",
         url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Desktop-Pcs-Components-And-Peripherals',
       },
     },
@@ -77,3 +99,8 @@ const config = {
 }
 
 export default config
+
+export const categorySlugMap: Record<string, string> = {
+  'smart-home': 'Living room, hallway and office furniture',
+  'pc-components': "Desktop PC's components and peripherals",
+}
