@@ -11,11 +11,11 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get('page')) || 1
   const perPage = Number(searchParams.get('perPage')) || 20
 
-  // Create cache key based on category
+  // Создаём ключ кеша в зависимости от категории
   const cacheKey = category ? `products_${category}` : 'products_all'
 
   try {
-    // Try to get data from Redis cache
+    // Пытаемся получить данные из кеша Redis
     const cachedData = await getAsync(cacheKey)
 
     if (cachedData) {
@@ -32,24 +32,30 @@ export async function GET(request: Request) {
       })
     }
 
-    // If no data in cache, connect to MongoDB
+    // Если данных в кеше нет, подключаемся к MongoDB
     await connectDB()
 
-    // Form query with category filter (if provided)
+    // Формируем запрос с фильтрацией по категории (если передана)
     const query = category ? { category } : {}
     const totalItems = await Product.countDocuments(query)
     const products = await Product.find(query)
       .skip((page - 1) * perPage)
       .limit(perPage)
 
-    // Save full category list in cache, but only if first page is requested
+    // Сохраняем полный список категории в кеш, но только если запрашивается 1-я страница
     if (page === 1) {
-      const allProducts = await Product.find(query)
-      await client.setex(
-        cacheKey,
-        CACHE_EXPIRATION,
-        JSON.stringify(allProducts)
-      )
+      try {
+        const allProducts = await Product.find(query)
+        console.log('Caching data count:', allProducts.length)
+        await client.setex(
+          cacheKey,
+          CACHE_EXPIRATION,
+          JSON.stringify(allProducts)
+        )
+        console.log('Data cached successfully')
+      } catch (redisError) {
+        console.error('Failed to cache data:', redisError)
+      }
     }
 
     console.log('Returning data from MongoDB')

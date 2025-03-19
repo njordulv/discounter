@@ -44,7 +44,7 @@ function AllDeals({ slug }: { slug: string }) {
 
   return (
     <div className="m-auto w-full max-w-4xl">
-      <div className="grid grid-cols-1 gap-3">
+      <div className="grid grid-cols-1 gap-2">
         {accumulatedData.map((product, index) => (
           <Card key={index} {...product} />
         ))}

@@ -6,22 +6,23 @@ import config from '@/config'
 import Product from '@/models/Product'
 import { connectDB } from '@/lib/mongo'
 import { EmagCats } from '@/interfaces/emag'
+import { sleep, userAgent } from '@/utils/functions'
+import { client } from '@/lib/redis'
 
 export async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
   let allProducts: CardProps[] = []
   let currentPage = 1
-  const maxPages = 40
+  const maxPages = 15
 
   try {
     while (currentPage <= maxPages) {
+      await sleep(2000 + Math.random() * 2000)
+
       const url = categoryUrl + (currentPage > 1 ? `/p${currentPage}` : '')
       console.log(`Scraping page ${currentPage}: ${url}`)
 
       const { data } = await axios.get(url, {
-        headers: {
-          'User-Agent':
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        },
+        headers: { 'User-Agent': userAgent() },
       })
 
       const $ = cheerio.load(data)
@@ -93,13 +94,23 @@ export async function scrapeAndSaveEmag(categories: EmagCats[]) {
   const categoriesCount: { [key: string]: number } = {}
 
   for (const category of categories) {
-    const products = await scrapeEmag(category.url) // Scrape data
+    await client.del(`products_${category.name}`)
+    console.log(`🗑️ Кеш для категории ${category.name} удален`)
+
+    // 1️. Before scraping, mark all products in the category as outdated
+    await Product.updateMany(
+      { category: category.name },
+      { $set: { outdated: true } }
+    )
+
+    // 2️. Scraping new data
+    const products = await scrapeEmag(category.url)
 
     for (const product of products) {
       await Product.updateOne(
         { link: product.link }, // Check by link
-        { $set: { ...product, category: category.name } },
-        { upsert: true } // Create if not exist
+        { $set: { ...product, category: category.name, outdated: false } }, // Reset outdated data flag
+        { upsert: true } // Create or add new product
       )
     }
 
@@ -109,6 +120,15 @@ export async function scrapeAndSaveEmag(categories: EmagCats[]) {
 
     console.log(
       `Saved ${productCounts} products in categories: ${categoryNames}`
+    )
+
+    // 3️. After scraping, delete products that are still marked as outdated (they no longer exist on the website)
+    const deletedCount = await Product.deleteMany({
+      category: category.name,
+      outdated: true,
+    })
+    console.log(
+      `🗑️ Deleted ${deletedCount.deletedCount} outdated products in category: ${category.name}`
     )
   }
 }

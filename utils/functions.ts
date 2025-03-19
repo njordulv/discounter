@@ -11,3 +11,11 @@ export function getCategoryName(slug: string) {
   return Object.values(config.emag.categories).find((cat) => cat.slug === slug)
     ?.name
 }
+
+export function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+export function userAgent() {
+  return config.userAgents[Math.floor(Math.random() * config.userAgents.length)]
+}
