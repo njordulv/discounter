@@ -11,15 +11,17 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get('page')) || 1
   const perPage = Number(searchParams.get('perPage')) || 20
 
-  // Создаём ключ кеша в зависимости от категории
+  // Create cache key based on category
   const cacheKey = category ? `products_${category}` : 'products_all'
 
   try {
-    // Пытаемся получить данные из кеша Redis
+    // Try to get data from Redis cache
     const cachedData = await getAsync(cacheKey)
 
     if (cachedData) {
+      console.log(`✅ Data loaded from Redis: ${cacheKey}`)
       const parsedData = JSON.parse(cachedData)
+
       return NextResponse.json({
         data: parsedData.slice((page - 1) * perPage, page * perPage),
         meta: {
@@ -32,17 +34,18 @@ export async function GET(request: Request) {
       })
     }
 
-    // Если данных в кеше нет, подключаемся к MongoDB
+    // If no data in cache, connect to MongoDB
+    console.log('❌ No data in Redis, loading from MongoDB')
     await connectDB()
 
-    // Формируем запрос с фильтрацией по категории (если передана)
+    // Create query with category filter
     const query = category ? { category } : {}
     const totalItems = await Product.countDocuments(query)
     const products = await Product.find(query)
       .skip((page - 1) * perPage)
       .limit(perPage)
 
-    // Сохраняем полный список категории в кеш, но только если запрашивается 1-я страница
+    // Save full category list in cache, but only if first page is requested
     if (page === 1) {
       try {
         const allProducts = await Product.find(query)

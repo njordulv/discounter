@@ -60,7 +60,7 @@ const config = {
       },
       mda: {
         name: 'Electric Accessories',
-        slug: 'electronics-accessories',
+        slug: 'electronic-accessories',
         path: 'Electric Accessories',
         url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Mda',
       },
