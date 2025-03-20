@@ -7,6 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
+  SheetDescription,
 } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/Button'
 import { Categories } from '@/components/emag/Categories'
@@ -20,6 +21,7 @@ export function SideMenu() {
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Menu</SheetTitle>
+          <SheetDescription>Browse categories and products</SheetDescription>
         </SheetHeader>
         <div className="flex flex-col gap-4 p-4">
           <Categories />
