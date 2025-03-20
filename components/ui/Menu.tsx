@@ -1,4 +1,4 @@
-import { LuMenu } from 'react-icons/lu'
+import { TbMenu2 } from 'react-icons/tb'
 import {
   Sheet,
   SheetClose,
@@ -16,7 +16,7 @@ export function SideMenu() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button size="sm" variant="outline" icon={<LuMenu size={23} />} />
+        <Button size="sm" variant="outline" icon={<TbMenu2 size={20} />} />
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

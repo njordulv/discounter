@@ -1,6 +1,6 @@
 'use client'
 
-import { GrNext, GrPrevious } from 'react-icons/gr'
+import { TbChevronLeft, TbChevronRight } from 'react-icons/tb'
 import { Button } from '@/components/ui/Button'
 import { PaginationProps } from '@/interfaces/emag'
 import config from '@/config'
@@ -54,7 +54,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           <Button
             size="sm"
             variant="outline"
-            icon={<GrPrevious size={13} />}
+            icon={<TbChevronLeft size={18} />}
             onClick={handlePrevious}
             disabled={currentPage === 1}
           />
@@ -67,7 +67,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           <Button
             size="sm"
             variant="outline"
-            icon={<GrNext size={13} />}
+            icon={<TbChevronRight size={18} />}
             onClick={handleNext}
             disabled={currentPage >= totalPages}
           />
