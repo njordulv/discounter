@@ -5,15 +5,17 @@ import AllDeals from '@/components/emag/AllDeals'
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
-  const category = getCategoryName(decodedSlug)
+  const tagName = getCategoryName(decodedSlug)
 
-  if (!category) {
+  if (!tagName) {
     notFound()
   }
 
   return (
     <>
-      <h1 className="text-2xl font-medium">{category}</h1>
+      <h1 className="m-auto w-full max-w-4xl sm:text-4xl text-2xl text-left font-medium text-foreground">
+        {tagName}
+      </h1>
       <AllDeals slug={decodedSlug} />
     </>
   )

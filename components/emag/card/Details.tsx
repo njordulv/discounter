@@ -93,7 +93,7 @@ export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
         </span>
       )}
       {stock && (
-        <span className="rounded-md px-3 text-sm bg-muted text-card-foreground">
+        <span className="rounded-md px-3 text-sm bg-[lightseagreen] text-card-foreground">
           {stock}
         </span>
       )}
@@ -106,7 +106,7 @@ export const LinkToShop = () => {
     <span className="text-sm sm:text-base text-muted-foreground">
       {config.card.shop}
       <Link
-        className="text-sm text-muted-foreground hover:text-primary transition hover:underline"
+        className="text-sm hover:text-[hsl(var(--primary))] transition"
         href={config.emag.url}
       >
         {config.emag.title}

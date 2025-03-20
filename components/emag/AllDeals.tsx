@@ -6,6 +6,7 @@ import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/ui/Loader'
 import { Pagination } from '@/components/emag/Pagination'
 import { CardSkeleton } from '@/components/ui/Skeletons'
+import { ProductsCount } from '@/components/ProductsCount'
 import { CardProps } from '@/interfaces/emag'
 import config from '@/config'
 
@@ -17,6 +18,7 @@ const Card = dynamic(
 function AllDeals({ slug }: { slug: string }) {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+  const [tagProducts, setTagProducts] = useState(0)
   const [accumulatedData, setAccumulatedData] = useState<CardProps[]>([])
   const perPage = 20
   const categoryPath = Object.values(config.emag.categories).find(
@@ -37,6 +39,7 @@ function AllDeals({ slug }: { slug: string }) {
     if (data?.data) {
       setAccumulatedData((prev) => [...prev, ...data.data])
       setTotalPages(data.meta.totalPages)
+      setTagProducts(data.meta.totalItems)
     }
   }, [data])
 
@@ -44,6 +47,10 @@ function AllDeals({ slug }: { slug: string }) {
 
   return (
     <div className="m-auto w-full max-w-4xl">
+      {tagProducts > 0 && (
+        <ProductsCount tagProducts={tagProducts} categoryPath={categoryPath!} />
+      )}
+
       <div className="grid grid-cols-1 gap-2">
         {accumulatedData.map((product, index) => (
           <Card key={index} {...product} />

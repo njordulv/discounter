@@ -19,3 +19,15 @@ export function sleep(ms: number) {
 export function userAgent() {
   return config.userAgents[Math.floor(Math.random() * config.userAgents.length)]
 }
+
+export function getMonthAndYear(options?: {
+  month?: string | null
+  year?: number | null
+}) {
+  const date = new Date()
+
+  return {
+    month: options?.month ?? date.toLocaleString('en-US', { month: 'long' }),
+    year: options?.year ?? date.getFullYear(),
+  }
+}

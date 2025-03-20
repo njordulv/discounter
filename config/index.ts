@@ -18,6 +18,7 @@ import {
 const config = {
   site: {
     name: 'DiSCOUNTER',
+    locale: 'Bulgaria',
     logoLabel: 'Home',
     rel: 'Home',
   },
