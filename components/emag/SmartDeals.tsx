@@ -5,7 +5,7 @@ import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/ui/Loader'
 import { ItemSkeleton } from '@/components/ui/Skeletons'
 import { DealProps } from '@/interfaces/emag'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 
 const Item = dynamic(
   () => import('@/components/emag/Item').then((mod) => mod.Item),

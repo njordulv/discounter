@@ -11,7 +11,7 @@ export const buttonVariants = cva('button', {
       destructive: 'destructive',
     },
     size: {
-      sm: 'h-8 px-3 text-sm rounded-sm',
+      sm: 'h-8 px-2 text-sm rounded-sm',
       md: 'h-10 px-4 text-sm rounded-md',
       lg: 'h-12 px-6 text-lg rounded-md',
       icon: 'h-10 w-10 p-2',
