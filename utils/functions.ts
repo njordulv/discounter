@@ -20,14 +20,7 @@ export function userAgent() {
   return config.userAgents[Math.floor(Math.random() * config.userAgents.length)]
 }
 
-export function getMonthAndYear(options?: {
-  month?: string | null
-  year?: number | null
-}) {
-  const date = new Date()
+export const getMonth = () =>
+  new Date().toLocaleString('en-US', { month: 'long' })
 
-  return {
-    month: options?.month ?? date.toLocaleString('en-US', { month: 'long' }),
-    year: options?.year ?? date.getFullYear(),
-  }
-}
+export const getYear = () => new Date().getFullYear()

@@ -1,6 +1,6 @@
 'use client'
 
-import { getMonthAndYear } from '@/utils/functions'
+import { getMonth, getYear } from '@/utils/functions'
 import config from '@/config'
 
 export const ProductsCount = ({
@@ -18,7 +18,7 @@ export const ProductsCount = ({
       </span>
       <span>{`Discover ${categoryPath || 'all'} offers and sales in ${
         config.site.locale
-      } – ${getMonthAndYear().month} ${getMonthAndYear().year}.`}</span>
+      }, ${getMonth()} ${getYear()}.`}</span>
     </p>
   )
 }
