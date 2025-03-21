@@ -32,7 +32,10 @@ function AllDeals({ slug }: { slug: string }) {
           page: currentPage.toString(),
           perPage: perPage.toString(),
         })}`
-      : `/api/emag/all-deals`,
+      : `/api/emag/all-deals?${new URLSearchParams({
+          page: currentPage.toString(),
+          perPage: perPage.toString(),
+        })}`,
   })
 
   useEffect(() => {

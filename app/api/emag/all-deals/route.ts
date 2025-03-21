@@ -2,8 +2,7 @@ import { NextResponse } from 'next/server'
 import { connectDB } from '@/lib/mongo'
 import { getAsync, client } from '@/lib/redis'
 import Product from '@/models/Product'
-
-const CACHE_EXPIRATION = 60 * 60 // 1 hour in seconds
+import { CACHE_EXPIRATION } from '@/config/cache'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)

@@ -8,6 +8,7 @@ import { connectDB } from '@/lib/mongo'
 import { EmagCats } from '@/interfaces/emag'
 import { sleep, userAgent } from '@/utils/functions'
 import { client } from '@/lib/redis'
+import { CACHE_EXPIRATION } from '@/config/cache'
 
 export async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
   let allProducts: CardProps[] = []
@@ -95,7 +96,7 @@ export async function scrapeAndSaveEmag(categories: EmagCats[]) {
 
   for (const category of categories) {
     await client.del(`products_${category.name}`)
-    console.log(`🗑️ Кеш для категории ${category.name} удален`)
+    console.log(`🗑️ Cache for category ${category.name} deleted`)
 
     // 1️. Before scraping, mark all products in the category as outdated
     await Product.updateMany(
@@ -130,5 +131,17 @@ export async function scrapeAndSaveEmag(categories: EmagCats[]) {
     console.log(
       `🗑️ Deleted ${deletedCount.deletedCount} outdated products in category: ${category.name}`
     )
+
+    // 4️. Cache the scraped data
+    try {
+      await client.setex(
+        `products_${category.name}`,
+        CACHE_EXPIRATION,
+        JSON.stringify(products)
+      )
+      console.log(`✅ Cache updated for category ${category.name}`)
+    } catch (cacheError) {
+      console.error('Error caching data:', cacheError)
+    }
   }
 }
