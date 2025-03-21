@@ -105,6 +105,10 @@ nav ul li a:hover {
   background-color: hsl(var(--primary));
 }
 
+.bg-primary\/10 {
+  background-color: hsl(var(--primary) / 0.1);
+}
+
 .bg-primary\/20 {
   background-color: hsl(var(--primary) / 0.2);
 }
