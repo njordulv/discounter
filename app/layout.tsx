@@ -26,7 +26,7 @@ export default function RootLayout({
         <div className="flex flex-col relative overflow-hidden">
           <Decor />
           <Header />
-          <main className="min-h-[calc(100vh-7rem)] sm:px-6 sm:py-16 px-2 py-5 gap-3 relative overflow-hidden">
+          <main className="min-h-[calc(100vh-7.5rem)] sm:px-6 sm:py-16 px-2 py-5 gap-3 relative overflow-hidden">
             {children}
           </main>
           <Footer />

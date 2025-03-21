@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/ui/Loader'
 import { Pagination } from '@/components/emag/Pagination'
@@ -21,30 +21,35 @@ function AllDeals({ slug }: { slug: string }) {
   const [tagProducts, setTagProducts] = useState(0)
   const [accumulatedData, setAccumulatedData] = useState<CardProps[]>([])
   const perPage = 20
-  const categoryPath = Object.values(config.emag.categories).find(
-    (cat) => cat.slug === slug
-  )?.path
+
+  const categoryPath = useMemo(
+    () =>
+      Object.values(config.emag.categories).find((cat) => cat.slug === slug)
+        ?.path,
+    [slug]
+  )
+
+  const queryParams = useMemo(() => {
+    const params = new URLSearchParams({
+      page: currentPage.toString(),
+      perPage: perPage.toString(),
+    })
+    if (categoryPath) params.append('category', categoryPath)
+    return params.toString()
+  }, [categoryPath, currentPage])
 
   const { data, error, isLoading } = useFetcher({
-    url: categoryPath
-      ? `/api/emag/all-deals?${new URLSearchParams({
-          category: categoryPath,
-          page: currentPage.toString(),
-          perPage: perPage.toString(),
-        })}`
-      : `/api/emag/all-deals?${new URLSearchParams({
-          page: currentPage.toString(),
-          perPage: perPage.toString(),
-        })}`,
+    url: `/api/emag/all-deals?${queryParams}`,
   })
 
   useEffect(() => {
-    if (data?.data) {
-      setAccumulatedData((prev) => [...prev, ...data.data])
-      setTotalPages(data.meta.totalPages)
-      setTagProducts(data.meta.totalItems)
-    }
-  }, [data])
+    if (!data?.data) return
+    setAccumulatedData((prev) =>
+      currentPage === 1 ? data.data : [...prev, ...data.data]
+    )
+    setTotalPages(data.meta.totalPages)
+    setTagProducts(data.meta.totalItems)
+  }, [data, currentPage])
 
   if (error) return <div>Error: {error.message}</div>
 
@@ -68,12 +73,14 @@ function AllDeals({ slug }: { slug: string }) {
         </div>
       )}
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setAccumulatedData={setAccumulatedData}
-        setCurrentPage={setCurrentPage}
-      />
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setAccumulatedData={setAccumulatedData}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </div>
   )
 }

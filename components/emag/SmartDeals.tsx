@@ -1,11 +1,13 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import { useMemo } from 'react'
 import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/ui/Loader'
 import { ItemSkeleton } from '@/components/ui/Skeletons'
 import { DealProps } from '@/interfaces/emag'
 import { Button } from '@/components/ui/Button'
+import { LoadFailed } from '@/components/ui/Errors'
 
 const Item = dynamic(
   () => import('@/components/emag/Item').then((mod) => mod.Item),
@@ -19,10 +21,10 @@ function SmartDeals() {
     url: '/api/emag/smart-deals',
   })
 
-  if (isLoading) return <Loader />
-  if (error) return <div>Error: {error.message}</div>
+  const deals = useMemo(() => data?.data?.product_collection ?? [], [data])
 
-  const deals = data?.data?.product_collection
+  if (isLoading) return <Loader />
+  if (error) return <LoadFailed />
 
   return (
     <>
@@ -39,15 +41,19 @@ function SmartDeals() {
               />
             ))}
           </div>
+          {deals.length > 0 && (
+            <div className="flex items-center justify-center mt-8">
+              <Button
+                size="md"
+                variant="outline"
+                text="All Deals"
+                className="!w-fit"
+                onClick={() => window.open('/all-deals', '_self')}
+              />
+            </div>
+          )}
         </div>
       )}
-      <Button
-        size="md"
-        variant="outline"
-        text="All Deals"
-        className="!w-fit"
-        onClick={() => window.open('/all-deals', '_self')}
-      />
     </>
   )
 }

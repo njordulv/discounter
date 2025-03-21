@@ -9,7 +9,7 @@ export default function Page() {
       <h1 className="sm:text-4xl text-2xl text-left font-medium text-foreground">
         Popular Categories
       </h1>
-      <div className="grid grid-cols-4 gap-2 my-8">
+      <div className="grid grid-cols-4 gap-3 my-8">
         {Object.entries(tags).map(([key, item]) => (
           <Link
             href={`/tag/${item.slug}`}

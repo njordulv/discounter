@@ -19,12 +19,10 @@ export const ItemSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
         </svg>
       </div>
       <div className="w-full overflow-hidden">
-        <div className="h-4 bg-primary/20 rounded-lg w-full mb-3"></div>
-        <div className="h-4 bg-primary/20 rounded-lg w-full mb-3"></div>
-        <div className="h-4 bg-primary/20 rounded-lg w-4/5 mb-3"></div>
-        <div className="h-4 bg-primary/20 rounded-lg w-2/5 mb-4"></div>
-        <div className="h-5 bg-primary/20 rounded-lg w-3/5 mb-4"></div>
-        <div className="h-8 bg-primary/20 rounded-full w-full max-w-40"></div>
+        <div className="h-4 bg-primary/20 rounded-md w-full mb-3"></div>
+        <div className="h-4 bg-primary/20 rounded-md w-3/5 mb-6"></div>
+        <div className="h-7 bg-primary/20 rounded-md w-4/5 mb-10"></div>
+        <div className="h-8 bg-primary/20 rounded-md w-full"></div>
       </div>
       <span className="sr-only">Loading...</span>
     </div>

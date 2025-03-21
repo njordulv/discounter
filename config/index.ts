@@ -126,6 +126,7 @@ const config = {
   },
   messages: {
     endOfDeals: 'You have reached the end of the deals',
+    failedToLoad: 'Failed to load deals. Please try again.',
   },
   pages: {
     notFound: {
