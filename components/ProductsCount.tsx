@@ -11,7 +11,7 @@ export const ProductsCount = ({
   categoryPath: string
 }) => {
   return (
-    <p className="flex items-center gap-1 mb-8 text-foreground">
+    <p className="w-full flex sm:flex-row flex-col gap-1 mb-8 text-foreground">
       <span>
         <b>{tagProducts}</b>{' '}
         {tagProducts === 1 ? 'deal & offer' : 'deals & offers'}.

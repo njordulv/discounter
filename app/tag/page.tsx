@@ -5,8 +5,8 @@ export default function Page() {
   const tags = config.emag.categories
 
   return (
-    <div className="m-auto w-full max-w-4xl">
-      <h1 className="sm:text-4xl text-2xl text-left font-medium text-foreground">
+    <>
+      <h1 className="w-full w-full sm:text-4xl text-2xl text-left font-medium text-foreground">
         Popular Categories
       </h1>
       <div className="grid grid-cols-4 gap-3 my-8">
@@ -25,6 +25,6 @@ export default function Page() {
           </Link>
         ))}
       </div>
-    </div>
+    </>
   )
 }

@@ -3,11 +3,9 @@ import { SideMenu } from '@/components/ui/Menu'
 
 export const Navigation = () => {
   return (
-    <nav className="p-4">
-      <div className="m-auto w-full max-w-4xl flex justify-between gap-9 relative">
-        <Logo />
-        <SideMenu />
-      </div>
+    <nav className="m-auto w-full max-w-5xl flex justify-between p-4 gap-9 relative">
+      <Logo />
+      <SideMenu />
     </nav>
   )
 }

@@ -77,6 +77,10 @@ nav ul li a:hover {
   background: hsl(var(--background));
 }
 
+.bg-background\/40 {
+  background: hsl(var(--background) / 0.4);
+}
+
 .bg-gradient {
   background: var(--gradient);
 }

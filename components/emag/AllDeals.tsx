@@ -54,12 +54,12 @@ function AllDeals({ slug }: { slug: string }) {
   if (error) return <div>Error: {error.message}</div>
 
   return (
-    <div className="m-auto w-full max-w-4xl">
+    <>
       {tagProducts > 0 && (
         <ProductsCount tagProducts={tagProducts} categoryPath={categoryPath!} />
       )}
 
-      <div className="grid grid-cols-1 gap-2">
+      <div className="w-full grid grid-cols-1 gap-2">
         {accumulatedData.map((product, index) => (
           <Card key={index} {...product} />
         ))}
@@ -81,7 +81,7 @@ function AllDeals({ slug }: { slug: string }) {
           setCurrentPage={setCurrentPage}
         />
       )}
-    </div>
+    </>
   )
 }
 

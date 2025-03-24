@@ -29,7 +29,7 @@ function SmartDeals() {
   return (
     <>
       {deals && (
-        <div className="m-auto w-full max-w-4xl">
+        <>
           <div className="grid grid-cols-2 gap-3 mt-8">
             {deals.map((deal: DealProps) => (
               <Item
@@ -52,7 +52,7 @@ function SmartDeals() {
               />
             </div>
           )}
-        </div>
+        </>
       )}
     </>
   )

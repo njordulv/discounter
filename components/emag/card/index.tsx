@@ -49,7 +49,7 @@ export const Card: React.FC<CardProps> = ({
             <h2 className="text-md text-foreground font-semibold sm:mb-3">
               {title}
             </h2>
-            <div className="flex sm:flex-row flex-col sm:gap-2 sm:items-center">
+            <div className="grid auto-cols-max sm:flex sm:flex-wrap sm:items-center">
               {price && <NewPrice price={price} />}
               {oldPrice && <OldPrice oldPrice={oldPrice} />}
               <StockStatus
