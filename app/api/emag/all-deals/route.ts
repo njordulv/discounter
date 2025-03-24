@@ -10,57 +10,51 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get('page')) || 1
   const perPage = Number(searchParams.get('perPage')) || 20
 
-  // Create cache key based on category
-  const cacheKey = category ? `products_${category}` : 'products_all'
+  const cacheKey = `products_${category}_page_${page}`
+  const countKey = `products_${category}_count`
 
   try {
-    // Try to get data from Redis cache
-    const cachedData = await getAsync(cacheKey)
+    // 1. Reading cached data for page
+    const cachedPage = await getAsync(cacheKey)
+    const cachedCount = await getAsync(countKey)
 
-    if (cachedData) {
-      console.log(`✅ Data loaded from Redis: ${cacheKey}`)
-      const parsedData = JSON.parse(cachedData)
+    if (cachedPage && cachedCount) {
+      console.log(`✅ Loaded page ${page} from Redis`)
 
       return NextResponse.json({
-        data: parsedData.slice((page - 1) * perPage, page * perPage),
+        data: JSON.parse(cachedPage),
         meta: {
           currentPage: page,
           perPage,
           category,
-          totalPages: Math.ceil(parsedData.length / perPage),
-          totalItems: parsedData.length,
+          totalPages: Math.ceil(Number(cachedCount) / perPage),
+          totalItems: Number(cachedCount),
         },
       })
     }
 
-    // If no data in cache, connect to MongoDB
-    console.log('❌ No data in Redis, loading from MongoDB')
+    // 2. No cache, fetching from MongoDB
+    console.log('❌ No cache, fetching from MongoDB')
     await connectDB()
 
-    // Create query with category filter
     const query = category ? { category } : {}
-    const totalItems = await Product.countDocuments(query)
+
+    // 3. If no cache for count, get it
+    const totalItems = cachedCount
+      ? Number(cachedCount)
+      : await Product.countDocuments(query)
+
     const products = await Product.find(query)
       .skip((page - 1) * perPage)
       .limit(perPage)
 
-    // Save full category list in cache, but only if first page is requested
-    if (page === 1) {
-      try {
-        const allProducts = await Product.find(query)
-        console.log('Caching data count:', allProducts.length)
-        await client.setex(
-          cacheKey,
-          CACHE_EXPIRATION,
-          JSON.stringify(allProducts)
-        )
-        console.log('Data cached successfully')
-      } catch (redisError) {
-        console.error('Failed to cache data:', redisError)
-      }
-    }
+    // 3. Caching data
+    await client.setex(cacheKey, CACHE_EXPIRATION, JSON.stringify(products))
 
-    console.log('Returning data from MongoDB')
+    // 4. Caching total items (if not in Redis)
+    if (!cachedCount) {
+      await client.setex(countKey, CACHE_EXPIRATION, totalItems.toString())
+    }
 
     return NextResponse.json({
       data: products,

@@ -6,7 +6,7 @@ export default function Page() {
 
   return (
     <>
-      <h1 className="w-full w-full sm:text-4xl text-2xl text-left font-medium text-foreground">
+      <h1 className="w-full sm:text-4xl text-2xl text-left font-medium text-foreground">
         Popular Categories
       </h1>
       <div className="grid grid-cols-4 gap-3 my-8">

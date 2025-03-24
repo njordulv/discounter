@@ -68,7 +68,7 @@ function AllDeals({ slug }: { slug: string }) {
       {isLoading && <Loader />}
 
       {data?.meta && currentPage >= data.meta.totalPages && (
-        <div className="mt-6 text-center text-muted-foreground">
+        <div className="mt-6 text-center text-muted">
           {config.messages.endOfDeals}
         </div>
       )}
