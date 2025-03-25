@@ -1,6 +1,6 @@
 import { scrapeAndSaveEmag } from '@/lib/scraper'
 import { connectDB } from '@/lib/mongo'
-import config from '@/config'
+import { catsConfig } from '@/config/categories'
 
 async function testMongo() {
   try {
@@ -13,54 +13,21 @@ async function testMongo() {
 
 testMongo()
 ;(async () => {
-  const categories = [
-    {
-      name: config.emag.categories.livingRoom.name,
-      url: config.emag.categories.livingRoom.url,
-    },
-    {
-      name: config.emag.categories.cooking.name,
-      url: config.emag.categories.cooking.url,
-    },
-    {
-      name: config.emag.categories.auto.name,
-      url: config.emag.categories.auto.url,
-    },
-    {
-      name: config.emag.categories.clothing.name,
-      url: config.emag.categories.clothing.url,
-    },
-    {
-      name: config.emag.categories.perfumes.name,
-      url: config.emag.categories.perfumes.url,
-    },
-    {
-      name: config.emag.categories.toys.name,
-      url: config.emag.categories.toys.url,
-    },
-    {
-      name: config.emag.categories.cleaning.name,
-      url: config.emag.categories.cleaning.url,
-    },
-    {
-      name: config.emag.categories.casesAndCards.name,
-      url: config.emag.categories.casesAndCards.url,
-    },
-    {
-      name: config.emag.categories.mda.name,
-      url: config.emag.categories.mda.url,
-    },
-    {
-      name: config.emag.categories.audioAndVideo.name,
-      url: config.emag.categories.audioAndVideo.url,
-    },
-    {
-      name: config.emag.categories.pcComponents.name,
-      url: config.emag.categories.pcComponents.url,
-    },
-  ]
+  const cats = Object.values(catsConfig).map((tag) => ({
+    name: tag.name,
+    url: tag.scrapeUrl,
+  }))
 
-  await scrapeAndSaveEmag(categories)
+  const subCats = Object.values(catsConfig).flatMap((tag) =>
+    Object.values(tag.subcategories || {}).map((sub) => ({
+      name: `${tag.name} - ${sub.name}`,
+      url: sub.scrapeUrl,
+    }))
+  )
+
+  const tags = [...cats, ...subCats]
+
+  await scrapeAndSaveEmag(tags)
 
   process.exit(0)
 })()

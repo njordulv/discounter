@@ -1,19 +1,5 @@
-import {
-  TbHome,
-  TbTag,
-  TbCategory,
-  TbSofa,
-  TbBlender,
-  TbCar,
-  TbShirt,
-  TbPerfume,
-  TbHorseToy,
-  TbWash,
-  TbDeviceMobile,
-  TbPlug,
-  TbDeviceSpeaker,
-  TbDeviceLaptop,
-} from 'react-icons/tb'
+import { TbHome, TbTag, TbCategory } from 'react-icons/tb'
+import { catsConfig } from '@/config/categories'
 
 const config = {
   site: {
@@ -45,83 +31,7 @@ const config = {
       },
     },
     categories: {
-      livingRoom: {
-        name: 'Smart Home',
-        slug: 'smart-home',
-        path: 'Smart Home',
-        url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Living-Room-Hallway-And-Office-Furniture',
-        icon: TbSofa,
-      },
-      cooking: {
-        name: 'Cooking',
-        slug: 'kitchen',
-        path: 'Cooking',
-        url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Cooking-And-Serving-Items',
-        icon: TbBlender,
-      },
-      auto: {
-        name: 'Auto Products',
-        slug: 'auto-products',
-        path: 'Auto Products',
-        url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Auto-Products',
-        icon: TbCar,
-      },
-      clothing: {
-        name: 'Clothing',
-        slug: 'clothing',
-        path: 'Clothing',
-        url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Men-And-Women-Clothing',
-        icon: TbShirt,
-      },
-      perfumes: {
-        name: 'Perfumes',
-        slug: 'perfumes',
-        path: 'Perfumes',
-        url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Perfumes',
-        icon: TbPerfume,
-      },
-      toys: {
-        name: 'Toys',
-        slug: 'toys',
-        path: 'Toys',
-        url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Baby-Toys',
-        icon: TbHorseToy,
-      },
-      cleaning: {
-        name: 'Cleaning',
-        slug: 'cleaning',
-        path: 'Cleaning',
-        url: 'https://www.emag.bg/label/Smart-Deals-Detergents-And-Cleaning-Products',
-        icon: TbWash,
-      },
-      casesAndCards: {
-        name: 'Phones & Accessories',
-        slug: 'cases-and-cards',
-        path: 'Phones & Accessories',
-        url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Cases-And-Memory-Cards',
-        icon: TbDeviceMobile,
-      },
-      mda: {
-        name: 'Electric Accessories',
-        slug: 'electronic-accessories',
-        path: 'Electric Accessories',
-        url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Mda',
-        icon: TbPlug,
-      },
-      audioAndVideo: {
-        name: 'Audio & Video',
-        slug: 'audio-video',
-        path: 'Audio & Video',
-        url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Audio-Video-And-Photo',
-        icon: TbDeviceSpeaker,
-      },
-      pcComponents: {
-        name: 'Computer & Tablets',
-        slug: 'pc-components',
-        path: 'Computer & Tablets',
-        url: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Desktop-Pcs-Components-And-Peripherals',
-        icon: TbDeviceLaptop,
-      },
+      ...catsConfig,
     },
   },
   messages: {

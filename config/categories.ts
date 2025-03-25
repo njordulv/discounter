@@ -44,7 +44,7 @@ import {
   TbBriefcase,
 } from 'react-icons/tb'
 
-export const categories = {
+export const catsConfig = {
   home: {
     name: 'Home & Office',
     slug: 'home-office',

@@ -9,6 +9,7 @@ import { CardSkeleton } from '@/components/ui/Skeletons'
 import { ProductsCount } from '@/components/ProductsCount'
 import { CardProps } from '@/interfaces/emag'
 import config from '@/config'
+import { catsConfig } from '@/config/categories'
 
 const Card = dynamic(
   () => import('@/components/emag/card').then((mod) => mod.Card),
@@ -23,9 +24,7 @@ function AllDeals({ slug }: { slug: string }) {
   const perPage = 20
 
   const categoryPath = useMemo(
-    () =>
-      Object.values(config.emag.categories).find((cat) => cat.slug === slug)
-        ?.path,
+    () => Object.values(catsConfig).find((cat) => cat.slug === slug)?.name,
     [slug]
   )
 

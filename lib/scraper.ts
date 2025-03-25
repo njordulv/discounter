@@ -17,7 +17,7 @@ export async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
 
   try {
     while (currentPage <= maxPages) {
-      await sleep(2000 + Math.random() * 2000)
+      await sleep(2000 + Math.random() * 2400)
 
       const url = categoryUrl + (currentPage > 1 ? `/p${currentPage}` : '')
       console.log(`Scraping page ${currentPage}: ${url}`)
