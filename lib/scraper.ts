@@ -1,6 +1,6 @@
 import axios from 'axios'
 import * as cheerio from 'cheerio'
-import { CardProps } from '@/interfaces/emag'
+import { ScrapeProps } from '@/interfaces/emag'
 import { normalizeImageUrl } from '@/utils/functions'
 import config from '@/config'
 import Product from '@/models/Product'
@@ -10,8 +10,8 @@ import { sleep, userAgent } from '@/utils/functions'
 import { client } from '@/lib/redis'
 import { CACHE_EXPIRATION } from '@/config/cache'
 
-export async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
-  let allProducts: CardProps[] = []
+export async function scrapeEmag(categoryUrl: string): Promise<ScrapeProps[]> {
+  let allProducts: ScrapeProps[] = []
   let currentPage = 1
   const maxPages = 15
 
@@ -27,7 +27,7 @@ export async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
       })
 
       const $ = cheerio.load(data)
-      const products: CardProps[] = []
+      const products: ScrapeProps[] = []
 
       $('.card-v2').each((_, element) => {
         const title = $(element).find('.card-v2-title').text().trim()
@@ -72,7 +72,8 @@ export async function scrapeEmag(categoryUrl: string): Promise<CardProps[]> {
             link: link.startsWith('http')
               ? link
               : new URL(link, config.emag.url).toString(),
-            timestamp: new Date().toISOString(),
+            timestamp: new Date().getTime(),
+            store: config.emag.title,
           })
         }
       })
@@ -110,7 +111,13 @@ export async function scrapeAndSaveEmag(categories: EmagCats[]) {
     for (const product of products) {
       await Product.updateOne(
         { link: product.link }, // Check by link
-        { $set: { ...product, category: category.name, outdated: false } }, // Reset outdated data flag
+        {
+          $set: {
+            ...product,
+            category: category.name,
+            outdated: false,
+          },
+        }, // Reset outdated data flag
         { upsert: true } // Create or add new product
       )
     }
@@ -127,6 +134,7 @@ export async function scrapeAndSaveEmag(categories: EmagCats[]) {
     const deletedCount = await Product.deleteMany({
       category: category.name,
       outdated: true,
+      store: config.emag.title,
     })
     console.log(
       `🗑️ Deleted ${deletedCount.deletedCount} outdated products in category: ${category.name}`

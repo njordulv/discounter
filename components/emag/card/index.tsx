@@ -1,5 +1,5 @@
 import { TbExternalLink } from 'react-icons/tb'
-import { CardProps } from '@/interfaces/emag'
+import { ScrapeProps } from '@/interfaces/emag'
 import { FallbackImage } from '@/components/ui/FallbackImage'
 import { useLazyLoad } from '@/hooks/useLazyLoad'
 import {
@@ -14,7 +14,7 @@ import {
 import { Button } from '@/components/ui/Button'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 
-export const Card: React.FC<CardProps> = ({
+export const Card: React.FC<ScrapeProps> = ({
   title,
   imageUrl,
   price,

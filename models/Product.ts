@@ -14,9 +14,11 @@ const ProductSchema = new mongoose.Schema(
     imageUrl: String,
     link: String,
     category: String,
+    store: { type: String, required: true },
+    outdated: { type: Boolean, default: false },
     timestamp: { type: Number, default: () => Date.now() },
   },
-  { versionKey: false } // Disable versionKey __v field
+  { versionKey: false }
 )
 
 export default mongoose.models.Product ||

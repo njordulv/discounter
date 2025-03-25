@@ -41,7 +41,7 @@ interface Currency {
   }
 }
 
-export interface CardProps {
+export interface ScrapeProps {
   title: string
   price: string
   oldPrice: string | null
@@ -53,7 +53,8 @@ export interface CardProps {
   toOrder: string
   imageUrl: string
   link: string
-  timestamp: string
+  timestamp: number
+  store: string
 }
 
 export interface StockProps {
@@ -66,7 +67,7 @@ export interface StockProps {
 export interface PaginationProps {
   currentPage: number
   totalPages: number
-  setAccumulatedData: (data: CardProps[]) => void
+  setAccumulatedData: (data: ScrapeProps[]) => void
   setCurrentPage: (page: number) => void
 }
 

@@ -1,13 +1,13 @@
 {
   "name": "discounter",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "scraper": "tsx scripts/scraper.ts"
+    "scrape": "tsx scripts/scraper.ts"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",

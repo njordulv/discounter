@@ -45,7 +45,7 @@ import {
 } from 'react-icons/tb'
 
 export const catsConfig = {
-  home: {
+  homeOffice: {
     name: 'Home & Office',
     slug: 'home-office',
     icon: TbSofa,
@@ -264,21 +264,21 @@ export const catsConfig = {
     subcategories: {
       skinCare: {
         name: 'Skincare',
-        slug: 'skincare',
+        slug: 'skin-care',
         icon: TbCropPortrait,
         scrapeUrl:
           'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Skin-Care',
       },
       bodyCare: {
         name: 'Bodycare',
-        slug: 'bodycare',
+        slug: 'body-care',
         icon: TbBottle,
         scrapeUrl:
           'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Body-Care',
       },
       hairCare: {
         name: 'Haircare',
-        slug: 'haircare',
+        slug: 'hair-care',
         icon: TbWash,
         scrapeUrl:
           'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Hair-Care',
@@ -326,7 +326,7 @@ export const catsConfig = {
     scrapeUrl: 'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Baby-Toys',
     subcategories: {
       outdoorToys: {
-        name: 'Outdoor',
+        name: 'Outdoor Toys',
         slug: 'outdoor-toys',
         icon: TbBallFootball,
         scrapeUrl:
@@ -383,9 +383,9 @@ export const catsConfig = {
       },
     },
   },
-  homeCare: {
-    name: 'Home Care',
-    slug: 'home-care',
+  cleaning: {
+    name: 'Cleaning',
+    slug: 'cleaning',
     icon: TbWash,
     scrapeUrl:
       'https://www.emag.bg/label/Smart-Deals-Detergents-And-Cleaning-Products',
@@ -449,7 +449,7 @@ export const catsConfig = {
       },
     },
   },
-  mda: {
+  appliances: {
     name: 'Appliances',
     slug: 'appliances',
     icon: TbPlug,
@@ -499,9 +499,9 @@ export const catsConfig = {
         scrapeUrl:
           'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Gaming-Consoles-And-Accessories',
       },
-      tvs: {
-        name: 'TV Accessories',
-        slug: 'tv-accessories',
+      tv: {
+        name: 'TV',
+        slug: 'tv',
         icon: TbDeviceDesktop,
         scrapeUrl:
           'https://www.emag.bg/label/Smart-Deals-Smart-Deals-Tv-Stands-And-Accessories',

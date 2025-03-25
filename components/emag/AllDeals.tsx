@@ -7,7 +7,7 @@ import Loader from '@/components/ui/Loader'
 import { Pagination } from '@/components/emag/Pagination'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { ProductsCount } from '@/components/ProductsCount'
-import { CardProps } from '@/interfaces/emag'
+import { ScrapeProps } from '@/interfaces/emag'
 import config from '@/config'
 import { catsConfig } from '@/config/categories'
 
@@ -20,7 +20,7 @@ function AllDeals({ slug }: { slug: string }) {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [tagProducts, setTagProducts] = useState(0)
-  const [accumulatedData, setAccumulatedData] = useState<CardProps[]>([])
+  const [accumulatedData, setAccumulatedData] = useState<ScrapeProps[]>([])
   const perPage = 20
 
   const categoryPath = useMemo(

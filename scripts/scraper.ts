@@ -14,13 +14,13 @@ async function testMongo() {
 testMongo()
 ;(async () => {
   const cats = Object.values(catsConfig).map((tag) => ({
-    name: tag.name,
+    name: tag.slug,
     url: tag.scrapeUrl,
   }))
 
   const subCats = Object.values(catsConfig).flatMap((tag) =>
     Object.values(tag.subcategories || {}).map((sub) => ({
-      name: `${tag.name} - ${sub.name}`,
+      name: `${sub.slug}`,
       url: sub.scrapeUrl,
     }))
   )

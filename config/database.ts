@@ -16,7 +16,7 @@ interface DatabaseConfig {
 const databaseConfig: DatabaseConfig = {
   mongo: {
     url: process.env.MONGODB_URI!,
-    defaultDb: 'allDeals',
+    defaultDb: 'discounter',
     collections: {
       products: 'products',
     },
