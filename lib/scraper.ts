@@ -1,4 +1,5 @@
 import * as cheerio from 'cheerio'
+import { Element } from 'domhandler'
 import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import config from '@/config'
@@ -13,8 +14,8 @@ puppeteer.use(StealthPlugin())
 
 // Product data parsing function
 const parseProductData = (
-  $: cheerio.Root,
-  element: cheerio.Element
+  $: cheerio.CheerioAPI,
+  element: Element
 ): ScrapeProps | null => {
   const title = $(element).find('.card-v2-title').text().trim()
   const price = $(element).find('.product-new-price').first().text().trim()
@@ -45,7 +46,10 @@ const parseProductData = (
 
 // Main scraper function
 export async function scrapeEmag(categoryUrl: string): Promise<ScrapeProps[]> {
-  const browser = await puppeteer.launch(config.browserConfig)
+  const browser = await puppeteer.launch({
+    ...config.browserConfig,
+    headless: true,
+  })
   const page = await browser.newPage()
   const allProducts: ScrapeProps[] = []
   const MAX_PAGES = 15
