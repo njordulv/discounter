@@ -7,7 +7,6 @@ import Loader from '@/components/ui/Loader'
 import { Pagination } from '@/components/emag/Pagination'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { ProductsCount } from '@/components/ProductsCount'
-import { getCategoryName } from '@/utils/functions'
 import { ScrapeProps } from '@/interfaces/emag'
 import config from '@/config'
 
@@ -23,16 +22,14 @@ function AllDeals({ slug }: { slug: string }) {
   const [accumulatedData, setAccumulatedData] = useState<ScrapeProps[]>([])
   const perPage = 20
 
-  const categoryPath = useMemo(() => getCategoryName(slug), [slug])
-
   const queryParams = useMemo(() => {
     const params = new URLSearchParams({
       page: currentPage.toString(),
       perPage: perPage.toString(),
     })
-    if (categoryPath) params.append('category', categoryPath.toLowerCase())
+    if (slug) params.append('category', slug.toLowerCase())
     return params.toString()
-  }, [categoryPath, currentPage])
+  }, [slug, currentPage])
 
   const { data, error, isLoading } = useFetcher({
     url: `/api/emag/all-deals?${queryParams}`,
@@ -52,7 +49,7 @@ function AllDeals({ slug }: { slug: string }) {
   return (
     <>
       {tagProducts > 0 && (
-        <ProductsCount tagProducts={tagProducts} categoryPath={categoryPath!} />
+        <ProductsCount tagProducts={tagProducts} slug={slug!} />
       )}
 
       <div className="w-full grid grid-cols-1 gap-2">

@@ -417,7 +417,7 @@ export const catsConfig = {
         scrapeUrl:
           'https://www.emag.bg/label/Smart-Deals-Smart-Home-And-Gadgets',
       },
-      booksMusicMovies: {
+      media: {
         name: 'Media',
         slug: 'media',
         icon: TbBook,
