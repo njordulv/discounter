@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { catsConfig } from '@/config/categories'
+import { ProductsCount } from '@/components/ProductsCount'
 
 const TagCats = ({ slug }: { slug: string }) => {
   const category = useMemo(() => {
@@ -14,7 +15,7 @@ const TagCats = ({ slug }: { slug: string }) => {
         <li key={item.slug}>
           <a
             href={`/tag/${item.slug}`}
-            className="flex flex-col items-center text-center flex-nowrap gap-3 leading-5 w-full text-md"
+            className="flex flex-col items-center text-center flex-nowrap gap-3 leading-5 w-full text-sm"
           >
             {item.icon && (
               <item.icon
@@ -33,7 +34,14 @@ const TagCats = ({ slug }: { slug: string }) => {
 
   if (!hasSubCats) return null
 
-  return <ul className="grid grid-cols-10 gap-4">{hasSubCats}</ul>
+  return (
+    <>
+      <ProductsCount slug={slug!} />
+      <ul className="grid grid-cols-5 sm:grid-cols-8 lg:grid-cols-10 gap-4 sm:gap-6 pb-6">
+        {hasSubCats}
+      </ul>
+    </>
+  )
 }
 
 export default TagCats

@@ -11,3 +11,12 @@ export interface BaseButtonProps
   type?: 'button' | 'submit' | 'reset'
   onClick?: () => void
 }
+
+export interface StoreProps {
+  currentPage: number
+  setCurrentPage: (page: number) => void
+  totalPages: number
+  setTotalPages: (page: number) => void
+  tagProducts: number
+  setTagProducts: (products: number) => void
+}

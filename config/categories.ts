@@ -13,6 +13,7 @@ import {
   TbToolsKitchen,
   TbBed,
   TbBath,
+  TbBathFilled,
   TbGrill,
   TbPlant,
   TbIroning,
@@ -75,7 +76,7 @@ export const catsConfig = {
       bathroom: {
         name: 'Bathroom',
         slug: 'bathroom',
-        icon: TbBath,
+        icon: TbBathFilled,
         scrapeUrl: 'https://www.emag.bg/label/Smart-Deals-Bathroom-Furniture',
       },
       outdoor: {
