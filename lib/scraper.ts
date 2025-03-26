@@ -1,155 +1,167 @@
-import axios from 'axios'
 import * as cheerio from 'cheerio'
-import { ScrapeProps } from '@/interfaces/emag'
-import { normalizeImageUrl } from '@/utils/functions'
+import puppeteer from 'puppeteer-extra'
+import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import config from '@/config'
 import Product from '@/models/Product'
+import { normalizeImageUrl, randomDelay, processLink } from '@/utils/functions'
+import { ScrapeProps, EmagCats } from '@/interfaces/emag'
 import { connectDB } from '@/lib/mongo'
-import { EmagCats } from '@/interfaces/emag'
-import { sleep, userAgent } from '@/utils/functions'
 import { client } from '@/lib/redis'
 import { CACHE_EXPIRATION } from '@/config/cache'
 
-export async function scrapeEmag(categoryUrl: string): Promise<ScrapeProps[]> {
-  let allProducts: ScrapeProps[] = []
-  let currentPage = 1
-  const maxPages = 15
+puppeteer.use(StealthPlugin())
 
-  try {
-    while (currentPage <= maxPages) {
-      await sleep(2000 + Math.random() * 2400)
+// Product data parsing function
+const parseProductData = (
+  $: cheerio.Root,
+  element: cheerio.Element
+): ScrapeProps | null => {
+  const title = $(element).find('.card-v2-title').text().trim()
+  const price = $(element).find('.product-new-price').first().text().trim()
 
-      const url = categoryUrl + (currentPage > 1 ? `/p${currentPage}` : '')
-      console.log(`Scraping page ${currentPage}: ${url}`)
+  if (!title || !price) return null
 
-      const { data } = await axios.get(url, {
-        headers: { 'User-Agent': userAgent() },
-      })
-
-      const $ = cheerio.load(data)
-      const products: ScrapeProps[] = []
-
-      $('.card-v2').each((_, element) => {
-        const title = $(element).find('.card-v2-title').text().trim()
-        const price = $(element)
-          .find('.product-new-price')
-          .first()
-          .text()
-          .trim()
-        const oldPrice =
-          $(element).find('.pricing .rrp-lp30d-content s').text().trim() || null
-        const discount = $(element)
-          .find('.card-v2-badge.badge-discount')
-          .text()
-          .trim()
-        const isGenius = $(element).find('.badge-genius').length > 0
-        const stock =
-          $(element).find('.text-availability-in_stock').text().trim() || null
-        const stockOut = $(element)
-          .find('.text-availability-out_of_stock')
-          .text()
-        const stockLimited = $(element)
-          .find('.text-availability-limited_stock_qty')
-          .text()
-        const toOrder = $(element).find('.text-availability-to_order').text()
-        const rawImageUrl =
-          $(element).find('.img-component img').attr('src') || ''
-        const imageUrl = normalizeImageUrl(rawImageUrl)
-        const link = $(element).find('a.js-product-url').attr('href') || ''
-
-        if (title && price) {
-          products.push({
-            title,
-            price,
-            oldPrice,
-            discount,
-            isGenius,
-            stock,
-            stockOut,
-            stockLimited,
-            toOrder,
-            imageUrl,
-            link: link.startsWith('http')
-              ? link
-              : new URL(link, config.emag.url).toString(),
-            timestamp: new Date().getTime(),
-            store: config.emag.title,
-          })
-        }
-      })
-
-      if (products.length === 0) break
-      allProducts = [...allProducts, ...products]
-      currentPage++
-    }
-
-    return allProducts
-  } catch (error) {
-    console.error('Error scraping:', error)
-    return []
+  return {
+    title,
+    price,
+    oldPrice:
+      $(element).find('.pricing .rrp-lp30d-content s').text().trim() || null,
+    discount: $(element).find('.card-v2-badge.badge-discount').text().trim(),
+    isGenius: $(element).find('.badge-genius').length > 0,
+    stock: $(element).find('.text-availability-in_stock').text().trim() || null,
+    stockOut: $(element).find('.text-availability-out_of_stock').text(),
+    stockLimited: $(element)
+      .find('.text-availability-limited_stock_qty')
+      .text(),
+    toOrder: $(element).find('.text-availability-to_order').text(),
+    imageUrl: normalizeImageUrl(
+      $(element).find('.img-component img').attr('src') || ''
+    ),
+    link: processLink($(element).find('a.js-product-url').attr('href') || ''),
+    timestamp: new Date().getTime(),
+    store: config.emag.title,
   }
 }
 
+// Main scraper function
+export async function scrapeEmag(categoryUrl: string): Promise<ScrapeProps[]> {
+  const browser = await puppeteer.launch(config.browserConfig)
+  const page = await browser.newPage()
+  const allProducts: ScrapeProps[] = []
+  const MAX_PAGES = 15
+
+  try {
+    await page.setUserAgent(
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    )
+    await page.setExtraHTTPHeaders({
+      'Accept-Language': 'en-US,en;q=0.9',
+      Referer: 'https://www.google.com/',
+    })
+
+    let currentPage = 1
+
+    while (currentPage <= MAX_PAGES) {
+      await randomDelay()
+
+      const url =
+        currentPage > 1 ? `${categoryUrl}/p${currentPage}` : categoryUrl
+
+      console.log(`🌐 Loading page ${currentPage}: ${url}`)
+
+      try {
+        await page.goto(url, {
+          waitUntil: 'networkidle2',
+          timeout: 60000,
+        })
+
+        // Cloudflare security check
+        if (await page.$('#challenge-form')) {
+          throw new Error('Cloudflare security check detected')
+        }
+
+        // Content parsing
+        const content = await page.content()
+        const $ = cheerio.load(content)
+        const products: ScrapeProps[] = []
+
+        $('.card-v2').each((_, element) => {
+          const product = parseProductData($, element)
+          if (product) products.push(product)
+        })
+
+        if (products.length === 0) break
+
+        allProducts.push(...products)
+        console.log(
+          `✅ Found ${products.length} products on page ${currentPage}`
+        )
+
+        currentPage++
+      } catch (error) {
+        console.error(`❌ Error on page ${currentPage}:`, error)
+        break
+      }
+    }
+
+    return allProducts
+  } finally {
+    await browser.close()
+    console.log(`🧹 Browser closed for ${categoryUrl}`)
+  }
+}
+
+// Data saving function
 export async function scrapeAndSaveEmag(categories: EmagCats[]) {
   await connectDB()
 
-  const categoriesCount: { [key: string]: number } = {}
-
   for (const category of categories) {
-    await client.del(`products_${category.name}`)
-    console.log(`🗑️ Cache for category ${category.name} deleted`)
-
-    // 1️. Before scraping, mark all products in the category as outdated
-    await Product.updateMany(
-      { category: category.name },
-      { $set: { outdated: true } }
-    )
-
-    // 2️. Scraping new data
-    const products = await scrapeEmag(category.url)
-
-    for (const product of products) {
-      await Product.updateOne(
-        { link: product.link }, // Check by link
-        {
-          $set: {
-            ...product,
-            category: category.name,
-            outdated: false,
-          },
-        }, // Reset outdated data flag
-        { upsert: true } // Create or add new product
-      )
-    }
-
-    categoriesCount[category.name] = products.length
-    const productCounts = Object.values(categoriesCount).join(', ')
-    const categoryNames = Object.keys(categoriesCount).join(', ')
-
-    console.log(
-      `Saved ${productCounts} products in categories: ${categoryNames}`
-    )
-
-    // 3️. After scraping, delete products that are still marked as outdated (they no longer exist on the website)
-    const deletedCount = await Product.deleteMany({
-      category: category.name,
-      outdated: true,
-      store: config.emag.title,
-    })
-    console.log(
-      `🗑️ Deleted ${deletedCount.deletedCount} outdated products in category: ${category.name}`
-    )
-
-    // 4️. Cache the scraped data
     try {
+      console.log(`🔄 Processing category: ${category.name}`)
+      await client.del(`products_${category.name}`)
+
+      // Mark old products
+      await Product.updateMany(
+        { category: category.name },
+        { $set: { outdated: true } }
+      )
+
+      // Scraping data
+      const products = await scrapeEmag(category.url)
+
+      // Update database
+      const bulkOps = products.map((product) => ({
+        updateOne: {
+          filter: { link: product.link },
+          update: {
+            $set: { ...product, category: category.name, outdated: false },
+          },
+          upsert: true,
+        },
+      }))
+
+      if (bulkOps.length > 0) {
+        await Product.bulkWrite(bulkOps)
+      }
+
+      // Clear old products
+      const { deletedCount } = await Product.deleteMany({
+        category: category.name,
+        outdated: true,
+      })
+
+      // Cache products
       await client.setex(
         `products_${category.name}`,
         CACHE_EXPIRATION,
         JSON.stringify(products)
       )
-      console.log(`✅ Cache updated for category ${category.name}`)
-    } catch (cacheError) {
-      console.error('Error caching data:', cacheError)
+
+      console.log(
+        `✅ ${products.length} products saved | 🗑 ${deletedCount} removed`
+      )
+    } catch (error) {
+      console.error(`❌ Error processing ${category.name}:`, error)
     }
   }
 }

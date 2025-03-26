@@ -7,9 +7,9 @@ import Loader from '@/components/ui/Loader'
 import { Pagination } from '@/components/emag/Pagination'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { ProductsCount } from '@/components/ProductsCount'
+import { getCategoryName } from '@/utils/functions'
 import { ScrapeProps } from '@/interfaces/emag'
 import config from '@/config'
-import { catsConfig } from '@/config/categories'
 
 const Card = dynamic(
   () => import('@/components/emag/card').then((mod) => mod.Card),
@@ -23,17 +23,14 @@ function AllDeals({ slug }: { slug: string }) {
   const [accumulatedData, setAccumulatedData] = useState<ScrapeProps[]>([])
   const perPage = 20
 
-  const categoryPath = useMemo(
-    () => Object.values(catsConfig).find((cat) => cat.slug === slug)?.name,
-    [slug]
-  )
+  const categoryPath = useMemo(() => getCategoryName(slug), [slug])
 
   const queryParams = useMemo(() => {
     const params = new URLSearchParams({
       page: currentPage.toString(),
       perPage: perPage.toString(),
     })
-    if (categoryPath) params.append('category', categoryPath)
+    if (categoryPath) params.append('category', categoryPath.toLowerCase())
     return params.toString()
   }, [categoryPath, currentPage])
 

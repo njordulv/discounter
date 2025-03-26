@@ -1,11 +1,12 @@
 import Link from 'next/link'
-import { SheetClose } from '@/components/ui/sheet'
-import config from '@/config'
 import { useMemo } from 'react'
+import { SheetClose } from '@/components/ui/sheet'
+import { catsConfig } from '@/config/categories'
+import config from '@/config'
 
 export const Categories = () => {
   const menu = useMemo(() => config.emag.mainMenu, [])
-  const cats = useMemo(() => config.emag.categories, [])
+  const cats = useMemo(() => catsConfig, [])
 
   const menuItems = useMemo(
     () =>
