@@ -1,5 +1,4 @@
 import * as cheerio from 'cheerio'
-import { Element } from 'domhandler'
 import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import config from '@/config'
@@ -14,8 +13,8 @@ puppeteer.use(StealthPlugin())
 
 // Product data parsing function
 const parseProductData = (
-  $: cheerio.CheerioAPI,
-  element: Element
+  $: cheerio.Root,
+  element: cheerio.Element
 ): ScrapeProps | null => {
   const title = $(element).find('.card-v2-title').text().trim()
   const price = $(element).find('.product-new-price').first().text().trim()
