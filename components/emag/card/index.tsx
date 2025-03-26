@@ -26,6 +26,7 @@ export const Card: React.FC<ScrapeProps> = ({
   stockLimited,
   toOrder,
   link,
+  store,
 }) => {
   const { ref, isVisible } = useLazyLoad()
 
@@ -49,13 +50,13 @@ export const Card: React.FC<ScrapeProps> = ({
             <h2 className="text-md text-foreground font-semibold sm:mb-3">
               {title}
             </h2>
-            <div className="grid auto-cols-max sm:flex sm:flex-wrap sm:items-center">
+            <div className="grid auto-cols-max sm:flex sm:flex-wrap sm:items-center sm:gap-3">
               {price && <NewPrice price={price} />}
               {oldPrice && <OldPrice oldPrice={oldPrice} />}
               <StockStatus
                 stockInfo={{ stockOut, stockLimited, toOrder, stock }}
               />
-              <LinkToShop />
+              <LinkToShop store={store} />
             </div>
           </div>
           <div className="grid grid-cols-2 items-center gap-3">

@@ -101,7 +101,7 @@ export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
   )
 }
 
-export const LinkToShop = () => {
+export const LinkToShop = ({ store }: { store: string }) => {
   return (
     <span className="text-sm sm:text-base text-muted-foreground">
       {config.card.shop}
@@ -109,7 +109,7 @@ export const LinkToShop = () => {
         className="text-sm hover:text-[hsl(var(--primary))] transition"
         href={config.emag.url}
       >
-        {config.emag.title}
+        {store}
       </Link>
     </span>
   )
