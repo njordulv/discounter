@@ -4,7 +4,7 @@ import { getMonth, getYear } from '@/utils/functions'
 import { useStore } from '@/store'
 import config from '@/config'
 
-export const ProductsCount = ({ slug }: { slug: string }) => {
+export const Discover = ({ slug }: { slug: string }) => {
   const { tagProducts } = useStore()
 
   return (
