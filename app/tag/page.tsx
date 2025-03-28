@@ -15,7 +15,11 @@ export default function Page() {
             key={key}
             className="w-full flex flex-col gap-4 p-3 border rounded-lg bg-[hsl(var(--card))] transition-all"
           >
-            <h2 className="text-2xl font-medium text-primary">{item.name}</h2>
+            <h2>
+              <span className="text-2xl font-medium bg-gradient inline !bg-clip-text text-transparent">
+                {item.name}
+              </span>
+            </h2>
             <ul className="w-full grid grid-cols-1 sm:grid-cols-4 gap-2">
               <li>
                 <Link

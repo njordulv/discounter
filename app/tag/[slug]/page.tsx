@@ -1,11 +1,11 @@
-import { getCategoryName } from '@/utils/functions'
+import { slugToName } from '@/utils/functions'
 import { notFound } from 'next/navigation'
 import { Hero } from '@/components/tags'
 import AllDeals from '@/components/emag/AllDeals'
 
 async function Page({ params }: { params: { slug: string } }) {
   const { slug } = await params
-  const title = getCategoryName(slug)
+  const title = slugToName(slug)
 
   if (!title) notFound()
 

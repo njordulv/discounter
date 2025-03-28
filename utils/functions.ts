@@ -1,6 +1,7 @@
 import config from '@/config'
 import { catsConfig } from '@/config/categories'
 
+// Normalize image URL
 export function normalizeImageUrl(url: string): string {
   url = url.replace(/^https?:/i, 'https://')
   const parts = url.split('://')
@@ -8,7 +9,8 @@ export function normalizeImageUrl(url: string): string {
   return `https://${lastPart}`.replace(/\/+/g, '/')
 }
 
-export function getCategoryName(slug: string) {
+// Slug to name
+export function slugToName(slug: string) {
   return Object.values(catsConfig)
     .flatMap((cat) => [
       { slug: cat.slug, name: cat.name },
@@ -37,7 +39,9 @@ export const processLink = (link: string): string => {
     : new URL(link, config.emag.url).toString()
 }
 
+// Get full month
 export const getMonth = () =>
   new Date().toLocaleString('en-US', { month: 'long' })
 
+// Get full year
 export const getYear = () => new Date().getFullYear()

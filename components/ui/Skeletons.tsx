@@ -38,7 +38,7 @@ export const CardSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
       role="status"
       className="animate-pulse w-full flex items-start sm:gap-4 gap-3 sm:p-4 p-2 relative overflow-hidden rounded-lg border bg-card text-card-foreground"
     >
-      <div className="flex items-start w-44 h-44 bg-transparent rounded-lg">
+      <div className="flex items-start w-44 h-44 bg-transparent rounded-md">
         <svg
           className="w-44 h-44 text-primary/50"
           aria-hidden="true"
@@ -50,10 +50,15 @@ export const CardSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
         </svg>
       </div>
       <div className="w-full overflow-hidden">
-        <div className="h-7 bg-primary/20 rounded-lg w-full mb-3"></div>
-        <div className="h-7 bg-primary/20 rounded-lg w-full max-w-42 mb-4"></div>
-        <div className="h-6 bg-primary/20 rounded-lg w-full max-w-16 mb-4"></div>
-        <div className="h-9 bg-primary/20 rounded-full w-full max-w-40"></div>
+        <div className="h-5 bg-primary/20 rounded-md w-full mb-2"></div>
+        <div className="h-5 bg-primary/20 rounded-md w-3/5 mb-3"></div>
+        <div className="flex gap-3 mb-12">
+          <div className="h-6 bg-primary/20 rounded-md w-full max-w-20"></div>
+          <div className="h-6 bg-primary/20 rounded-md w-full max-w-20"></div>
+          <div className="h-6 bg-primary/20 rounded-md w-full max-w-20"></div>
+          <div className="h-6 bg-primary/20 rounded-md w-full max-w-32"></div>
+        </div>
+        <div className="h-10 bg-primary/20 rounded-md w-full max-w-96"></div>
       </div>
       <span className="sr-only">Loading...</span>
     </div>
