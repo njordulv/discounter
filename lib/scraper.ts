@@ -11,39 +11,47 @@ import { CACHE_EXPIRATION } from '@/config/cache'
 
 puppeteer.use(StealthPlugin())
 
-// Product data parsing function
+// Extract text content safely
+const extractText = (
+  $: cheerio.Root,
+  element: cheerio.Element,
+  selector: string
+): string => $(element).find(selector).text().trim() || ''
+
+// Parse product data
 const parseProductData = (
   $: cheerio.Root,
   element: cheerio.Element
 ): ScrapeProps | null => {
-  const title = $(element).find('.card-v2-title').text().trim()
-  const price = $(element).find('.product-new-price').first().text().trim()
+  const title = extractText($, element, '.card-v2-title')
+  const price = extractText($, element, '.product-new-price')
 
   if (!title || !price) return null
 
   return {
     title,
     price,
-    oldPrice:
-      $(element).find('.pricing .rrp-lp30d-content s').text().trim() || null,
-    discount: $(element).find('.card-v2-badge.badge-discount').text().trim(),
+    oldPrice: extractText($, element, '.pricing s') || null,
+    discount: extractText($, element, '.card-v2-badge.badge-discount'),
     isGenius: $(element).find('.badge-genius').length > 0,
-    stock: $(element).find('.text-availability-in_stock').text().trim() || null,
-    stockOut: $(element).find('.text-availability-out_of_stock').text(),
-    stockLimited: $(element)
-      .find('.text-availability-limited_stock_qty')
-      .text(),
-    toOrder: $(element).find('.text-availability-to_order').text(),
+    stock: extractText($, element, '.text-availability-in_stock') || null,
+    stockOut: extractText($, element, '.text-availability-out_of_stock'),
+    stockLimited: extractText(
+      $,
+      element,
+      '.text-availability-limited_stock_qty'
+    ),
+    toOrder: extractText($, element, '.text-availability-to_order'),
     imageUrl: normalizeImageUrl(
       $(element).find('.img-component img').attr('src') || ''
     ),
     link: processLink($(element).find('a.js-product-url').attr('href') || ''),
-    timestamp: new Date().getTime(),
+    timestamp: Date.now(),
     store: config.emag.title,
   }
 }
 
-// Main scraper function
+// Main scraping function
 export async function scrapeEmag(categoryUrl: string): Promise<ScrapeProps[]> {
   const browser = await puppeteer.launch({
     ...config.browserConfig,
@@ -63,8 +71,9 @@ export async function scrapeEmag(categoryUrl: string): Promise<ScrapeProps[]> {
     })
 
     let currentPage = 1
+    const hasNextPage = true
 
-    while (currentPage <= MAX_PAGES) {
+    while (currentPage <= MAX_PAGES && hasNextPage) {
       await randomDelay()
 
       const url =
@@ -73,17 +82,18 @@ export async function scrapeEmag(categoryUrl: string): Promise<ScrapeProps[]> {
       console.log(`🌐 Loading page ${currentPage}: ${url}`)
 
       try {
-        await page.goto(url, {
-          waitUntil: 'networkidle2',
-          timeout: 60000,
+        const response = await page.goto(url, {
+          waitUntil: 'domcontentloaded',
+          timeout: 30000,
         })
 
-        // Cloudflare security check
-        if (await page.$('#challenge-form')) {
-          throw new Error('Cloudflare security check detected')
+        // Check if the page returns 404, then stop scraping
+        if (response && response.status() === 404) {
+          console.log(`❌ Page ${currentPage} not found, stopping.`)
+          break // If page not found, stop the loop
         }
 
-        // Content parsing
+        // Try to parse content
         const content = await page.content()
         const $ = cheerio.load(content)
         const products: ScrapeProps[] = []
@@ -93,28 +103,45 @@ export async function scrapeEmag(categoryUrl: string): Promise<ScrapeProps[]> {
           if (product) products.push(product)
         })
 
-        if (products.length === 0) break
+        if (products.length === 0) {
+          console.log(`⚠️ No more products on page ${currentPage}, stopping.`)
+          break // Stop the loop if no products are found
+        }
 
         allProducts.push(...products)
         console.log(
           `✅ Found ${products.length} products on page ${currentPage}`
         )
 
-        currentPage++
+        // If content is present, check if the next page exists
+        const nextPageUrl = `${categoryUrl}/p${currentPage + 1}`
+        const nextPageResponse = await page
+          .goto(nextPageUrl, { timeout: 5000 })
+          .catch(() => null)
+
+        // If the next page does not exist (failed request), stop scraping
+        if (!nextPageResponse || nextPageResponse.status() === 404) {
+          console.log(`🚀 No more pages available, moving to next category.`)
+          break
+        }
+
+        currentPage++ // If all ok, go to the next page
       } catch (error) {
         console.error(`❌ Error on page ${currentPage}:`, error)
-        break
+        break // Stop in case of error
       }
     }
 
     return allProducts
   } finally {
-    await browser.close()
-    console.log(`🧹 Browser closed for ${categoryUrl}`)
+    if (browser.isConnected()) {
+      await browser.close()
+      console.log(`🧹 Browser closed for ${categoryUrl}`)
+    }
   }
 }
 
-// Data saving function
+// Scrape and save data to MongoDB
 export async function scrapeAndSaveEmag(categories: EmagCats[]) {
   await connectDB()
 
@@ -123,46 +150,50 @@ export async function scrapeAndSaveEmag(categories: EmagCats[]) {
       console.log(`🔄 Processing category: ${category.name}`)
       await client.del(`products_${category.name}`)
 
-      // Mark old products
+      // Mark old products as outdated instead of deleting immediately
       await Product.updateMany(
         { category: category.name },
         { $set: { outdated: true } }
       )
 
-      // Scraping data
+      // Scrape data
       const products = await scrapeEmag(category.url)
 
-      // Update database
-      const bulkOps = products.map((product) => ({
-        updateOne: {
-          filter: { link: product.link },
-          update: {
-            $set: { ...product, category: category.name, outdated: false },
+      // If new products are found, update the database
+      if (products.length > 0) {
+        const bulkOps = products.map((product) => ({
+          updateOne: {
+            filter: { link: product.link },
+            update: {
+              $set: { ...product, category: category.name, outdated: false },
+            },
+            upsert: true,
           },
-          upsert: true,
-        },
-      }))
+        }))
 
-      if (bulkOps.length > 0) {
         await Product.bulkWrite(bulkOps)
+
+        // Delete outdated products only if new ones are added
+        const { deletedCount } = await Product.deleteMany({
+          category: category.name,
+          outdated: true,
+        })
+
+        console.log(
+          `✅ Saved: ${products.length} | 🗑 Removed outdated: ${deletedCount}`
+        )
+      } else {
+        console.warn(`⚠️ No new products found for ${category.name}`)
       }
 
-      // Clear old products
-      const { deletedCount } = await Product.deleteMany({
-        category: category.name,
-        outdated: true,
-      })
-
-      // Cache products
-      await client.setex(
-        `products_${category.name}`,
-        CACHE_EXPIRATION,
-        JSON.stringify(products)
-      )
-
-      console.log(
-        `✅ ${products.length} products saved | 🗑 ${deletedCount} removed`
-      )
+      // Cache products only if data is available
+      if (products.length > 0) {
+        await client.setex(
+          `products_${category.name}`,
+          CACHE_EXPIRATION,
+          JSON.stringify(products)
+        )
+      }
     } catch (error) {
       console.error(`❌ Error processing ${category.name}:`, error)
     }
