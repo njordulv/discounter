@@ -6,7 +6,7 @@ import config from '@/config'
 
 export const Categories = () => {
   const menu = useMemo(() => config.emag.mainMenu, [])
-  const cats = useMemo(() => catsConfig, [])
+  const cats = useMemo(() => catsConfig.electronics.subcategories, [])
 
   const menuItems = useMemo(
     () =>

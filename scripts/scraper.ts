@@ -13,11 +13,6 @@ async function testMongo() {
 
 testMongo()
 ;(async () => {
-  const cats = Object.values(catsConfig).map((tag) => ({
-    name: tag.slug,
-    url: tag.scrapeUrl,
-  }))
-
   const subCats = Object.values(catsConfig).flatMap((tag) =>
     Object.values(tag.subcategories || {}).map((sub) => ({
       name: `${sub.slug}`,
@@ -25,9 +20,7 @@ testMongo()
     }))
   )
 
-  const tags = [...cats, ...subCats]
-
-  await scrapeAndSaveEmag(tags)
+  await scrapeAndSaveEmag(subCats)
 
   process.exit(0)
 })()

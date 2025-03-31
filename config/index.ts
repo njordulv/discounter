@@ -25,7 +25,7 @@ const config = {
         icon: TbTag,
       },
       categories: {
-        name: 'Categories',
+        name: 'All Categories',
         slug: '/tag',
         icon: TbCategory,
       },
