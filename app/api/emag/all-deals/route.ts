@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { connectDB } from '@/lib/mongo'
-import { getAsync, client } from '@/lib/redis'
+import { getAsync, redisClient } from '@/lib/redis'
 import { CACHE_EXPIRATION } from '@/config/cache'
 import Product from '@/models/Product'
 
@@ -49,10 +49,14 @@ export async function GET(request: Request) {
       .limit(perPage)
 
     // 3. Caching data
-    await client.setex(cacheKey, CACHE_EXPIRATION, JSON.stringify(products))
+    await redisClient.setex(
+      cacheKey,
+      CACHE_EXPIRATION,
+      JSON.stringify(products)
+    )
 
     if (!cachedCount) {
-      await client.setex(countKey, CACHE_EXPIRATION, totalItems.toString())
+      await redisClient.setex(countKey, CACHE_EXPIRATION, totalItems.toString())
     }
 
     return NextResponse.json({
