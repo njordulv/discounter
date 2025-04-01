@@ -11,6 +11,7 @@ const config = {
   emag: {
     title: 'eMAG',
     url: 'https://www.emag.bg',
+    currency: 'лв.',
     smartDeals: 'https://sapi.emag.bg/label-campaign/flash-deals?source_id=',
     errorFetch: 'Error fetching data',
     mainMenu: {

@@ -3,7 +3,12 @@ import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import config from '@/config'
 import Product from '@/models/Product'
-import { normalizeImageUrl, randomDelay, processLink } from '@/utils/functions'
+import {
+  normalizeImageUrl,
+  parsePrice,
+  randomDelay,
+  processLink,
+} from '@/utils/functions'
 import { ScrapeProps, EmagCats } from '@/interfaces/emag'
 import { connectDB } from '@/lib/mongo'
 import { redisClient } from '@/lib/redis'
@@ -24,7 +29,10 @@ const parseProductData = (
   element: cheerio.Element
 ): ScrapeProps | null => {
   const title = extractText($, element, '.card-v2-title')
-  const price = extractText($, element, '.product-new-price')
+  const rawPrice = extractText($, element, '.product-new-price')
+  const price = parsePrice(rawPrice)
+  const rawOldPrice = extractText($, element, '.pricing s')
+  const oldPrice = parsePrice(rawOldPrice)
   const discountText = extractText(
     $,
     element,
@@ -37,7 +45,7 @@ const parseProductData = (
   return {
     title,
     price,
-    oldPrice: extractText($, element, '.pricing s') || null,
+    oldPrice,
     discount: discountMatch ? parseFloat(discountMatch[1]) : 0,
     isGenius: $(element).find('.badge-genius').length > 0,
     stock: extractText($, element, '.text-availability-in_stock') || null,

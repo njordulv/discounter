@@ -1,13 +1,16 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { StockProps } from '@/interfaces/emag'
+import { formatPrice } from '@/utils/functions'
 import config from '@/config'
 
 export const Discount = ({
   discount,
   isGenius,
 }: {
-  discount: string
+  discount: number
   isGenius: boolean | undefined
 }) => {
   return (
@@ -60,14 +63,17 @@ export const Img = ({
   )
 }
 
-export const NewPrice = ({ price }: { price: string | null }) => (
+export const NewPrice = ({ price }: { price?: number }) => (
   <span className="text-xl font-semibold bg-gradient inline !bg-clip-text text-transparent">
-    {price}
+    {price !== undefined ? formatPrice(price) : '—'} {config.emag.currency}
   </span>
 )
 
-export const OldPrice = ({ oldPrice }: { oldPrice: string | null }) => (
-  <span className="text-md line-through text-muted-foreground">{oldPrice}</span>
+export const OldPrice = ({ oldPrice }: { oldPrice: number }) => (
+  <span className="text-md line-through text-muted-foreground">
+    {oldPrice !== undefined ? formatPrice(oldPrice) : '—'}{' '}
+    {config.emag.currency}
+  </span>
 )
 
 export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({

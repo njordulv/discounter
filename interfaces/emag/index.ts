@@ -43,8 +43,8 @@ interface Currency {
 
 export interface ScrapeProps {
   title: string
-  price: string
-  oldPrice: string | null
+  price: number
+  oldPrice: number | null
   discount: number
   isGenius?: boolean
   stock: string | null

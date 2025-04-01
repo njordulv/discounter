@@ -39,3 +39,24 @@ export const getMonth = () =>
 
 // Get full year
 export const getYear = () => new Date().getFullYear()
+
+// Parse price from mongodb with correct format
+export const parsePrice = (priceText: string): number | null => {
+  if (!priceText) return null
+
+  const cleanText = priceText.replace(/[^0-9.,]/g, '').trim()
+  const normalizedPrice = cleanText.replace(',', '.')
+  const price = parseFloat(normalizedPrice)
+
+  return isNaN(price) ? null : price
+}
+
+// Format price output
+export const formatPrice = (price: number): string => {
+  const [intPart, decimalPart = '00'] = price.toString().split('.')
+
+  const formattedDecimal =
+    decimalPart.length === 1 ? `${decimalPart}0` : decimalPart
+
+  return `${intPart},${formattedDecimal}`
+}
