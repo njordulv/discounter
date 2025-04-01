@@ -2,10 +2,10 @@ import redis from 'ioredis'
 import { promisify } from 'util'
 import databaseConfig from '@/config/database'
 
-const client = new redis(databaseConfig.redis.url)
+const redisClient = new redis(databaseConfig.redis.url)
 
 // Transform redis methods into promises
-const getAsync = promisify(client.get).bind(client)
-const setAsync = promisify(client.set).bind(client)
+const getAsync = promisify(redisClient.get).bind(redisClient)
+const setAsync = promisify(redisClient.set).bind(redisClient)
 
-export { client, getAsync, setAsync }
+export { redisClient, getAsync, setAsync }

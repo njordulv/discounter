@@ -6,7 +6,7 @@ import Product from '@/models/Product'
 import { normalizeImageUrl, randomDelay, processLink } from '@/utils/functions'
 import { ScrapeProps, EmagCats } from '@/interfaces/emag'
 import { connectDB } from '@/lib/mongo'
-import { client } from '@/lib/redis'
+import { redisClient } from '@/lib/redis'
 import { CACHE_EXPIRATION } from '@/config/cache'
 
 puppeteer.use(StealthPlugin())
@@ -148,7 +148,7 @@ export async function scrapeAndSaveEmag(categories: EmagCats[]) {
   for (const category of categories) {
     try {
       console.log(`🔄 Processing category: ${category.name}`)
-      await client.del(`products_${category.name}`)
+      await redisClient.del(`products_${category.name}`)
 
       // Mark old products as outdated instead of deleting immediately
       await Product.updateMany(
@@ -188,7 +188,7 @@ export async function scrapeAndSaveEmag(categories: EmagCats[]) {
 
       // Cache products only if data is available
       if (products.length > 0) {
-        await client.setex(
+        await redisClient.setex(
           `products_${category.name}`,
           CACHE_EXPIRATION,
           JSON.stringify(products)
