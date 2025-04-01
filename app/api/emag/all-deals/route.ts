@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 import { connectDB } from '@/lib/mongo'
 import { getAsync, client } from '@/lib/redis'
-import Product from '@/models/Product'
 import { CACHE_EXPIRATION } from '@/config/cache'
+import Product from '@/models/Product'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -39,7 +39,7 @@ export async function GET(request: Request) {
 
     const query = category ? { category } : {}
 
-    // 3. If no cache for count, get it
+    // If no cache for count, get it
     const totalItems = cachedCount
       ? Number(cachedCount)
       : await Product.countDocuments(query)
@@ -51,7 +51,6 @@ export async function GET(request: Request) {
     // 3. Caching data
     await client.setex(cacheKey, CACHE_EXPIRATION, JSON.stringify(products))
 
-    // 4. Caching total items (if not in Redis)
     if (!cachedCount) {
       await client.setex(countKey, CACHE_EXPIRATION, totalItems.toString())
     }

@@ -15,11 +15,10 @@ export const Discover = ({ slug }: { slug: string }) => {
           {tagProducts === 1 ? 'deal and offer' : 'deals and offers'}.
         </span>
       )}
-      <span>{`Discover ${
-        slugToName(slug)
-          ? 'offers and sales in'
-          : 'the best deals and discounts in'
-      } ${config.site.locale}, ${getMonth()} ${getYear()}.`}</span>
+
+      <span>{`Discover ${slugToName(slug) || 'all'} offers and sales in ${
+        config.site.locale
+      }, ${getMonth()} ${getYear()}.`}</span>
     </p>
   )
 }

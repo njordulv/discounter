@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { useState, useEffect, useMemo } from 'react'
 import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/ui/Loader'
+import { Discover } from '@/components/tags'
 import { useStore } from '@/store'
 import { Pagination } from '@/components/emag/Pagination'
 import { CardSkeleton } from '@/components/ui/Skeletons'
@@ -41,6 +42,7 @@ function AllDeals({ slug }: { slug: string }) {
 
   useEffect(() => {
     if (!data?.data) return
+
     setAccumulatedData((prev) =>
       currentPage === 1 ? data.data : [...prev, ...data.data]
     )
@@ -52,6 +54,7 @@ function AllDeals({ slug }: { slug: string }) {
 
   return (
     <>
+      <Discover slug={slug} />
       <div className="w-full grid grid-cols-1 gap-2">
         {accumulatedData.map((product, index) => (
           <Card key={index} {...product} />
