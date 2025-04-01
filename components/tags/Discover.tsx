@@ -9,13 +9,17 @@ export const Discover = ({ slug }: { slug: string }) => {
 
   return (
     <p className="w-full flex sm:flex-row flex-col gap-1 mb-4 text-foreground">
-      <span>
-        <b>{tagProducts}</b>{' '}
-        {tagProducts === 1 ? 'deal and offer' : 'deals and offers'}.
-      </span>
-      <span>{`Discover ${slugToName(slug) || 'all'} offers and sales in ${
-        config.site.locale
-      }, ${getMonth()} ${getYear()}.`}</span>
+      {tagProducts > 0 && (
+        <span>
+          <b>{tagProducts}</b>{' '}
+          {tagProducts === 1 ? 'deal and offer' : 'deals and offers'}.
+        </span>
+      )}
+      <span>{`Discover ${
+        slugToName(slug)
+          ? 'offers and sales in'
+          : 'the best deals and discounts in'
+      } ${config.site.locale}, ${getMonth()} ${getYear()}.`}</span>
     </p>
   )
 }

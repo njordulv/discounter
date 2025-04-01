@@ -1,20 +1,20 @@
 import { slugToName } from '@/utils/functions'
 import { notFound } from 'next/navigation'
-import { Hero } from '@/components/tags'
+import { Discover } from '@/components/tags'
 import AllDeals from '@/components/emag/AllDeals'
 
 async function Page({ params }: { params: { slug: string } }) {
-  const { slug } = await params
+  const { slug } = params
   const title = slugToName(slug)
 
-  if (!title) notFound()
+  if (!title) return notFound()
 
   return (
     <>
       <h1 className="w-full sm:text-4xl text-2xl text-left font-medium text-foreground">
         {title}
       </h1>
-      <Hero slug={slug} />
+      <Discover slug={slug} />
       <AllDeals slug={slug} />
     </>
   )

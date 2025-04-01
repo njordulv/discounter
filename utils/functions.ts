@@ -12,13 +12,7 @@ export function normalizeImageUrl(url: string): string {
 // Slug to name
 export function slugToName(slug: string) {
   return Object.values(catsConfig)
-    .flatMap((cat) => [
-      { slug: cat.slug, name: cat.name },
-      ...Object.values(cat.subcategories || {}).map((sub) => ({
-        slug: sub.slug,
-        name: sub.name,
-      })),
-    ])
+    .flatMap((cat) => [{ slug: cat.slug, name: cat.name }])
     .find((item) => item.slug === slug)?.name
 }
 
