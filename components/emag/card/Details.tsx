@@ -20,7 +20,7 @@ export const Discount = ({
       title={isGenius ? 'Genius Deals' : undefined}
     >
       <b className="absolute rotate-[45deg] text-xs text-primary-foreground font-normal left-7 top-14">
-        {discount}
+        {`-${discount}%`}
       </b>
     </span>
   )

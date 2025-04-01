@@ -25,6 +25,12 @@ const parseProductData = (
 ): ScrapeProps | null => {
   const title = extractText($, element, '.card-v2-title')
   const price = extractText($, element, '.product-new-price')
+  const discountText = extractText(
+    $,
+    element,
+    '.card-v2-badge.badge-discount'
+  ).trim()
+  const discountMatch = discountText.match(/-?(\d+(\.\d+)?)%?/)
 
   if (!title || !price) return null
 
@@ -32,7 +38,7 @@ const parseProductData = (
     title,
     price,
     oldPrice: extractText($, element, '.pricing s') || null,
-    discount: extractText($, element, '.card-v2-badge.badge-discount'),
+    discount: discountMatch ? parseFloat(discountMatch[1]) : 0,
     isGenius: $(element).find('.badge-genius').length > 0,
     stock: extractText($, element, '.text-availability-in_stock') || null,
     stockOut: extractText($, element, '.text-availability-out_of_stock'),

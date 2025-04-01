@@ -12,7 +12,6 @@ export async function GET(request: Request) {
 
   const cacheKey = `products_${category}_page_${page}`
   const countKey = `products_${category}_count`
-  // const countKey = `products_${category}_count`
 
   try {
     // 1. Reading cached data for page
