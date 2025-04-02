@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={notoSans.className}>
+      <body className={notoSans.variable}>
         <div className="flex flex-col relative overflow-hidden">
           <Decor />
           <Header />

@@ -6,7 +6,9 @@ async function Page({ params }: { params: { slug: string } }) {
   const { slug } = await params
   const title = slugToName(slug)
 
-  if (!title) return notFound()
+  if (!title) {
+    return notFound()
+  }
 
   return (
     <>

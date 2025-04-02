@@ -22,10 +22,6 @@ export function sleep(ms: number) {
 
 export const randomDelay = () => sleep(3000 + Math.random() * 7000)
 
-export function userAgent() {
-  return config.userAgents[Math.floor(Math.random() * config.userAgents.length)]
-}
-
 // Link processing function
 export const processLink = (link: string): string => {
   return link.startsWith('http')
