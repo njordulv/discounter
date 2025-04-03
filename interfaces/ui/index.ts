@@ -19,4 +19,6 @@ export interface StoreProps {
   setTotalPages: (page: number) => void
   tagProducts: number
   setTagProducts: (products: number) => void
+  isGridView: boolean
+  setIsGridView: (value: boolean) => void
 }

@@ -8,4 +8,6 @@ export const useStore = create<StoreProps>((set) => ({
   setTotalPages: (page: number) => set({ totalPages: page }),
   tagProducts: 0,
   setTagProducts: (products: number) => set({ tagProducts: products }),
+  isGridView: false,
+  setIsGridView: (value: boolean) => set({ isGridView: value }),
 }))
