@@ -9,7 +9,7 @@ import { useStore } from '@/store'
 import { Pagination } from '@/components/emag/Pagination'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { ScrapeProps } from '@/interfaces/emag'
-import { GridView } from '@/components/ui/GridView'
+import { Toolbar } from '@/components/Toolbar'
 import config from '@/config'
 
 const Card = dynamic(
@@ -56,7 +56,7 @@ function AllDeals({ slug }: { slug: string }) {
   return (
     <>
       <Discover slug={slug} />
-      <GridView />
+      <Toolbar />
       <div className="w-full grid grid-cols-1 gap-2">
         {accumulatedData.map((product, index) => (
           <Card key={index} {...product} />
