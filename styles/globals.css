@@ -49,6 +49,10 @@
   }
 }
 
+* {
+  border-color: hsl(var(--border));
+}
+
 body {
   color: hsl(var(--foreground));
   background: hsl(var(--background));
@@ -70,7 +74,6 @@ nav ul li a:hover {
 
 .border {
   border-width: 1px;
-  border-color: hsl(var(--border));
 }
 
 .bg-background {
@@ -167,6 +170,14 @@ nav ul li a:hover {
 
 .border-input {
   border-color: hsl(var(--input));
+}
+
+.data-\[state\=checked\]\:bg-primary[data-state='checked'] {
+  background-color: hsl(var(--primary));
+}
+
+.data-\[state\=unchecked\]\:bg-input[data-state='unchecked'] {
+  background-color: hsl(var(--input));
 }
 
 .button {
