@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { StockProps } from '@/interfaces/emag'
 import { formatPrice } from '@/utils/functions'
+import { useStore } from '@/store'
 import config from '@/config'
 
 export const Discount = ({
@@ -45,17 +46,25 @@ export const Genius = () => {
 export const Img = ({
   imageUrl,
   title,
+  width,
+  height,
 }: {
   imageUrl: string
   title: string
+  width?: number
+  height?: number
 }) => {
+  const { isGridView } = useStore()
+
   return (
     <Image
       src={imageUrl}
       alt={title}
-      width={176}
-      height={176}
-      className="sm:w-44 sm:h-44 w-28 h-28 object-cover aspect-square rounded-lg bg-background border"
+      width={width || 176}
+      height={height || 176}
+      className={`w-44 h-44 ${
+        isGridView ? 'sm:w-full sm:h-auto' : 'sm:w-44 sm:h-44'
+      } object-cover aspect-square rounded-lg bg-background border`}
       priority={false}
       placeholder="blur"
       blurDataURL={config.imageBase64}

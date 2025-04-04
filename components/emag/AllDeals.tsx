@@ -10,6 +10,7 @@ import { Pagination } from '@/components/emag/Pagination'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { ScrapeProps } from '@/interfaces/emag'
 import { Toolbar } from '@/components/Toolbar'
+import styles from '@/styles/Products.module.scss'
 import config from '@/config'
 
 const Card = dynamic(
@@ -24,6 +25,7 @@ function AllDeals({ slug }: { slug: string }) {
     totalPages,
     setTotalPages,
     setTagProducts,
+    isGridView,
   } = useStore()
   const [accumulatedData, setAccumulatedData] = useState<ScrapeProps[]>([])
   const perPage = 20
@@ -43,7 +45,6 @@ function AllDeals({ slug }: { slug: string }) {
 
   useEffect(() => {
     if (!data?.data) return
-
     setAccumulatedData((prev) =>
       currentPage === 1 ? data.data : [...prev, ...data.data]
     )
@@ -57,7 +58,11 @@ function AllDeals({ slug }: { slug: string }) {
     <>
       <Discover slug={slug} />
       <Toolbar />
-      <div className="w-full grid grid-cols-1 gap-2">
+      <div
+        className={`${styles.card__items} ${
+          isGridView ? styles['card__items--grid'] : styles['card__items--list']
+        }`}
+      >
         {accumulatedData.map((product, index) => (
           <Card key={index} {...product} />
         ))}
