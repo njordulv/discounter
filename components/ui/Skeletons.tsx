@@ -66,3 +66,19 @@ export const CardSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
 })
 
 CardSkeleton.displayName = 'CardSkeleton'
+
+export const GridViewSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
+  return (
+    <div ref={ref} role="status" className="animate-pulse w-full">
+      <div className="w-full overflow-hidden">
+        <div className="flex items-center justify-end gap-2">
+          <div className="h-3.5 bg-primary/20 rounded-md w-full max-w-16"></div>
+          <div className="h-6 bg-primary/20 rounded-full w-full max-w-11"></div>
+        </div>
+      </div>
+      <span className="sr-only">Loading...</span>
+    </div>
+  )
+})
+
+GridViewSkeleton.displayName = 'GridViewSkeleton'
