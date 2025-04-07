@@ -3,6 +3,7 @@ import { ScrapeProps } from '@/interfaces/emag'
 import { FallbackImage } from '@/components/ui/FallbackImage'
 import { useLazyLoad } from '@/hooks/useLazyLoad'
 import {
+  Heading,
   Discount,
   Genius,
   Img,
@@ -52,13 +53,7 @@ export const Card: React.FC<ScrapeProps> = ({
 
       <div className="flex flex-col sm:gap-4 gap-1 justify-between h-full">
         <div>
-          <h2
-            className={`text-foreground font-semibold ${
-              isGridView ? 'mb-1 text-sm' : 'mb-1 sm:mb-3 text-md'
-            }`}
-          >
-            {title}
-          </h2>
+          <Heading title={title} />
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             {price && <NewPrice price={price} />}
             {oldPrice && <OldPrice oldPrice={oldPrice} />}
@@ -68,7 +63,11 @@ export const Card: React.FC<ScrapeProps> = ({
             <LinkToShop store={store} />
           </div>
         </div>
-        <div className="grid gap-3 items-center grid-cols-1 max-w-52">
+        <div
+          className={`grid gap-3 items-center grid-cols-1 ${
+            isGridView ? 'w-full' : 'sm:max-w-52'
+          }`}
+        >
           <Button
             size="md"
             variant="default"

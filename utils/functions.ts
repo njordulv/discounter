@@ -56,3 +56,10 @@ export const formatPrice = (price: number): string => {
 
   return `${intPart},${formattedDecimal}`
 }
+
+// Decrease text length with "..."
+export const shortenText = (str: string, length: number) => {
+  if (!str) return str
+  if (str.length <= length) return str
+  return str.slice(0, length) + '...'
+}

@@ -3,9 +3,24 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { StockProps } from '@/interfaces/emag'
-import { formatPrice } from '@/utils/functions'
+import { formatPrice, shortenText } from '@/utils/functions'
 import { useStore } from '@/store'
 import config from '@/config'
+
+export const Heading = ({ title }: { title: string }) => {
+  const { isGridView } = useStore()
+  const MAX_TITLE_LENGTH = 60
+
+  return (
+    <h2
+      className={`text-foreground font-semibold ${
+        isGridView ? 'mb-1 text-sm' : 'mb-1 sm:mb-3 text-md'
+      }`}
+    >
+      {isGridView ? shortenText(title, MAX_TITLE_LENGTH) : title}
+    </h2>
+  )
+}
 
 export const Discount = ({
   discount,
