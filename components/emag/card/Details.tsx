@@ -62,8 +62,10 @@ export const Img = ({
       alt={title}
       width={width || 176}
       height={height || 176}
-      className={`w-44 h-44 ${
-        isGridView ? 'sm:w-full sm:h-auto' : 'sm:w-44 sm:h-44'
+      className={`${
+        isGridView
+          ? 'w-auto h-52 sm:w-full sm:h-auto'
+          : 'w-24 h-24 sm:w-44 sm:h-44'
       } object-cover aspect-square rounded-lg bg-background border`}
       priority={false}
       placeholder="blur"
