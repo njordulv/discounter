@@ -1,3 +1,4 @@
+import { motion as m } from 'framer-motion'
 import { TbExternalLink } from 'react-icons/tb'
 import { ScrapeProps } from '@/interfaces/emag'
 import { FallbackImage } from '@/components/ui/FallbackImage'
@@ -16,8 +17,9 @@ import { Button } from '@/components/ui/Button'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { useStore } from '@/store'
 import styles from '@/styles/Products.module.scss'
-
+import config from '@/config'
 export const Card: React.FC<ScrapeProps> = ({
+  index,
   title,
   imageUrl,
   price,
@@ -37,7 +39,14 @@ export const Card: React.FC<ScrapeProps> = ({
   if (!isVisible) return <CardSkeleton ref={ref} />
 
   return (
-    <div ref={ref} className={`${styles.card__item}`}>
+    <m.div
+      variants={config.getCardMotion(index)}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.4 }}
+      ref={ref}
+      className={`${styles.card__item}`}
+    >
       {discount && <Discount discount={discount} isGenius={isGenius} />}
       {isGenius && !discount && <Genius />}
       {!imageUrl || imageUrl.startsWith('https:https://') ? (
@@ -78,6 +87,6 @@ export const Card: React.FC<ScrapeProps> = ({
           />
         </div>
       </div>
-    </div>
+    </m.div>
   )
 }
