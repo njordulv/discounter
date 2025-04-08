@@ -2,7 +2,11 @@ import { notFound } from 'next/navigation'
 import { slugToName } from '@/utils/functions'
 import AllDeals from '@/components/emag/AllDeals'
 
-async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
   const { slug } = await params
   const title = slugToName(slug)
 
@@ -19,5 +23,3 @@ async function Page({ params }: { params: { slug: string } }) {
     </>
   )
 }
-
-export default Page
