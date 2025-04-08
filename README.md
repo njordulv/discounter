@@ -11,12 +11,16 @@ A web service that aggregates discount deals and promo codes from various source
 - **Dynamic Routing**: Supports navigation through different categories and product details.
 - **Database**: Integrated with MongoDB to store product data and Redis for caching.
 - **Responsive UI**: Designed with Tailwind CSS for a mobile-friendly and modern interface.
+- **Theme Switching**: Swithing between dark & light themes.
 
 ## 🛠 Tech Stack
 
 - **Frontend**: Next.js, React, TypeScript, Tailwind CSS
 - **Backend**: Node.js, Cheerio (for scraping), Redis (for caching), MongoDB (for data storage)
-- **State Management**: Zustand (in the future)
+- **State Management**: Zustand
+- **Design System**: Shadcn UI
+- **Animations**: Framer Motion
+- **Programming Language**: TypeScript
 - **Hosting**: Vercel (in the future)
 
 ## 📂 Project Structure

@@ -16,10 +16,12 @@ export function slugToName(slug: string) {
     .find((item) => item.slug === slug)?.name
 }
 
+// Sleep function
 export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
+// Random delay function
 export const randomDelay = () => sleep(3000 + Math.random() * 7000)
 
 // Link processing function
