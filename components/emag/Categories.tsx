@@ -15,7 +15,7 @@ export const Categories = () => {
           <SheetClose asChild>
             <Link
               href={item.slug}
-              className="flex py-1 px-2 items-center gap-3 text-[hsl(var(--muted-foreground))] hover:text-white w-full hover:bg-[hsl(var(--accent))] rounded-sm"
+              className="flex py-1 px-2 items-center gap-3 text-[hsl(var(--muted-foreground))] dark:hover:text-white w-full hover:bg-[hsl(var(--accent))] rounded-sm"
             >
               {item.icon && <item.icon size={20} color="hsl(var(--primary))" />}
               <span>{item.name}</span>
@@ -33,7 +33,7 @@ export const Categories = () => {
           <SheetClose asChild>
             <Link
               href={`/tag/${cat.slug}`}
-              className="flex py-1 px-2 items-center gap-3 text-[hsl(var(--muted-foreground))] hover:text-white w-full hover:bg-[hsl(var(--accent))] rounded-sm"
+              className="flex py-1 px-2 items-center gap-3 text-[hsl(var(--muted-foreground))] dark:hover:text-white w-full hover:bg-[hsl(var(--accent))] rounded-sm"
             >
               {cat.icon && <cat.icon size={20} color="hsl(var(--primary))" />}
               <span>{cat.name}</span>

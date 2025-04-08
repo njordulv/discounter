@@ -1,39 +1,17 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-@custom-variant dark (&:is(.dark *));
-
-@layer base {
+@custom-variant dark (&:where(.dark, .dark *));
+@layer theme {
   :root {
     --gradient: linear-gradient(
       to top left,
       hsl(200 80% 69%),
       hsl(207 100% 28%)
     );
-
-    --background: 212 43.35% 7.23%;
-    --foreground: 212 8% 98.45%;
-
-    --muted: 212 40% 20.7%;
-    --muted-foreground: 212 8% 56.9%;
-
-    --popover: 212 49% 8.969999999999999%;
-    --popover-foreground: 212 8% 98.45%;
-
-    --card: 212 49% 8.969999999999999%;
-    --card-foreground: 212 8% 98.45%;
-
-    --border: 212 40% 20.7%;
-    --input: 212 40% 20.7%;
-
+    /* Общие значения (не зависят от темы) */
     --primary: 212 80% 69%;
-    --primary-foreground: 212 8% 6.8999999999999995%;
-
-    --secondary: 212 40% 20.7%;
-    --secondary-foreground: 212 8% 98.45%;
-
-    --accent: 212 40% 20.7%;
-    --accent-foreground: 212 8% 98.45%;
+    --primary-foreground: 212 8% 6.9%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 212 8% 98.45%;
@@ -45,7 +23,54 @@
       hsl(200 80% 69%),
       hsl(var(--ring))
     );
+
     --gradient-genius: linear-gradient(to bottom, #090171, #ff005a);
+  }
+
+  .light {
+    --background: 223 100% 98.46%;
+    --foreground: 223 10% 0.92%;
+
+    --muted: 223 10% 92.3%;
+    --muted-foreground: 223 5% 42.3%;
+
+    --popover: 223 10% 92.3%;
+    --popover-foreground: 223 10% 1.15%;
+
+    --card: 223 10% 92.3%;
+    --card-foreground: 223 10% 1.15%;
+
+    --border: 223 15% 89.92%;
+    --input: 223 15% 89.92%;
+
+    --secondary: 223 5% 96.15%;
+    --secondary-foreground: 223 7% 12.3%;
+
+    --accent: 223 5% 96.15%;
+    --accent-foreground: 223 7% 12.3%;
+  }
+
+  .dark {
+    --background: 212 43.35% 7.23%;
+    --foreground: 212 8% 98.45%;
+
+    --muted: 212 40% 20.7%;
+    --muted-foreground: 212 8% 56.9%;
+
+    --popover: 212 49% 8.97%;
+    --popover-foreground: 212 8% 98.45%;
+
+    --card: 212 49% 8.97%;
+    --card-foreground: 212 8% 98.45%;
+
+    --border: 212 40% 20.7%;
+    --input: 212 40% 20.7%;
+
+    --secondary: 212 40% 20.7%;
+    --secondary-foreground: 212 8% 98.45%;
+
+    --accent: 212 40% 20.7%;
+    --accent-foreground: 212 8% 98.45%;
   }
 }
 
@@ -118,6 +143,10 @@ nav ul li a:hover {
 
 .bg-primary\/20 {
   background-color: hsl(var(--primary) / 0.2);
+}
+
+.bg-primary\/50 {
+  background-color: hsl(var(--primary) / 0.5);
 }
 
 .bg-secondary {

@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Decor from '@/components/ui/Decor'
 import Footer from '@/components/Footer'
+import ThemeProvider from '@/providers/theme'
 import '@/styles/globals.css'
 
 const notoSans = Noto_Sans({
@@ -21,16 +22,23 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={notoSans.variable}>
-        <div className="flex flex-col relative overflow-hidden">
-          <Decor />
-          <Header />
-          <main className="w-full max-w-5xl m-auto min-h-[calc(100vh-7.5rem)] sm:py-16 py-2 px-2 flex flex-col sm:gap-3 gap-2 relative overflow-hidden">
-            {children}
-          </main>
-          <Footer />
-        </div>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex flex-col relative overflow-hidden">
+            <Decor />
+            <Header />
+            <main className="w-full max-w-5xl m-auto min-h-[calc(100vh-7.5rem)] sm:py-16 py-2 px-2 flex flex-col sm:gap-3 gap-2 relative overflow-hidden">
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   )

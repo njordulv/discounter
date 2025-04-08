@@ -10,6 +10,7 @@ import {
   SheetDescription,
 } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/Button'
+import { ThemeToggle } from '@/components/Theme'
 import { Categories } from '@/components/emag/Categories'
 
 export function SideMenu() {
@@ -25,6 +26,8 @@ export function SideMenu() {
         </SheetHeader>
         <div className="flex flex-col gap-4 p-4">
           <Categories />
+          <hr className="border-input" />
+          <ThemeToggle />
         </div>
         <SheetFooter>
           <SheetClose asChild>

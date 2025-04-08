@@ -122,7 +122,7 @@ export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
         </span>
       )}
       {stock && (
-        <span className="rounded-md px-3 text-sm bg-[lightseagreen] text-card-foreground">
+        <span className="rounded-md px-3 text-sm bg-primary/50 text-card-foreground">
           {stock}
         </span>
       )}
