@@ -6,6 +6,7 @@ import { StockProps } from '@/interfaces/emag'
 import { formatPrice, shortenText } from '@/utils/functions'
 import { useStore } from '@/store'
 import config from '@/config'
+import styles from '@/styles/Products.module.scss'
 
 export const Heading = ({ title }: { title: string }) => {
   const { isGridView } = useStore()
@@ -31,16 +32,14 @@ export const Discount = ({
 }) => {
   return (
     <span
-      className={`absolute w-20 h-20 rotate-[-45deg] left-[-40px] top-[-40px] ${
+      className={`${styles.card__discount} ${
         isGenius
           ? 'bg-gradient-to-b bg-gradient-genius'
           : 'bg-gradient-to-b bg-gradient'
       }`}
       title={isGenius ? 'Genius Deals' : undefined}
     >
-      <b className="absolute rotate-[45deg] text-xs text-primary-foreground font-normal left-7 top-14">
-        {`-${discount}%`}
-      </b>
+      <b>{`-${discount}%`}</b>
     </span>
   )
 }
@@ -48,12 +47,10 @@ export const Discount = ({
 export const Genius = () => {
   return (
     <span
-      className="absolute bg-gradient-genius left-[-40px] top-[-40px] w-20 h-20 rotate-[-45deg]"
+      className={`${styles.card__discount} bg-gradient-genius`}
       title="Genius Deals"
     >
-      <b className="absolute rotate-[45deg] text-foreground text-xs font-normal left-3 top-14">
-        Genius
-      </b>
+      <b>Genius</b>
     </span>
   )
 }
@@ -73,15 +70,15 @@ export const Img = ({
 
   return (
     <Image
+      className={`${styles.card__image} ${
+        isGridView
+          ? 'w-auto h-52 sm:w-full sm:h-auto'
+          : 'w-24 h-24 sm:w-44 sm:h-44'
+      }`}
       src={imageUrl}
       alt={title}
       width={width || 176}
       height={height || 176}
-      className={`${
-        isGridView
-          ? 'w-auto h-52 sm:w-full sm:h-auto'
-          : 'w-24 h-24 sm:w-44 sm:h-44'
-      } object-cover aspect-square rounded-lg bg-background border`}
       priority={false}
       placeholder="blur"
       blurDataURL={config.imageBase64}

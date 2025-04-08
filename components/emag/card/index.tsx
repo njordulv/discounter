@@ -16,8 +16,8 @@ import {
 import { Button } from '@/components/ui/Button'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { useStore } from '@/store'
-import styles from '@/styles/Products.module.scss'
 import { motionCard } from '@/variants'
+import styles from '@/styles/Products.module.scss'
 
 export const Card: React.FC<ScrapeProps> = ({
   index,
@@ -40,12 +40,7 @@ export const Card: React.FC<ScrapeProps> = ({
   if (!isVisible) return <CardSkeleton ref={ref} />
 
   return (
-    <m.div
-      {...motionCard(index)}
-      // viewport={{ once: true, amount: 0.1 }}
-      ref={ref}
-      className={`${styles.card__item}`}
-    >
+    <m.div {...motionCard(index)} ref={ref} className={`${styles.card__item}`}>
       {discount && <Discount discount={discount} isGenius={isGenius} />}
       {isGenius && !discount && <Genius />}
       {!imageUrl || imageUrl.startsWith('https:https://') ? (
@@ -59,8 +54,8 @@ export const Card: React.FC<ScrapeProps> = ({
         />
       )}
 
-      <div className="flex flex-col sm:gap-4 gap-1 justify-between h-full">
-        <div>
+      <div className={`${styles.card__content}`}>
+        <div className={styles['card__content--top']}>
           <Heading title={title} />
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             {price && <NewPrice price={price} />}
@@ -72,7 +67,7 @@ export const Card: React.FC<ScrapeProps> = ({
           </div>
         </div>
         <div
-          className={`grid gap-3 items-center grid-cols-1 ${
+          className={`${styles['card__content--bottom']} ${
             isGridView ? 'w-full' : 'sm:max-w-52'
           }`}
         >
