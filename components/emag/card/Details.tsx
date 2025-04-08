@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { StockProps } from '@/interfaces/emag'
-import { formatPrice, shortenText } from '@/utils/functions'
+import { formatPrice, shortenText } from '@/utils'
 import { useStore } from '@/store'
 import config from '@/config'
 import styles from '@/styles/Products.module.scss'

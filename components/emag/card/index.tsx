@@ -40,7 +40,11 @@ export const Card: React.FC<ScrapeProps> = ({
   if (!isVisible) return <CardSkeleton ref={ref} />
 
   return (
-    <m.div {...motionCard(index)} ref={ref} className={`${styles.card__item}`}>
+    <m.div
+      {...motionCard(index ?? 0)}
+      ref={ref}
+      className={`${styles.card__item}`}
+    >
       {discount && <Discount discount={discount} isGenius={isGenius} />}
       {isGenius && !discount && <Genius />}
       {!imageUrl || imageUrl.startsWith('https:https://') ? (

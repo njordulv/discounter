@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { connectDB } from '@/lib/mongo'
 import { getAsync, redisClient } from '@/lib/redis'
-import { CACHE_EXPIRATION } from '@/config/cache'
+import { CACHE_EXPIRATION } from '@/config/constants'
 import Product from '@/models/Product'
 
 export async function GET(request: Request) {
@@ -51,12 +51,16 @@ export async function GET(request: Request) {
     // 3. Caching data
     await redisClient.setex(
       cacheKey,
-      CACHE_EXPIRATION,
+      CACHE_EXPIRATION.DEFAULT,
       JSON.stringify(products)
     )
 
     if (!cachedCount) {
-      await redisClient.setex(countKey, CACHE_EXPIRATION, totalItems.toString())
+      await redisClient.setex(
+        countKey,
+        CACHE_EXPIRATION.DEFAULT,
+        totalItems.toString()
+      )
     }
 
     return NextResponse.json({

@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { slugToName } from '@/utils/functions'
+import { slugToName } from '@/utils'
 import AllDeals from '@/components/emag/AllDeals'
 
 export default async function Page({

@@ -10,6 +10,7 @@ import { Pagination } from '@/components/emag/Pagination'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { ScrapeProps } from '@/interfaces/emag'
 import { Toolbar } from '@/components/Toolbar'
+import { PAGINATION } from '@/config/constants'
 import styles from '@/styles/Products.module.scss'
 import config from '@/config'
 
@@ -28,12 +29,11 @@ function AllDeals({ slug }: { slug: string }) {
     isGridView,
   } = useStore()
   const [accumulatedData, setAccumulatedData] = useState<ScrapeProps[]>([])
-  const perPage = 20
 
   const queryParams = useMemo(() => {
     const params = new URLSearchParams({
       page: currentPage.toString(),
-      perPage: perPage.toString(),
+      perPage: PAGINATION.PER_PAGE.toString(),
     })
     if (slug) params.append('category', slug.toLowerCase())
     return params.toString()

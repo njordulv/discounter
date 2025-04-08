@@ -8,11 +8,11 @@ import {
   parsePrice,
   randomDelay,
   processLink,
-} from '@/utils/functions'
-import { ScrapeProps, EmagCats } from '@/interfaces/emag'
+} from '@/utils'
 import { connectDB } from '@/lib/mongo'
 import { redisClient } from '@/lib/redis'
-import { CACHE_EXPIRATION } from '@/config/cache'
+import { ScrapeProps, EmagCats } from '@/interfaces/emag'
+import { CACHE_EXPIRATION, SCRAPER } from '@/config/constants'
 
 puppeteer.use(StealthPlugin())
 
@@ -73,7 +73,7 @@ export async function scrapeEmag(categoryUrl: string): Promise<ScrapeProps[]> {
   })
   const page = await browser.newPage()
   const allProducts: ScrapeProps[] = []
-  const MAX_PAGES = 15
+  const maxPages = SCRAPER.MAX_PAGES
 
   try {
     await page.setUserAgent(
@@ -87,7 +87,7 @@ export async function scrapeEmag(categoryUrl: string): Promise<ScrapeProps[]> {
     let currentPage = 1
     const hasNextPage = true
 
-    while (currentPage <= MAX_PAGES && hasNextPage) {
+    while (currentPage <= maxPages && hasNextPage) {
       await randomDelay()
 
       const url =
@@ -204,7 +204,7 @@ export async function scrapeAndSaveEmag(categories: EmagCats[]) {
       if (products.length > 0) {
         await redisClient.setex(
           `products_${category.name}`,
-          CACHE_EXPIRATION,
+          CACHE_EXPIRATION.DEFAULT,
           JSON.stringify(products)
         )
       }
