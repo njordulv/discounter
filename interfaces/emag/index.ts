@@ -42,7 +42,7 @@ interface Currency {
 }
 
 export interface ScrapeProps {
-  index: number
+  index?: number
   title: string
   price: number
   oldPrice: number | null
