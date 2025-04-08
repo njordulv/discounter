@@ -17,7 +17,8 @@ import { Button } from '@/components/ui/Button'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { useStore } from '@/store'
 import styles from '@/styles/Products.module.scss'
-import config from '@/config'
+import { motionCard } from '@/variants'
+
 export const Card: React.FC<ScrapeProps> = ({
   index,
   title,
@@ -40,10 +41,8 @@ export const Card: React.FC<ScrapeProps> = ({
 
   return (
     <m.div
-      variants={config.getCardMotion(index ?? 0)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.4 }}
+      {...motionCard(index)}
+      // viewport={{ once: true, amount: 0.1 }}
       ref={ref}
       className={`${styles.card__item}`}
     >

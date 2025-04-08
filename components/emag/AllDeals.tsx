@@ -64,7 +64,7 @@ function AllDeals({ slug }: { slug: string }) {
         }`}
       >
         {accumulatedData.map((product, index) => (
-          <Card key={index} {...product} />
+          <Card key={index} {...product} index={index} />
         ))}
       </div>
 

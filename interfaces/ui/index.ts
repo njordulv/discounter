@@ -22,3 +22,22 @@ export interface StoreProps {
   isGridView: boolean
   setIsGridView: (value: boolean) => void
 }
+
+export interface MotionCardVariants {
+  initial: {
+    opacity: number
+    scale: number
+    y: number
+  }
+  animate: {
+    opacity: number
+    scale: number
+    y: number
+  }
+  transition: {
+    delay: number
+    duration: number
+    type: 'spring' | 'tween' | 'inertia'
+    bounce: number
+  }
+}

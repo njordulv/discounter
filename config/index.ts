@@ -1,6 +1,5 @@
 import { TbHome, TbTag, TbCategory } from 'react-icons/tb'
 import { catsConfig } from '@/config/categories'
-import { Variants } from 'framer-motion'
 
 const config = {
   site: {
@@ -66,26 +65,6 @@ const config = {
       '--disable-gpu',
     ],
   },
-  // Framer Motion variants
-  getCardMotion: (index: number): Variants =>
-    ({
-      hidden: {
-        opacity: 0,
-        y: 20,
-        scale: 0.95,
-      },
-      visible: {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        transition: {
-          delay: index * 0.1,
-          type: 'spring',
-          bounce: 0.3,
-          duration: 0.5,
-        },
-      },
-    } as const),
 }
 
 export default config
