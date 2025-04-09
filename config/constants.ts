@@ -1,5 +1,6 @@
 export const PAGINATION = {
-  PER_PAGE: 24,
+  PER_PAGE_DEFAULT: 24,
+  PER_PAGE_OPTIONS: ['24', '48', '60'],
 } as const
 
 export const CACHE_EXPIRATION = {

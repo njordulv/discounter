@@ -21,6 +21,8 @@ export interface StoreProps {
   setTagProducts: (products: number) => void
   isGridView: boolean
   setIsGridView: (value: boolean) => void
+  perPage: number
+  setPerPage: (page: number) => void
 }
 
 export interface MotionCardVariants {

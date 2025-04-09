@@ -1,4 +1,5 @@
 .toolbar {
+  border: 1px solid hsl(var(--border));
   border-radius: var(--radius-lg);
   background-color: hsl(var(--card));
   color: hsl(var(--card-foreground));

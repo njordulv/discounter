@@ -9,8 +9,7 @@ import { useStore } from '@/store'
 import { Pagination } from '@/components/emag/Pagination'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { ScrapeProps } from '@/interfaces/emag'
-import { Toolbar } from '@/components/Toolbar'
-import { PAGINATION } from '@/config/constants'
+import { Toolbar } from '@/components/toolbar'
 import styles from '@/styles/Products.module.scss'
 import config from '@/config'
 
@@ -27,17 +26,18 @@ function AllDeals({ slug }: { slug: string }) {
     setTotalPages,
     setTagProducts,
     isGridView,
+    perPage,
   } = useStore()
   const [accumulatedData, setAccumulatedData] = useState<ScrapeProps[]>([])
 
   const queryParams = useMemo(() => {
     const params = new URLSearchParams({
       page: currentPage.toString(),
-      perPage: PAGINATION.PER_PAGE.toString(),
+      perPage: perPage.toString(),
     })
     if (slug) params.append('category', slug.toLowerCase())
     return params.toString()
-  }, [slug, currentPage])
+  }, [slug, currentPage, perPage])
 
   const { data, error, isLoading } = useFetcher({
     url: `/api/emag/all-deals?${queryParams}`,
