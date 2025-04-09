@@ -1,17 +1,18 @@
 import { NextResponse } from 'next/server'
 import { connectDB } from '@/lib/mongo'
 import { getAsync, redisClient } from '@/lib/redis'
-import { CACHE_EXPIRATION } from '@/config/constants'
+import { CACHE_EXPIRATION, PAGINATION } from '@/config/constants'
 import Product from '@/models/Product'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const category = searchParams.get('category') || ''
   const page = Number(searchParams.get('page')) || 1
-  const perPage = Number(searchParams.get('perPage')) || 20
+  const perPage =
+    Number(searchParams.get('perPage')) || PAGINATION.PER_PAGE_DEFAULT
 
-  const cacheKey = `products_${category}_page_${page}`
-  const countKey = `products_${category}_count`
+  const cacheKey = `products_${category}_page_${page}_perPage_${perPage}`
+  const countKey = `products_${category}_count_perPage_${perPage}`
 
   try {
     // 1. Reading cached data for page
