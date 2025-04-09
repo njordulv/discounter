@@ -82,10 +82,10 @@ CardSkeleton.displayName = 'CardSkeleton'
 
 export const GridViewSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
   return (
-    <div ref={ref} role="status" className="animate-pulse w-full max-w-28">
+    <div ref={ref} role="status" className="animate-pulse w-full max-w-[76px]">
       <div className="w-full">
         <div className="flex h-9 items-center justify-end gap-2">
-          <div className="h-3.5 bg-primary/20 rounded-md w-full max-w-16"></div>
+          <div className="h-6 bg-primary/20 rounded-md w-full max-w-6"></div>
           <div className="h-6 bg-primary/20 rounded-full w-full max-w-11"></div>
         </div>
       </div>
