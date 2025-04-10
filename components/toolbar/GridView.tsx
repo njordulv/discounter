@@ -13,7 +13,10 @@ export const GridView = () => {
 
   return (
     <div className="flex items-center space-x-2">
-      <Label htmlFor="grid-mode" className="text-muted-foreground">
+      <Label
+        htmlFor="grid-mode"
+        className="text-muted-foreground cursor-pointer"
+      >
         {isGridView ? <TbLayoutGrid size={24} /> : <TbListDetails size={24} />}
       </Label>
       <Switch

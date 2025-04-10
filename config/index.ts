@@ -8,6 +8,14 @@ const config = {
     logoLabel: 'Home',
     rel: 'Home',
   },
+  theme: {
+    light: 'Light',
+    dark: 'Dark',
+    switchToLight: 'Switch to light mode',
+    switchToDark: 'Switch to dark mode',
+    labelLight: 'Light Mode',
+    labelDark: 'Dark Mode',
+  },
   emag: {
     title: 'eMAG',
     url: 'https://www.emag.bg',

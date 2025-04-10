@@ -181,6 +181,14 @@ nav ul li a:hover {
   color: hsl(var(--accent-foreground));
 }
 
+.bg-secondary-foreground {
+  background-color: hsl(var(--secondary-foreground));
+}
+
+.bg-input {
+  background-color: hsl(var(--input));
+}
+
 .bg-accent {
   background-color: hsl(var(--accent));
 }

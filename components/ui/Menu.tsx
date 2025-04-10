@@ -10,7 +10,7 @@ import {
   SheetDescription,
 } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/Button'
-import { ThemeToggle } from '@/components/Theme'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import { Categories } from '@/components/emag/Categories'
 
 export function SideMenu() {
