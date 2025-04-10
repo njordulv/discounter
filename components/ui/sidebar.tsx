@@ -1,26 +1,31 @@
 'use client'
-import { cn } from '@/lib/utils'
+
 import Link, { LinkProps } from 'next/link'
-import React, { useState, createContext, useContext } from 'react'
+import { createContext, useContext } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { SlMenu, SlClose } from 'react-icons/sl'
+import { cn } from '@/lib/utils'
+import { catsConfig } from '@/config/categories'
+import { useStore } from '@/store'
 
-interface Links {
-  label: string
-  href: string
-  icon: React.JSX.Element | React.ReactNode
-}
+type CategoryItem = (typeof catsConfig)[keyof typeof catsConfig]
 
-interface SidebarContextProps {
+type SidebarLinkProps =
+  | { link: { label: string; href: string; icon: React.ReactNode } }
+  | { category: CategoryItem }
+
+interface SidebarUIContextProps {
   open: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setOpen: (value: boolean) => void
   animate: boolean
 }
 
-const SidebarContext = createContext<SidebarContextProps | undefined>(undefined)
+const SidebarUIContext = createContext<SidebarUIContextProps | undefined>(
+  undefined
+)
 
 export const useSidebar = () => {
-  const context = useContext(SidebarContext)
+  const context = useContext(SidebarUIContext)
   if (!context) {
     throw new Error('useSidebar must be used within a SidebarProvider')
   }
@@ -29,43 +34,29 @@ export const useSidebar = () => {
 
 export const SidebarProvider = ({
   children,
-  open: openProp,
-  setOpen: setOpenProp,
   animate = true,
 }: {
   children: React.ReactNode
-  open?: boolean
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>
   animate?: boolean
 }) => {
-  const [openState, setOpenState] = useState(false)
-
-  const open = openProp !== undefined ? openProp : openState
-  const setOpen = setOpenProp !== undefined ? setOpenProp : setOpenState
+  const open = useStore((state) => state.openSidebar)
+  const setOpen = useStore((state) => state.setOpenSidebar)
 
   return (
-    <SidebarContext.Provider value={{ open, setOpen, animate: animate }}>
+    <SidebarUIContext.Provider value={{ open, setOpen, animate }}>
       {children}
-    </SidebarContext.Provider>
+    </SidebarUIContext.Provider>
   )
 }
 
 export const Sidebar = ({
   children,
-  open,
-  setOpen,
   animate,
 }: {
   children: React.ReactNode
-  open?: boolean
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>
   animate?: boolean
 }) => {
-  return (
-    <SidebarProvider open={open} setOpen={setOpen} animate={animate}>
-      {children}
-    </SidebarProvider>
-  )
+  return <SidebarProvider animate={animate}>{children}</SidebarProvider>
 }
 
 export const SidebarBody = (props: React.ComponentProps<typeof motion.div>) => {
@@ -84,22 +75,18 @@ export const DesktopSidebar = ({
 }: React.ComponentProps<typeof motion.div>) => {
   const { open, setOpen, animate } = useSidebar()
   return (
-    <>
-      <motion.div
-        className={cn(
-          'h-full px-4 py-4 hidden  md:flex md:flex-col bg-neutral-100 dark:bg-neutral-800 w-[300px] shrink-0',
-          className
-        )}
-        animate={{
-          width: animate ? (open ? '300px' : '60px') : '300px',
-        }}
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
-        {...props}
-      >
-        {children}
-      </motion.div>
-    </>
+    <motion.div
+      className={cn(
+        'h-full p-2 hidden md:flex md:flex-col bg-neutral-100 dark:bg-neutral-800 w-[288px] shrink-0',
+        className
+      )}
+      animate={{ width: animate ? (open ? '288px' : '50px') : '288px' }}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      {...props}
+    >
+      {children}
+    </motion.div>
   )
 }
 
@@ -109,79 +96,83 @@ export const MobileSidebar = ({
   ...props
 }: React.ComponentProps<'div'>) => {
   const { open, setOpen } = useSidebar()
+
   return (
-    <>
-      <div
-        className={cn(
-          'h-10 px-4 py-4 flex flex-row md:hidden  items-center justify-between bg-neutral-100 dark:bg-neutral-800 w-full'
-        )}
-        {...props}
-      >
-        <div className="flex justify-end z-20 w-full">
-          <SlMenu
-            className="text-neutral-800 dark:text-neutral-200"
-            onClick={() => setOpen(!open)}
-          />
-        </div>
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              initial={{ x: '-100%', opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: '-100%', opacity: 0 }}
-              transition={{
-                duration: 0.3,
-                ease: 'easeInOut',
-              }}
-              className={cn(
-                'fixed h-full w-full inset-0 bg-white dark:bg-neutral-900 p-10 z-[100] flex flex-col justify-between',
-                className
-              )}
-            >
-              <div
-                className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200"
-                onClick={() => setOpen(!open)}
-              >
-                <SlClose />
-              </div>
-              {children}
-            </motion.div>
-          )}
-        </AnimatePresence>
+    <div
+      className={cn(
+        'h-10 px-4 py-4 flex flex-row md:hidden items-center justify-between bg-neutral-100 dark:bg-neutral-800 w-full'
+      )}
+      {...props}
+    >
+      <div className="flex justify-end z-20 w-full">
+        <SlMenu
+          className="text-neutral-800 dark:text-neutral-200"
+          onClick={() => setOpen(!open)}
+        />
       </div>
-    </>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ x: '-100%', opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: '-100%', opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className={cn(
+              'fixed h-full w-full inset-0 bg-white dark:bg-neutral-900 p-10 z-[100] flex flex-col justify-between',
+              className
+            )}
+          >
+            <div
+              className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200"
+              onClick={() => setOpen(false)}
+            >
+              <SlClose />
+            </div>
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }
 
 export const SidebarLink = ({
-  link,
   className,
   ...props
-}: {
-  link: Links
-  className?: string
-  props?: LinkProps
-}) => {
+}: SidebarLinkProps & { className?: string; props?: LinkProps }) => {
   const { open, animate } = useSidebar()
+
+  const isCategory = 'category' in props
+  const label = isCategory ? props.category.name : props.link.label
+  const href = isCategory ? `/tag/${props.category.slug}` : props.link.href
+  const Icon = isCategory ? props.category.icon : null
+  const icon = isCategory
+    ? Icon && (
+        <Icon
+          size={22}
+          className="shrink-0 text-secondary group-hover/sidebar:text-[hsl(var(--primary))] transition-colors duration-200"
+        />
+      )
+    : props.link.icon
+
   return (
     <Link
-      href={link.href}
+      href={href}
       className={cn(
-        'flex items-center justify-start gap-2  group/sidebar py-2',
+        'flex items-center justify-start gap-2 transition-all duration-200 group/sidebar py-2 px-1 rounded-sm hover:bg-[hsl(var(--accent))]',
         className
       )}
       {...props}
     >
-      {link.icon}
-
+      {icon}
       <motion.span
         animate={{
           display: animate ? (open ? 'inline-block' : 'none') : 'inline-block',
           opacity: animate ? (open ? 1 : 0) : 1,
         }}
-        className="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+        className="text-secondary text-sm group-hover/sidebar:translate-x-1 transition duration-200 whitespace-pre inline-block !p-0 !m-0"
       >
-        {link.label}
+        {label}
       </motion.span>
     </Link>
   )

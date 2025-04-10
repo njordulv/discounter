@@ -16,6 +16,8 @@ export const useStore = create<StoreProps>()(
       setIsGridView: (value: boolean) => set({ isGridView: value }),
       perPage: PAGINATION.PER_PAGE_DEFAULT,
       setPerPage: (page: number) => set({ perPage: page }),
+      openSidebar: false,
+      setOpenSidebar: (value: boolean) => set({ openSidebar: value }),
     }),
     {
       name: 'user-preferences',

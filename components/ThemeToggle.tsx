@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { IoMoonOutline, IoSunnyOutline } from 'react-icons/io5'
 import { useTheme } from 'next-themes'
 import { motion } from 'framer-motion'
 import config from '@/config'
@@ -11,6 +12,13 @@ const toggleClass =
 export const ThemeToggle = () => {
   const { theme, setTheme } = useTheme()
   const [isPressed, setIsPressed] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
 
   const isLight = theme === 'light'
   const isDark = theme === 'dark'
@@ -22,7 +30,12 @@ export const ThemeToggle = () => {
   }
 
   return (
-    <div className="flex items-start">
+    <div className="flex items-center gap-1">
+      {theme === 'dark' ? (
+        <IoMoonOutline size={20} className="w-7" />
+      ) : (
+        <IoSunnyOutline size={20} className="w-7" />
+      )}
       <div
         className={`relative flex items-center border-0 rounded-full transition-all ${
           isLight ? 'bg-input' : 'bg-gray-950'

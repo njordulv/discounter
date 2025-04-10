@@ -23,6 +23,8 @@ export interface StoreProps {
   setIsGridView: (value: boolean) => void
   perPage: number
   setPerPage: (page: number) => void
+  openSidebar: boolean
+  setOpenSidebar: (value: boolean) => void
 }
 
 export interface MotionCardVariants {
