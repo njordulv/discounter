@@ -20,7 +20,7 @@ const MobileSidebar = () => {
       <DrawerTrigger>
         <TbMenu2
           size={30}
-          className="absolute right-3 top-6 z-10 cursor-pointer text-[hsl(var(--background))]"
+          className="absolute right-2 top-6 z-10 cursor-pointer text-[hsl(var(--background))]"
         />
       </DrawerTrigger>
       <DrawerContent>

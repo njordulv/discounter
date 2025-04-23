@@ -87,15 +87,6 @@ li {
   margin: 0;
 }
 
-nav ul li a {
-  color: hsl(var(--popover));
-  transition: all 0.3s ease;
-}
-
-nav ul li a:hover {
-  color: hsl(var(--popover-foreground));
-}
-
 .wrapper {
   position: relative;
   margin-inline: auto;

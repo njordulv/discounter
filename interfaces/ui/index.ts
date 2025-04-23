@@ -45,3 +45,15 @@ export interface MotionCardVariants {
     bounce: number
   }
 }
+
+export interface SidebarItem {
+  name: string
+  slug: string
+  icon: React.ElementType
+}
+
+export interface SidebarMenuListProps {
+  items: SidebarItem[]
+  ariaLabel: string
+  hrefPattern?: string
+}

@@ -1,20 +1,16 @@
 'use client'
 
-import Link, { LinkProps } from 'next/link'
+import Link from 'next/link'
 import { createContext, useContext } from 'react'
 import { motion } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { catsConfig } from '@/config/categories'
 import { useStore } from '@/store'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { SidebarMenuListProps } from '@/interfaces/ui'
 import config from '@/config'
 import SVGIcon from '@/components/ui/SVGIcon'
-
-type CategoryItem = (typeof catsConfig)[keyof typeof catsConfig]
-
-type SidebarLinkProps =
-  | { link: { label: string; href: string; icon: React.ReactNode } }
-  | { category: CategoryItem }
 
 interface SidebarUIContextProps {
   open: boolean
@@ -110,40 +106,6 @@ export const DesktopSidebar = ({
   )
 }
 
-export const SidebarLink = ({
-  className,
-  ...props
-}: SidebarLinkProps & { className?: string; props?: LinkProps }) => {
-  const isCategory = 'category' in props
-  const label = isCategory ? props.category.name : props.link.label
-  const href = isCategory ? `/tag/${props.category.slug}` : props.link.href
-  const Icon = isCategory ? props.category.icon : null
-  const icon = isCategory
-    ? Icon && (
-        <Icon
-          size={22}
-          className="shrink-0 text-secondary group-hover/sidebar:text-[hsl(var(--primary))] transition-colors duration-200"
-        />
-      )
-    : props.link.icon
-
-  return (
-    <Link
-      href={href}
-      className={cn(
-        'flex items-center justify-start gap-2 transition-all duration-200 group/sidebar py-2 px-1 rounded-sm hover:bg-[hsl(var(--accent))]',
-        className
-      )}
-      {...props}
-    >
-      {icon}
-      <span className="text-secondary text-sm group-hover/sidebar:translate-x-1 transition duration-200 whitespace-pre !p-0 !m-0">
-        {label}
-      </span>
-    </Link>
-  )
-}
-
 export const Logo = () => {
   return (
     <Link
@@ -173,26 +135,57 @@ export const Theme = () => {
   )
 }
 
-export const SidebarMenu = () => {
+export const SidebarMenuList = ({
+  items,
+  ariaLabel,
+  hrefPattern = '/{slug}',
+}: SidebarMenuListProps) => {
+  const pathname = usePathname()
+
   return (
-    <ul>
-      {Object.values(config.mainMenu).map((item) => (
-        <li key={item.slug}>
-          <SidebarLink category={item} />
-        </li>
-      ))}
-    </ul>
+    <nav aria-label={ariaLabel}>
+      <ul className="flex flex-col gap-[1px]">
+        {items.map(({ slug, name, icon: Icon }) => {
+          const href = hrefPattern.replace('{slug}', slug)
+          const isActive = pathname === href
+
+          return (
+            <li key={slug}>
+              <Link
+                href={href}
+                className="flex items-center gap-2 px-1 py-2 rounded-sm transition-all hover:bg-[hsl(var(--accent))]"
+              >
+                <Icon
+                  size={22}
+                  className={cn(
+                    'shrink-0',
+                    isActive ? 'text-primary' : 'text-secondary'
+                  )}
+                />
+                <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+                  {name}
+                </span>
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
+    </nav>
   )
 }
 
-export const CategoryMenu = () => {
-  return (
-    <ul>
-      {Object.values(catsConfig).map((item) => (
-        <li key={item.slug}>
-          <SidebarLink category={item} />
-        </li>
-      ))}
-    </ul>
-  )
-}
+export const SidebarMenu = () => (
+  <SidebarMenuList
+    items={Object.values(config.mainMenu)}
+    ariaLabel="Main menu"
+    hrefPattern="{slug}"
+  />
+)
+
+export const CategoryMenu = () => (
+  <SidebarMenuList
+    items={Object.values(catsConfig)}
+    ariaLabel="Categories"
+    hrefPattern="/tag/{slug}"
+  />
+)
