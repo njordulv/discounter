@@ -2,9 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Sidebar, SidebarBody, SidebarLink } from '@/components/ui/sidebar'
-import { cn } from '@/lib/utils'
-import { catsConfig } from '@/config/categories'
+import { Sidebar, SidebarBody, SidebarContent } from '@/components/ui/sidebar'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -12,24 +10,10 @@ import SVGIcon from '@/components/ui/SVGIcon'
 
 export const SideMenu = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div
-      className={cn(
-        'relative mx-auto flex w-full flex-1 flex-col md:flex-row gap-2',
-        'h-screen'
-      )}
-    >
+    <div className="wrapper">
       <Sidebar>
-        <SidebarBody className="h-screen fixed top-0 left-0 justify-between gap-10 border border-input rounded-tr-md rounded-br-md bg-card">
-          <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
-            <Logo />
-            <div className="mt-8 flex flex-col gap-1">
-              {Object.values(catsConfig).map((cat) => (
-                <SidebarLink key={cat.slug} category={cat} />
-              ))}
-              <hr className="border-input my-2" />
-              <Theme />
-            </div>
-          </div>
+        <SidebarBody className="h-auto top-0 left-0 justify-between gap-10 border border-input rounded-tr-md rounded-br-md bg-card">
+          <SidebarContent />
         </SidebarBody>
       </Sidebar>
       <div className="w-full mx-auto">

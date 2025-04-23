@@ -16,32 +16,35 @@ const config = {
     labelLight: 'Light Mode',
     labelDark: 'Dark Mode',
   },
+  mainMenu: {
+    home: {
+      name: 'Home',
+      slug: '/',
+      icon: TbHome,
+      scrapeUrl: '',
+    },
+    allDeals: {
+      name: 'All Deals',
+      slug: '/all-deals',
+      icon: TbTag,
+      scrapeUrl: '',
+    },
+    categories: {
+      name: 'All Categories',
+      slug: '/tag',
+      icon: TbCategory,
+      scrapeUrl: '',
+    },
+  },
+  categories: {
+    ...catsConfig,
+  },
   emag: {
     title: 'eMAG',
     url: 'https://www.emag.bg',
     currency: 'лв.',
     smartDeals: 'https://sapi.emag.bg/label-campaign/flash-deals?source_id=',
     errorFetch: 'Error fetching data',
-    mainMenu: {
-      home: {
-        name: 'Home',
-        slug: '/',
-        icon: TbHome,
-      },
-      allDeals: {
-        name: 'All Deals',
-        slug: '/all-deals',
-        icon: TbTag,
-      },
-      categories: {
-        name: 'All Categories',
-        slug: '/tag',
-        icon: TbCategory,
-      },
-    },
-    categories: {
-      ...catsConfig,
-    },
   },
   messages: {
     endOfDeals: 'You have reached the end of the deals',

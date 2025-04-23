@@ -9,7 +9,6 @@
       hsl(200 80% 69%),
       hsl(207 100% 28%)
     );
-    /* Общие значения (не зависят от темы) */
     --primary: 212 80% 69%;
     --primary-foreground: 212 8% 6.9%;
 
@@ -95,6 +94,16 @@ nav ul li a {
 
 nav ul li a:hover {
   color: hsl(var(--popover-foreground));
+}
+
+.wrapper {
+  position: relative;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 2);
+  width: 100%;
+  flex: 1;
 }
 
 .border {
@@ -277,4 +286,11 @@ nav ul li a:hover {
 
 .destructive:hover {
   background-color: hsl(var(--destructive) / 70%);
+}
+
+@media (width >= 48rem) {
+  .wrapper {
+    flex-direction: row;
+    gap: 0;
+  }
 }

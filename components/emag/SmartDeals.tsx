@@ -31,9 +31,9 @@ function SmartDeals() {
       {deals && (
         <>
           <div className="grid grid-cols-2 gap-3 mt-8">
-            {deals.map((deal: DealProps) => (
+            {deals.map((deal: DealProps, index: number) => (
               <Item
-                key={deal.id}
+                key={index}
                 name={deal.name}
                 image={deal.image}
                 url={deal.url}

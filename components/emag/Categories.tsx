@@ -5,7 +5,7 @@ import { catsConfig } from '@/config/categories'
 import config from '@/config'
 
 export const Categories = () => {
-  const menu = useMemo(() => config.emag.mainMenu, [])
+  const menu = useMemo(() => config.mainMenu, [])
   const cats = useMemo(() => catsConfig, [])
 
   const menuItems = useMemo(
