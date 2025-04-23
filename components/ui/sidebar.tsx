@@ -77,13 +77,9 @@ export const SidebarContent = () => {
     >
       <Logo />
       <div className="mt-8 flex flex-col gap-1">
-        {Object.values(config.mainMenu).map((item) => (
-          <SidebarLink key={item.slug} category={item} />
-        ))}
+        <SidebarMenu />
         <hr className="border-input my-2" />
-        {Object.values(catsConfig).map((item) => (
-          <SidebarLink key={item.slug} category={item} />
-        ))}
+        <CategoryMenu />
         <hr className="border-input mt-2" />
         <Theme />
       </div>
@@ -174,5 +170,29 @@ export const Theme = () => {
     >
       <ThemeToggle />
     </motion.div>
+  )
+}
+
+export const SidebarMenu = () => {
+  return (
+    <ul>
+      {Object.values(config.mainMenu).map((item) => (
+        <li key={item.slug}>
+          <SidebarLink category={item} />
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export const CategoryMenu = () => {
+  return (
+    <ul>
+      {Object.values(catsConfig).map((item) => (
+        <li key={item.slug}>
+          <SidebarLink category={item} />
+        </li>
+      ))}
+    </ul>
   )
 }

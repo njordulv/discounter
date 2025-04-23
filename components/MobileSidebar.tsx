@@ -1,6 +1,6 @@
 'use client'
 
-import { SlMenu } from 'react-icons/sl'
+import { TbMenu2 } from 'react-icons/tb'
 import {
   Drawer,
   DrawerClose,
@@ -12,44 +12,37 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer'
 import { Button } from '@/components/ui/Button'
-import { SidebarLink, Theme } from '@/components/ui/sidebar'
-import { catsConfig } from '@/config/categories'
-import config from '@/config'
+import { Logo, SidebarMenu, CategoryMenu, Theme } from '@/components/ui/sidebar'
 
-export const MobileSidebar = () => {
+const MobileSidebar = () => {
   return (
     <Drawer>
       <DrawerTrigger>
-        <SlMenu />
+        <TbMenu2
+          size={30}
+          className="absolute right-3 top-6 z-10 cursor-pointer text-[hsl(var(--background))]"
+        />
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Edit profile</DrawerTitle>
-          <DrawerDescription>asd</DrawerDescription>
-          <ul>
-            {Object.values(config.mainMenu).map((item) => (
-              <li key={item.slug}>
-                <SidebarLink category={item} />
-              </li>
-            ))}
-          </ul>
+          <DrawerTitle>
+            <Logo />
+          </DrawerTitle>
+          <DrawerDescription hidden>Menu Items</DrawerDescription>
+          <SidebarMenu />
           <hr className="border-input my-2" />
-          <ul>
-            {Object.values(catsConfig).map((item) => (
-              <li key={item.slug}>
-                <SidebarLink category={item} />
-              </li>
-            ))}
-          </ul>
+          <CategoryMenu />
           <hr className="border-input mt-2" />
           <Theme />
         </DrawerHeader>
         <DrawerFooter>
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button size="md" variant="outline" text="Close" />
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
   )
 }
+
+export default MobileSidebar

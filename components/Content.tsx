@@ -1,8 +1,8 @@
 'use client'
 
 import { Sidebar, SidebarBody, SidebarContent } from '@/components/ui/sidebar'
-import { MobileSidebar } from '@/components/MobileSidebar'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import MobileSidebar from '@/components/MobileSidebar'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
