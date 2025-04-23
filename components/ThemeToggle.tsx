@@ -30,11 +30,11 @@ export const ThemeToggle = () => {
   }
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-2 py-2 px-1">
       {theme === 'dark' ? (
-        <IoMoonOutline size={20} className="w-7" />
+        <IoMoonOutline size={20} className="w-6" />
       ) : (
-        <IoSunnyOutline size={20} className="w-7" />
+        <IoSunnyOutline size={20} className="w-6" />
       )}
       <div
         className={`relative flex items-center border-0 rounded-full transition-all ${

@@ -2,7 +2,7 @@ import { Noto_Sans } from 'next/font/google'
 import type { Metadata } from 'next'
 import Decor from '@/components/ui/Decor'
 import ThemeProvider from '@/providers/theme'
-import { SideMenu } from '@/components/ui/SideMenu'
+import { Content } from '@/components/Content'
 import '@/styles/globals.css'
 
 const notoSans = Noto_Sans({
@@ -30,7 +30,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Decor />
-          <SideMenu>{children}</SideMenu>
+          <Content>{children}</Content>
         </ThemeProvider>
       </body>
     </html>

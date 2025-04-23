@@ -76,7 +76,7 @@ export const SidebarContent = () => {
 
   return (
     <motion.div
-      className="flex flex-1 flex-col overflow-hidden fixed"
+      className="flex flex-1 flex-col overflow-hidden fixed w-[34px]"
       animate={{ width: animate ? (open ? '262px' : '34px') : '262px' }}
     >
       <Logo />
@@ -88,7 +88,7 @@ export const SidebarContent = () => {
         {Object.values(catsConfig).map((item) => (
           <SidebarLink key={item.slug} category={item} />
         ))}
-        <hr className="border-input my-2" />
+        <hr className="border-input mt-2" />
         <Theme />
       </div>
     </motion.div>
