@@ -9,8 +9,8 @@ import { catsConfig } from '@/config/categories'
 import { useStore } from '@/store'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { SidebarMenuListProps } from '@/interfaces/ui'
+import Logo from '@/components/Logo'
 import config from '@/config'
-import SVGIcon from '@/components/ui/SVGIcon'
 
 interface SidebarUIContextProps {
   open: boolean
@@ -68,8 +68,8 @@ export const SidebarContent = () => {
 
   return (
     <motion.div
-      className="flex flex-1 flex-col overflow-hidden fixed w-[34px]"
-      animate={{ width: animate ? (open ? '262px' : '34px') : '262px' }}
+      className="flex flex-1 flex-col overflow-hidden fixed bg-card px-1 py-2 w-[40px]"
+      animate={{ width: animate ? (open ? '288px' : '40px') : '288px' }}
     >
       <Logo />
       <div className="mt-8 flex flex-col gap-1">
@@ -77,7 +77,9 @@ export const SidebarContent = () => {
         <hr className="border-input my-2" />
         <CategoryMenu />
         <hr className="border-input mt-2" />
-        <Theme />
+        <div className="min-w-fit flex items-center gap-2 text-secondary-foreground">
+          <ThemeToggle />
+        </div>
       </div>
     </motion.div>
   )
@@ -93,45 +95,16 @@ export const DesktopSidebar = ({
   return (
     <motion.aside
       className={cn(
-        'h-full p-2 hidden md:flex md:flex-col bg-card w-[50px] shrink-0',
+        'h-full hidden md:flex md:flex-col bg-card w-[40px] shrink-0',
         className
       )}
-      animate={{ width: animate ? (open ? '288px' : '50px') : '288px' }}
+      animate={{ width: animate ? (open ? '288px' : '40px') : '288px' }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
       {...props}
     >
       {children}
     </motion.aside>
-  )
-}
-
-export const Logo = () => {
-  return (
-    <Link
-      href="/"
-      className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black"
-    >
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="text-secondary-foreground"
-      >
-        <SVGIcon width={162} height={32} />
-      </motion.span>
-    </Link>
-  )
-}
-
-export const Theme = () => {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="min-w-fit flex items-center gap-2 text-secondary-foreground"
-    >
-      <ThemeToggle />
-    </motion.div>
   )
 }
 
@@ -144,7 +117,7 @@ export const SidebarMenuList = ({
 
   return (
     <nav aria-label={ariaLabel}>
-      <ul className="flex flex-col gap-[1px]">
+      <ul className="flex flex-col gap-1">
         {items.map(({ slug, name, icon: Icon }) => {
           const href = hrefPattern.replace('{slug}', slug)
           const isActive = pathname === href
@@ -153,7 +126,7 @@ export const SidebarMenuList = ({
             <li key={slug}>
               <Link
                 href={href}
-                className="flex items-center gap-2 px-1 py-2 rounded-sm transition-all hover:bg-[hsl(var(--accent))]"
+                className="flex items-center gap-2 p-1 rounded-sm transition-all hover:bg-[hsl(var(--accent))]"
               >
                 <Icon
                   size={22}
@@ -162,7 +135,7 @@ export const SidebarMenuList = ({
                     isActive ? 'text-primary' : 'text-secondary'
                   )}
                 />
-                <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+                <span className="text-sm whitespace-nowrap overflow-hidden text-ellipsis">
                   {name}
                 </span>
               </Link>
