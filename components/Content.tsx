@@ -8,9 +8,9 @@ export const Content = ({ children }: { children: React.ReactNode }) => {
     <div className="wrapper">
       <Aside />
       <MobileSidebar />
-      <div className="w-full mx-auto">
+      <div className="w-full mx-auto h-screen">
         <Header />
-        <main className="w-full max-w-5xl mx-auto min-h-[calc(100vh-7.5rem)] sm:py-16 py-2 px-2 flex flex-col sm:gap-3 gap-2 relative overflow-hidden">
+        <main className="w-full max-w-5xl mx-auto h-[calc(100vh-5.6rem)] sm:py-16 py-2 px-2 flex flex-col sm:gap-3 gap-2 relative overflow-hidden">
           {children}
         </main>
         <Footer />

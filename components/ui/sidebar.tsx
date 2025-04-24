@@ -68,15 +68,15 @@ export const SidebarContent = () => {
 
   return (
     <motion.div
-      className="flex flex-1 flex-col overflow-hidden fixed bg-card px-1 py-2 w-[40px]"
-      animate={{ width: animate ? (open ? '288px' : '40px') : '288px' }}
+      className="flex flex-1 flex-col overflow-hidden fixed bg-card px-1 py-2 w-[39px]"
+      animate={{ width: animate ? (open ? '260px' : '39px') : '260px' }}
     >
       <Logo />
       <div className="mt-8 flex flex-col gap-1">
         <SidebarMenu />
-        <hr className="border-input my-2" />
+        <hr className="border-input my-1" />
         <CategoryMenu />
-        <hr className="border-input mt-2" />
+        <hr className="border-input mt-1" />
         <div className="min-w-fit flex items-center gap-2 text-secondary-foreground">
           <ThemeToggle />
         </div>
@@ -95,10 +95,10 @@ export const DesktopSidebar = ({
   return (
     <motion.aside
       className={cn(
-        'h-full hidden md:flex md:flex-col bg-card w-[40px] shrink-0',
+        'h-full hidden md:flex md:flex-col bg-card w-[40px] border-input border-r shrink-0',
         className
       )}
-      animate={{ width: animate ? (open ? '288px' : '40px') : '288px' }}
+      animate={{ width: animate ? (open ? '260px' : '40px') : '260px' }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
       {...props}

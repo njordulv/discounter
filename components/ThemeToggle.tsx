@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { IoMoonOutline, IoSunnyOutline } from 'react-icons/io5'
 import { useTheme } from 'next-themes'
 import { motion } from 'framer-motion'
+import { cn } from '@/lib/utils'
 import config from '@/config'
 
 const toggleClass =
@@ -30,21 +31,23 @@ export const ThemeToggle = () => {
   }
 
   return (
-    <div className="flex items-center gap-2 py-2 px-1">
+    <div className="flex items-center gap-2 p-1">
       {theme === 'dark' ? (
         <IoMoonOutline size={20} className="w-6" />
       ) : (
         <IoSunnyOutline size={20} className="w-6" />
       )}
       <div
-        className={`relative flex items-center border-0 rounded-full transition-all ${
+        className={cn(
+          'relative flex items-center border-0 rounded-full transition-all',
           isLight ? 'bg-input' : 'bg-gray-950'
-        }`}
+        )}
       >
         <button
-          className={`${toggleClass} ${
+          className={cn(
+            toggleClass,
             isLight ? 'text-secondary-foreground' : ' text-muted-foreground'
-          }`}
+          )}
           onClick={handleClick}
           aria-label={config.theme.switchToDark}
           title={config.theme.labelLight}
@@ -52,9 +55,10 @@ export const ThemeToggle = () => {
           {config.theme.light}
         </button>
         <button
-          className={`${toggleClass} ${
+          className={cn(
+            toggleClass,
             isDark ? 'text-secondary' : ' text-muted-foreground'
-          }`}
+          )}
           onClick={handleClick}
           aria-label={config.theme.switchToLight}
           title={config.theme.labelDark}
@@ -62,9 +66,10 @@ export const ThemeToggle = () => {
           {config.theme.dark}
         </button>
         <div
-          className={`absolute inset-0 z-0 flex ${
+          className={cn(
+            'absolute inset-0 z-0 flex',
             isDark ? 'justify-end' : 'justify-start'
-          }`}
+          )}
         >
           <motion.span
             layout

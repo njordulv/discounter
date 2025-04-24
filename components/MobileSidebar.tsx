@@ -36,9 +36,9 @@ const MobileSidebar = () => {
             </DrawerTitle>
             <DrawerDescription hidden>Menu Items</DrawerDescription>
             <SidebarMenu />
-            <hr className="border-input my-2" />
+            <hr className="border-input my-1" />
             <CategoryMenu />
-            <hr className="border-input mt-2" />
+            <hr className="border-input mt-1" />
             <ThemeToggle />
           </DrawerHeader>
           <DrawerFooter>
