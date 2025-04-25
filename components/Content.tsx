@@ -8,13 +8,13 @@ export const Content = ({ children }: { children: React.ReactNode }) => {
     <div className="wrapper">
       <Aside />
       <MobileSidebar />
-      <div className="w-full mx-auto h-screen">
+      <main className="relative w-full h-full min-h-[calc(100vh-5.6rem)] overflow-auto flex-1 flex flex-col">
         <Header />
-        <main className="w-full max-w-5xl mx-auto h-[calc(100vh-5.6rem)] sm:py-16 py-2 px-2 flex flex-col sm:gap-3 gap-2 relative overflow-hidden">
+        <section className="max-w-5xl w-full mx-auto flex flex-col sm:py-16 py-2 px-2 gap-2">
           {children}
-        </main>
+        </section>
         <Footer />
-      </div>
+      </main>
     </div>
   )
 }

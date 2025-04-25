@@ -29,8 +29,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Decor />
           <Content>{children}</Content>
+          <Decor />
         </ThemeProvider>
       </body>
     </html>

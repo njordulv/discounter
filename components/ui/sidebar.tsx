@@ -68,8 +68,8 @@ export const SidebarContent = () => {
 
   return (
     <motion.div
-      className="flex flex-1 flex-col overflow-hidden fixed bg-card px-1 py-2 w-[39px]"
-      animate={{ width: animate ? (open ? '260px' : '39px') : '260px' }}
+      className="flex flex-1 flex-col overflow-hidden fixed w-[32px]"
+      animate={{ width: animate ? (open ? '253px' : '32px') : '253px' }}
     >
       <Logo />
       <div className="mt-8 flex flex-col gap-1">
@@ -95,10 +95,10 @@ export const DesktopSidebar = ({
   return (
     <motion.aside
       className={cn(
-        'h-full hidden md:flex md:flex-col bg-card w-[40px] border-input border-r shrink-0',
+        'h-full hidden md:flex md:flex-col bg-card w-[47px] bg-card p-2 border-input border-r shrink-0',
         className
       )}
-      animate={{ width: animate ? (open ? '260px' : '40px') : '260px' }}
+      animate={{ width: animate ? (open ? '268px' : '47px') : '268px' }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
       {...props}
@@ -117,7 +117,7 @@ export const SidebarMenuList = ({
 
   return (
     <nav aria-label={ariaLabel}>
-      <ul className="flex flex-col gap-1">
+      <ul>
         {items.map(({ slug, name, icon: Icon }) => {
           const href = hrefPattern.replace('{slug}', slug)
           const isActive = pathname === href
@@ -126,10 +126,10 @@ export const SidebarMenuList = ({
             <li key={slug}>
               <Link
                 href={href}
-                className="flex items-center gap-2 p-1 rounded-sm transition-all hover:bg-[hsl(var(--accent))]"
+                className="flex items-center gap-2 px-1 py-2 rounded-sm transition-all hover:bg-[hsl(var(--accent))]"
               >
                 <Icon
-                  size={22}
+                  size={23}
                   className={cn(
                     'shrink-0',
                     isActive ? 'text-primary' : 'text-secondary'
