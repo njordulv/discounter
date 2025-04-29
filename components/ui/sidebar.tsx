@@ -7,8 +7,8 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { catsConfig } from '@/config/categories'
 import { useStore } from '@/store'
-import { ThemeToggle } from '@/components/ThemeToggle'
 import { SidebarMenuListProps } from '@/interfaces/ui'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import Logo from '@/components/Logo'
 import config from '@/config'
 
@@ -68,7 +68,7 @@ export const SidebarContent = () => {
 
   return (
     <motion.div
-      className="flex flex-1 flex-col overflow-hidden fixed w-[32px]"
+      className="aside-wrapper"
       animate={{ width: animate ? (open ? '253px' : '32px') : '253px' }}
     >
       <Logo />

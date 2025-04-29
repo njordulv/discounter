@@ -123,3 +123,16 @@ export const DiscoverSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
 })
 
 DiscoverSkeleton.displayName = 'DiscoverSkeleton'
+
+export const IconSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
+  return (
+    <div ref={ref} role="status" className="animate-pulse w-full">
+      <div className="w-full overflow-hidden">
+        <div className="h-6 w-6 bg-muted rounded-md"></div>
+      </div>
+      <span className="sr-only">Loading...</span>
+    </div>
+  )
+})
+
+IconSkeleton.displayName = 'IconSkeleton'

@@ -95,17 +95,44 @@ li {
 .wrapper {
   position: relative;
   margin-inline: auto;
-  display: flex;
-  flex-direction: column;
   gap: calc(var(--spacing) * 2);
   width: 100%;
   height: 100%;
   overflow: hidden;
-  flex: 1;
+  display: grid;
+  grid-template-columns: auto 100%;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+aside {
+  grid-area: 1 / 1 / 3 / 2;
+}
+
+main {
+  grid-area: 1 / 2 / 3 / 3;
+}
+
+footer {
+  grid-area: 3 / 1 / 4 / 3;
 }
 
 .border {
   border-width: 1px;
+}
+
+.aside-wrapper {
+  scrollbar-width: none;
+  position: fixed;
+  overflow-x: hidden;
+  flex: 1;
+  flex-direction: column;
+  width: 32px;
+  height: calc(100vh - 4rem);
+}
+
+.aside-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .bg-background {
