@@ -27,6 +27,7 @@ function AllDeals({ slug }: { slug: string }) {
     setTagProducts,
     isGridView,
     perPage,
+    sortOrder,
   } = useStore()
   const [accumulatedData, setAccumulatedData] = useState<ScrapeProps[]>([])
 
@@ -36,8 +37,10 @@ function AllDeals({ slug }: { slug: string }) {
       perPage: perPage.toString(),
     })
     if (slug) params.append('category', slug.toLowerCase())
+    if (sortOrder) params.append('sort', sortOrder)
+
     return params.toString()
-  }, [slug, currentPage, perPage])
+  }, [slug, currentPage, perPage, sortOrder])
 
   const { data, error, isLoading } = useFetcher({
     url: `/api/emag/all-deals?${queryParams}`,

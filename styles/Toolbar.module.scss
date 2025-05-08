@@ -14,4 +14,14 @@
     flex-grow: 1;
     display: flex;
   }
+
+  .options {
+    display: flex;
+    gap: calc(var(--spacing) * 2);
+  }
+
+  @media (width < 48rem) {
+    flex-direction: column;
+    gap: calc(var(--spacing) * 2);
+  }
 }

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { connectDB } from '@/lib/mongo'
+import type { SortOrder } from 'mongoose'
 import { getAsync, redisClient } from '@/lib/redis'
 import { CACHE_EXPIRATION, PAGINATION } from '@/config/constants'
 import Product from '@/models/Product'
@@ -10,12 +11,14 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get('page')) || 1
   const perPage =
     Number(searchParams.get('perPage')) || PAGINATION.PER_PAGE_DEFAULT
+  const sort = searchParams.get('sort')
 
-  const cacheKey = `products_${category}_page_${page}_perPage_${perPage}`
-  const countKey = `products_${category}_count_perPage_${perPage}`
+  const sortSuffix = sort ? `_sort_${sort}` : ''
+  const cacheKey = `products_${category}_page_${page}_perPage_${perPage}${sortSuffix}`
+  const countKey = `products_${category}_count_perPage_${perPage}${sortSuffix}`
 
   try {
-    // 1. Reading cached data for page
+    // 1. Reading cached data
     const cachedPage = await getAsync(cacheKey)
     const cachedCount = await getAsync(countKey)
 
@@ -30,26 +33,44 @@ export async function GET(request: Request) {
           category,
           totalPages: Math.ceil(Number(cachedCount) / perPage),
           totalItems: Number(cachedCount),
+          sort,
         },
       })
     }
 
-    // 2. No cache, fetching from MongoDB
+    // 2. No cache, fetch from DB
     console.log('❌ No cache, fetching from MongoDB')
     await connectDB()
 
     const query = category ? { category } : {}
 
-    // If no cache for count, get it
+    // Optional: Ensure index exists (safe to call multiple times)
+    await Product.collection.createIndex({ category: 1, price: 1 })
+
+    const sortOption: Record<string, SortOrder> = {}
+    if (sort === 'price_asc') sortOption.price = 1
+    else if (sort === 'price_desc') sortOption.price = -1
+
+    // Count items
     const totalItems = cachedCount
       ? Number(cachedCount)
       : await Product.countDocuments(query)
 
+    // Fetch sorted and paginated products
     const products = await Product.find(query)
+      .sort(sortOption)
       .skip((page - 1) * perPage)
       .limit(perPage)
 
-    // 3. Caching data
+    // Optional: Debug index usage
+    // const explain = await Product.find(query)
+    //   .sort(sortOption)
+    //   .skip((page - 1) * perPage)
+    //   .limit(perPage)
+    //   .explain('executionStats')
+    // console.log('MongoDB query performance:', explain)
+
+    // 3. Cache result
     await redisClient.setex(
       cacheKey,
       CACHE_EXPIRATION.DEFAULT,
@@ -72,9 +93,11 @@ export async function GET(request: Request) {
         category,
         totalPages: Math.ceil(totalItems / perPage),
         totalItems,
+        sort,
       },
     })
   } catch (error) {
+    console.error('❌ Error fetching products:', error)
     return NextResponse.json({ message: 'Error fetching data', error })
   }
 }

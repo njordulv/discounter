@@ -98,7 +98,6 @@ li {
   gap: calc(var(--spacing) * 2);
   width: 100%;
   height: 100%;
-  overflow: hidden;
   display: grid;
   grid-template-columns: auto 100%;
   grid-column-gap: 0px;

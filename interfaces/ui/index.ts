@@ -25,6 +25,8 @@ export interface StoreProps {
   setPerPage: (page: number) => void
   openSidebar: boolean
   setOpenSidebar: (value: boolean) => void
+  sortOrder: string
+  setSortOrder: (order: string) => void
 }
 
 export interface MotionCardVariants {

@@ -62,6 +62,12 @@ const config = {
     perPage: 'per page',
     productsPerPage: 'Products per page',
   },
+  sorting: {
+    sortBy: 'Sort by',
+    default: 'Popular',
+    priceAsc: 'Price Ascending',
+    priceDesc: 'Price Descending',
+  },
   card: {
     shop: 'Налично в: ',
   },
