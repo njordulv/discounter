@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
+import type { SortOrder, FilterQuery } from 'mongoose'
 import { connectDB } from '@/lib/mongo'
-import type { SortOrder } from 'mongoose'
 import { getAsync, redisClient } from '@/lib/redis'
 import { CACHE_EXPIRATION, PAGINATION } from '@/config/constants'
 import Product from '@/models/Product'
@@ -12,10 +12,12 @@ export async function GET(request: Request) {
   const perPage =
     Number(searchParams.get('perPage')) || PAGINATION.PER_PAGE_DEFAULT
   const sort = searchParams.get('sort')
+  const search = searchParams.get('search') || ''
 
   const sortSuffix = sort ? `_sort_${sort}` : ''
-  const cacheKey = `products_${category}_page_${page}_perPage_${perPage}${sortSuffix}`
-  const countKey = `products_${category}_count_perPage_${perPage}${sortSuffix}`
+  const searchSuffix = search ? `_search_${search}` : ''
+  const cacheKey = `products_${category}_page_${page}_perPage_${perPage}${sortSuffix}${searchSuffix}`
+  const countKey = `products_${category}_count_perPage_${perPage}${sortSuffix}${searchSuffix}`
 
   try {
     // 1. Reading cached data
@@ -42,14 +44,16 @@ export async function GET(request: Request) {
     console.log('❌ No cache, fetching from MongoDB')
     await connectDB()
 
-    const query = category ? { category } : {}
+    const query: FilterQuery<typeof Product> = {}
+    if (category) query.category = category
+    if (search) query.$text = { $search: search }
 
-    // Optional: Ensure index exists (safe to call multiple times)
-    await Product.collection.createIndex({ category: 1, price: 1 })
-
-    const sortOption: Record<string, SortOrder> = {}
+    const sortOption: Record<string, SortOrder | { $meta: string }> = {}
     if (sort === 'price_asc') sortOption.price = 1
     else if (sort === 'price_desc') sortOption.price = -1
+    if (search) sortOption.score = { $meta: 'textScore' }
+
+    const projection = search ? { score: { $meta: 'textScore' } } : {}
 
     // Count items
     const totalItems = cachedCount
@@ -57,18 +61,10 @@ export async function GET(request: Request) {
       : await Product.countDocuments(query)
 
     // Fetch sorted and paginated products
-    const products = await Product.find(query)
+    const products = await Product.find(query, projection)
       .sort(sortOption)
       .skip((page - 1) * perPage)
       .limit(perPage)
-
-    // Optional: Debug index usage
-    // const explain = await Product.find(query)
-    //   .sort(sortOption)
-    //   .skip((page - 1) * perPage)
-    //   .limit(perPage)
-    //   .explain('executionStats')
-    // console.log('MongoDB query performance:', explain)
 
     // 3. Cache result
     await redisClient.setex(

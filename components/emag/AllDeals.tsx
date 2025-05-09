@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { useState, useEffect, useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
 import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/ui/Loader'
 import { Discover } from '@/components/tags'
@@ -30,6 +31,8 @@ function AllDeals({ slug }: { slug: string }) {
     sortOrder,
   } = useStore()
   const [accumulatedData, setAccumulatedData] = useState<ScrapeProps[]>([])
+  const searchParams = useSearchParams()
+  const search = searchParams.get('search') || ''
 
   const queryParams = useMemo(() => {
     const params = new URLSearchParams({
@@ -38,9 +41,10 @@ function AllDeals({ slug }: { slug: string }) {
     })
     if (slug) params.append('category', slug.toLowerCase())
     if (sortOrder) params.append('sort', sortOrder)
+    if (search) params.append('search', search)
 
     return params.toString()
-  }, [slug, currentPage, perPage, sortOrder])
+  }, [slug, currentPage, perPage, sortOrder, search])
 
   const { data, error, isLoading } = useFetcher({
     url: `/api/emag/all-deals?${queryParams}`,
