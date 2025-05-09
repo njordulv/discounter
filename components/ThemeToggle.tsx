@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 import config from '@/config'
 
 const toggleClass =
-  'text-sm font-medium flex items-center gap-2 py-1 px-7 transition-colors relative z-10 cursor-pointer'
+  'text-sm font-medium flex items-center gap-2 py-2 px-7 transition-colors relative z-10 cursor-pointer'
 
 export const ThemeToggle = () => {
   const { theme, setTheme } = useTheme()

@@ -1,8 +1,8 @@
 .toolbar {
-  border: 1px solid hsl(var(--border));
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  background-color: hsl(var(--card));
-  color: hsl(var(--card-foreground));
+  background-color: var(--card);
+  color: var(--card-foreground);
   box-shadow: var(--shadow-sm);
   display: flex;
   gap: calc(var(--spacing) * 2);

@@ -107,12 +107,12 @@ export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
   return (
     <>
       {stockOut && (
-        <span className="rounded-md px-3 text-sm text-[hsl(var(--destructive-foreground))]">
+        <span className="rounded-md px-3 text-sm text-[var(--destructive-foreground)]">
           {stockOut}
         </span>
       )}
       {stockLimited && (
-        <span className="rounded-md px-3 text-sm bg-[hsl(var(--destructive))] text-destructive">
+        <span className="rounded-md px-3 text-sm bg-[var(--destructive)] text-destructive">
           {stockLimited}
         </span>
       )}
@@ -135,7 +135,7 @@ export const LinkToShop = ({ store }: { store: string }) => {
     <span className="text-sm sm:text-base text-muted-foreground">
       {config.card.shop}
       <Link
-        className="text-sm hover:text-[hsl(var(--primary))] transition"
+        className="text-sm hover:text-[var(--primary))] transition"
         href={config.emag.url}
       >
         {store}

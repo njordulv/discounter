@@ -18,8 +18,8 @@ export const CatsList = () => {
             {item.icon && (
               <item.icon
                 size={30}
-                color="hsl(var(--secondary))"
-                className="w-full h-full p-4 shadow-sm bg-[hsl(var(--foreground))] hover:scale-90 rounded-lg transition-all duration-300"
+                color="var(--secondary)"
+                className="w-full h-full p-4 shadow-sm bg-[var(--foreground)] hover:scale-90 rounded-lg transition-all duration-300"
               />
             )}
             <p>{item.name}</p>

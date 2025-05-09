@@ -31,9 +31,9 @@
     gap: calc(var(--spacing) * 3);
     padding: calc(var(--spacing) * 2);
     border-width: 1px;
-    border: 1px solid hsl(var(--border));
-    background-color: hsl(var(--card) / 0.9);
-    color: hsl(var(--card-foreground));
+    border: 1px solid var(--border);
+    background-color: var(--card);
+    color: var(--card-foreground);
     border-radius: 0.5rem;
 
     @media (width >= 40rem) {
@@ -59,7 +59,7 @@
       font-size: var(--text-xs);
       line-height: var(--text-xs--line-height);
       font-weight: 400;
-      color: hsl(var(--primary-foreground));
+      color: var(--primary-foreground);
     }
   }
 
@@ -90,7 +90,7 @@
     object-fit: cover;
     aspect-ratio: 1 / 1;
     border-radius: var(--radius-lg);
-    background-color: hsl(var(--background));
-    border: 1px solid hsl(var(--border));
+    background-color: var(--background);
+    border: 1px solid var(--border);
   }
 }

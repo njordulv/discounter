@@ -126,7 +126,7 @@ export const SidebarMenuList = ({
             <li key={slug}>
               <Link
                 href={href}
-                className="flex items-center gap-2 px-1 py-2 rounded-sm transition-all hover:bg-[hsl(var(--accent))]"
+                className="flex items-center gap-2 px-1 py-2 rounded-sm transition-all hover:bg-[var(--accent)] hover:text-sidebar-accent-foreground"
               >
                 <Icon
                   size={23}

@@ -1,80 +1,91 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
-
 @custom-variant dark (&:where(.dark, .dark *));
+
 @layer theme {
   :root {
-    --gradient: linear-gradient(
-      to top left,
-      hsl(200 80% 69%),
-      hsl(207 100% 28%)
-    );
-    --primary: 212 80% 69%;
-    --primary-foreground: 212 8% 6.9%;
+    /* sunset-hrz theme */
+    --background: #fff9f6;
+    --foreground: #3d3436;
+    --card: #ffffff;
+    --card-foreground: #3d3436;
+    --popover: #ffffff;
+    --popover-foreground: #3d3436;
+    --primary: #ff7e5f;
+    --primary-foreground: #ffffff;
+    --secondary: #ffedea;
+    --secondary-foreground: #b35340;
+    --muted: #fff0eb;
+    --muted-foreground: #78716c;
+    --accent: #feb47b;
+    --accent-foreground: #3d3436;
+    --destructive: #e63946;
+    --destructive-foreground: #ffffff;
+    --border: #ffe0d6;
+    --input: #ffe0d6;
+    --ring: #ff7e5f;
+    --chart-1: #ff7e5f;
+    --chart-2: #feb47b;
+    --chart-3: #ffcaa7;
+    --chart-4: #ffad8f;
+    --chart-5: #ce6a57;
+    --sidebar: #fff0eb;
+    --sidebar-foreground: #3d3436;
+    --sidebar-primary: #ff7e5f;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #feb47b;
+    --sidebar-accent-foreground: #3d3436;
+    --sidebar-border: #ffe0d6;
+    --sidebar-ring: #ff7e5f;
+    --radius: 0.625rem;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 212 8% 98.45%;
-
-    --ring: 207 100% 28%;
-
+    --gradient: linear-gradient(to top left, var(--primary), var(--accent));
     --gradient-decoration: linear-gradient(
       to bottom,
-      hsl(200 80% 69%),
-      hsl(var(--ring))
+      var(--primary),
+      var(--accent)
     );
-
     --gradient-genius: linear-gradient(to bottom, #090171, #ff005a);
   }
 
-  .light {
-    --background: 223 100% 98.46%;
-    --foreground: 223 10% 0.92%;
-
-    --muted: 223 10% 92.3%;
-    --muted-foreground: 223 5% 42.3%;
-
-    --popover: 223 10% 92.3%;
-    --popover-foreground: 223 10% 1.15%;
-
-    --card: 223 10% 92.3%;
-    --card-foreground: 223 10% 1.15%;
-
-    --border: 223 15% 89.92%;
-    --input: 223 15% 89.92%;
-
-    --secondary: 223 5% 96.15%;
-    --secondary-foreground: 223 7% 12.3%;
-
-    --accent: 223 5% 96.15%;
-    --accent-foreground: 223 7% 12.3%;
-  }
-
   .dark {
-    --background: 212 43.35% 7.23%;
-    --foreground: 212 8% 98.45%;
-
-    --muted: 212 40% 20.7%;
-    --muted-foreground: 212 8% 56.9%;
-
-    --popover: 212 49% 8.97%;
-    --popover-foreground: 212 8% 98.45%;
-
-    --card: 212 49% 8.97%;
-    --card-foreground: 212 8% 98.45%;
-
-    --border: 212 40% 20.7%;
-    --input: 212 40% 20.7%;
-
-    --secondary: 212 40% 20.7%;
-    --secondary-foreground: 212 8% 98.45%;
-
-    --accent: 212 40% 20.7%;
-    --accent-foreground: 212 8% 98.45%;
+    --background: #2a2024;
+    --foreground: #f2e9e4;
+    --card: #392f35;
+    --card-foreground: #f2e9e4;
+    --popover: #392f35;
+    --popover-foreground: #f2e9e4;
+    --primary: #ff7e5f;
+    --primary-foreground: #ffffff;
+    --secondary: #463a41;
+    --secondary-foreground: #f2e9e4;
+    --muted: #392f35;
+    --muted-foreground: #d7c6bc;
+    --accent: #feb47b;
+    --accent-foreground: #2a2024;
+    --destructive: #e63946;
+    --destructive-foreground: #ffffff;
+    --border: #463a41;
+    --input: #463a41;
+    --ring: #ff7e5f;
+    --chart-1: #ff7e5f;
+    --chart-2: #feb47b;
+    --chart-3: #ffcaa7;
+    --chart-4: #ffad8f;
+    --chart-5: #ce6a57;
+    --sidebar: #2a2024;
+    --sidebar-foreground: #f2e9e4;
+    --sidebar-primary: #ff7e5f;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #feb47b;
+    --sidebar-accent-foreground: #2a2024;
+    --sidebar-border: #463a41;
+    --sidebar-ring: #ff7e5f;
   }
 }
 
 * {
-  border-color: hsl(var(--border));
+  border-color: var(--border);
 }
 
 html,
@@ -83,8 +94,8 @@ body {
 }
 
 body {
-  color: hsl(var(--foreground));
-  background: hsl(var(--background));
+  color: var(--foreground);
+  background: var(--background);
 }
 
 ul,
@@ -99,7 +110,7 @@ li {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: auto 100%;
+  grid-template-columns: 1fr 35fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
 }
@@ -135,11 +146,11 @@ footer {
 }
 
 .bg-background {
-  background: hsl(var(--background));
+  background: var(--background);
 }
 
 .bg-background\/40 {
-  background: hsl(var(--background) / 0.4);
+  background: var(--background) / 0.4;
 }
 
 .bg-gradient {
@@ -155,100 +166,108 @@ footer {
 }
 
 .bg-card {
-  background-color: hsl(var(--card));
+  background-color: var(--card);
 }
 
 .bg-card\/7 {
-  background-color: hsl(var(--card) / 0.7);
+  background-color: var(--card) / 0.7;
 }
 
 .bg-card\/9 {
-  background-color: hsl(var(--card) / 0.9);
+  background-color: var(--card) / 0.9;
 }
 
 .bg-primary {
-  background-color: hsl(var(--primary));
+  background-color: var(--primary);
 }
 
 .bg-primary\/10 {
-  background-color: hsl(var(--primary) / 0.1);
+  background-color: var(--primary) / 0.1;
 }
 
 .bg-primary\/20 {
-  background-color: hsl(var(--primary) / 0.2);
+  background-color: var(--primary) / 0.2;
 }
 
 .bg-primary\/50 {
-  background-color: hsl(var(--primary) / 0.5);
+  background-color: var(--primary) / 0.5;
 }
 
 .bg-secondary {
-  background-color: hsl(var(--secondary));
+  background-color: var(--secondary);
 }
 
 .text-primary {
-  color: hsl(var(--primary));
+  color: var(--primary);
 }
 
 .text-primary\/50 {
-  color: hsl(var(--primary) / 0.5);
+  color: var(--primary) / 0.5;
 }
 
 .text-primary-foreground {
-  color: hsl(var(--primary-foreground));
+  color: var(--primary-foreground);
 }
 
 .text-secondary-foreground {
-  color: hsl(var(--secondary-foreground));
+  color: var(--secondary-foreground);
+}
+
+.hover\:text-sidebar-accent-foreground:hover {
+  color: var(--sidebar-accent-foreground);
+}
+
+.hover\:bg-primary\/90:hover {
+  background-color: var(--primary);
 }
 
 .ring-offset-background {
-  --tw-ring-offset-color: hsl(var(--background));
+  --tw-ring-offset-color: var(--background);
 }
 
 .text-foreground {
-  color: hsl(var(--foreground));
+  color: var(--foreground);
 }
 
 .text-accent-foreground {
-  color: hsl(var(--accent-foreground));
+  color: var(--accent-foreground);
 }
 
 .bg-secondary-foreground {
-  background-color: hsl(var(--secondary-foreground));
+  background-color: var(--secondary-foreground);
 }
 
 .bg-input {
-  background-color: hsl(var(--input));
+  background-color: var(--input);
 }
 
 .bg-accent {
-  background-color: hsl(var(--accent));
+  background-color: var(--accent);
 }
 
 .bg-muted {
-  background-color: hsl(var(--muted));
+  background-color: var(--muted);
 }
 
 .text-muted-foreground {
-  color: hsl(var(--muted-foreground));
+  color: var(--muted-foreground);
 }
 
 .text-card-foreground {
-  color: hsl(var(--card-foreground));
+  color: var(--card-foreground);
 }
 
 .border-input {
-  border-color: hsl(var(--input));
+  border-color: var(--input);
 }
 
 .data-\[state\=checked\]\:bg-primary[data-state='checked'] {
-  background-color: hsl(var(--primary));
-  border-color: hsl(var(--primary));
+  background-color: var(--primary);
+  border-color: var(--primary);
 }
 
 .data-\[state\=unchecked\]\:bg-input[data-state='unchecked'] {
-  background-color: hsl(var(--input));
+  background-color: var(--input);
 }
 
 .button {
@@ -269,39 +288,39 @@ footer {
 }
 
 .default {
-  background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+  background-color: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .default:hover {
-  background-color: hsl(var(--primary) / 80%);
+  background-color: color-mix(in oklab, var(--primary) 80%, transparent);
 }
 
 .outline {
   border-width: 1px;
-  border-color: hsl(var(--input));
-  background-color: hsl(var(--background));
-  color: hsl(var(--accent-foreground));
+  border-color: var(--input);
+  background-color: var(--background);
+  color: var(--accent);
 }
 
 .outline:hover {
-  background-color: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background-color: var(--accent);
+  color: var(--accent-foreground);
 }
 
 .ghost {
   background-color: transparent;
-  color: hsl(var(--accent-foreground));
+  color: var(--accent-foreground);
 }
 
 .ghost:hover {
-  background-color: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background-color: var(--accent);
+  color: var(--accent-foreground);
 }
 
 .destructive {
-  background-color: hsl(var(--destructive));
-  color: hsl(var(--accent-foreground));
+  background-color: var(--destructive);
+  color: var(--accent-foreground);
 }
 
 .text-destructive {
@@ -309,7 +328,7 @@ footer {
 }
 
 .destructive:hover {
-  background-color: hsl(var(--destructive) / 70%);
+  background-color: var(--destructive) / 70%;
 }
 
 @media (width >= 48rem) {

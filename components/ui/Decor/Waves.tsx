@@ -13,7 +13,7 @@ export const WaveOne = () => {
         className={styles.decor__vector}
       >
         <path
-          fill="hsl(var(--ring) / 30%)"
+          fill="var(--accent)"
           d="M0 170
   C 100 60, 140 120, 230 156 
   S 300 90, 400 137 
@@ -46,7 +46,7 @@ export const WaveTwo = () => {
         className={styles.decor__vector}
       >
         <path
-          fill="hsl(var(--background))"
+          fill="var(--background)"
           d="M0 250 
   C 290 30, 330 250, 560 290 
   S 890 50, 1150 200 

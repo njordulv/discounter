@@ -25,7 +25,7 @@ export const ThemeToggle = () => {
       />
       <Label
         htmlFor="theme-toggle"
-        className="text-[hsl(var(--muted-foreground))] transition-colors duration-300"
+        className="text-[var(--muted-foreground)] transition-colors duration-300"
       >
         {checked ? 'Dark' : 'Light'} Mode
       </Label>

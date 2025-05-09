@@ -65,8 +65,8 @@ const config = {
   sorting: {
     sortBy: 'Sort by',
     default: 'Popular',
-    priceAsc: 'Price Ascending',
-    priceDesc: 'Price Descending',
+    priceAsc: 'Lowest price',
+    priceDesc: 'Highest price',
   },
   card: {
     shop: 'Налично в: ',

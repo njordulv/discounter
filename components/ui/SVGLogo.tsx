@@ -10,7 +10,7 @@ const SVGLogo = (props: React.SVGProps<SVGSVGElement>) => (
   >
     <g
       transform="translate(0,512) scale(0.100000,-0.100000)"
-      fill="hsl(var(--foreground))"
+      fill="var(--foreground)"
       stroke="none"
     >
       <path
