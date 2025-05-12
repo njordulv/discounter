@@ -14,6 +14,7 @@ export const SearchInput = () => {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([])
   const router = useRouter()
   const fetchSuggestionsRef = useRef<ReturnType<typeof debounce> | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     fetchSuggestionsRef.current = debounce(async (value: string) => {
@@ -40,9 +41,24 @@ export const SearchInput = () => {
     fetchSuggestionsRef.current?.(term)
   }, [term])
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setSuggestions([])
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     if (term.trim()) {
       router.push(`/search?q=${encodeURIComponent(term)}`)
       setSuggestions([])
@@ -55,7 +71,7 @@ export const SearchInput = () => {
   }
 
   return (
-    <div className="flex flex-col gap-2 w-2/5 rounded-lg">
+    <div ref={containerRef} className="flex flex-col gap-2 w-2/5 rounded-lg">
       <form onSubmit={handleSubmit} className="relative">
         <Input
           type="text"
@@ -63,7 +79,13 @@ export const SearchInput = () => {
           className="bg-card focus-visible:ring-[2px] focus-visible:ring-[var(--accent)]"
           value={term}
           onChange={(e) => setTerm(e.target.value)}
+          onFocus={() => {
+            if (term.trim() && suggestions.length === 0) {
+              fetchSuggestionsRef.current?.(term)
+            }
+          }}
         />
+
         {suggestions.length > 0 && (
           <ul className="absolute z-10 top-[calc(100%+3px)] flex flex-col w-full bg-card border border-input rounded">
             {suggestions.map((s, i) => (
