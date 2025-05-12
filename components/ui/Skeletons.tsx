@@ -114,7 +114,7 @@ export const DiscoverSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
     <div ref={ref} role="status" className="animate-pulse w-full mb-4">
       <div className="w-full overflow-hidden">
         <div className="flex items-center gap-2">
-          <div className="h-6 bg-muted rounded-md w-3/4"></div>
+          <div className="h-6 bg-card opacity-50 rounded-md w-3/4"></div>
         </div>
       </div>
       <span className="sr-only">Loading...</span>

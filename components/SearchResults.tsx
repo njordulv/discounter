@@ -7,7 +7,8 @@ import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/ui/Loader'
 import { useStore } from '@/store'
 import { Pagination } from '@/components/emag/Pagination'
-import { CardSkeleton } from '@/components/ui/Skeletons'
+import { CardSkeleton, DiscoverSkeleton } from '@/components/ui/Skeletons'
+import { Discover } from '@/components/tags'
 import { ScrapeProps } from '@/interfaces/emag'
 import { Toolbar } from '@/components/toolbar'
 import styles from '@/styles/Products.module.scss'
@@ -64,6 +65,7 @@ const SearchResults = () => {
       <h1 className="w-full sm:text-4xl text-2xl text-left font-medium text-foreground">
         Search for &quot;{query}&quot;
       </h1>
+      {isLoading ? <DiscoverSkeleton /> : <Discover slug={query} />}
       <Toolbar />
       <div
         className={`${styles.card__items} ${
