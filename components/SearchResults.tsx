@@ -62,7 +62,7 @@ const SearchResults = () => {
   return (
     <>
       <h1 className="w-full sm:text-4xl text-2xl text-left font-medium text-foreground">
-        Search for “{query}”
+        Search for &quot;{query}&quot;
       </h1>
       <Toolbar />
       <div

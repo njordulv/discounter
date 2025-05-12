@@ -4,8 +4,10 @@ import Image from 'next/image'
 import debounce from 'lodash.debounce'
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import { TbX } from 'react-icons/tb'
 import { Input } from '@/components/ui/input'
 import { Suggestion } from '@/interfaces/ui'
+import config from '@/config'
 
 export const SearchInput = () => {
   const [term, setTerm] = useState('')
@@ -40,10 +42,16 @@ export const SearchInput = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     if (term.trim()) {
       router.push(`/search?q=${encodeURIComponent(term)}`)
       setSuggestions([])
     }
+  }
+
+  const handleClear = () => {
+    setTerm('')
+    setSuggestions([])
   }
 
   return (
@@ -51,8 +59,8 @@ export const SearchInput = () => {
       <form onSubmit={handleSubmit} className="relative">
         <Input
           type="text"
-          placeholder="Search products..."
-          className="bg-card focus-visible:ring-[2px]"
+          placeholder={config.search.placeholder}
+          className="bg-card focus-visible:ring-[2px] focus-visible:ring-[var(--accent)]"
           value={term}
           onChange={(e) => setTerm(e.target.value)}
         />
@@ -78,6 +86,15 @@ export const SearchInput = () => {
               </li>
             ))}
           </ul>
+        )}
+        {term.length > 0 && (
+          <button
+            type="button"
+            onClick={handleClear}
+            className="absolute right-2 top-2 hover:text-[var(--primary)] cursor-pointer transition-all"
+          >
+            <TbX className="w-5 h-5" />
+          </button>
         )}
       </form>
     </div>
