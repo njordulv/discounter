@@ -1,13 +1,15 @@
 'use client'
 
+import Image from 'next/image'
+import debounce from 'lodash.debounce'
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import debounce from 'lodash.debounce'
 import { Input } from '@/components/ui/input'
+import { Suggestion } from '@/interfaces/ui'
 
 export const SearchInput = () => {
   const [term, setTerm] = useState('')
-  const [suggestions, setSuggestions] = useState<string[]>([])
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([])
   const router = useRouter()
   const fetchSuggestionsRef = useRef<ReturnType<typeof debounce> | null>(null)
 
@@ -55,17 +57,24 @@ export const SearchInput = () => {
           onChange={(e) => setTerm(e.target.value)}
         />
         {suggestions.length > 0 && (
-          <ul className="absolute z-10 top-[calc(100%+3px)] flex flex-col gap-3 p-3 w-full bg-card border-1 border-input rounded">
+          <ul className="absolute z-10 top-[calc(100%+3px)] flex flex-col w-full bg-card border border-input rounded">
             {suggestions.map((s, i) => (
               <li
                 key={i}
                 onClick={() => {
-                  router.push(`/search?q=${encodeURIComponent(s)}`)
+                  router.push(`/search?q=${encodeURIComponent(s.title)}`)
                   setSuggestions([])
                 }}
-                className="hover:text-[var(--primary)] cursor-pointer transition-all"
+                className="flex items-center gap-3 p-3 text-sm hover:bg-muted cursor-pointer transition-all rounded hover:bg-[var(--secondary)]"
               >
-                <span>{s}</span>
+                <Image
+                  src={s.image}
+                  alt={s.title}
+                  width={40}
+                  height={40}
+                  className="object-contain rounded"
+                />
+                <span>{s.title}</span>
               </li>
             ))}
           </ul>

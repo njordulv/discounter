@@ -59,3 +59,8 @@ export interface SidebarMenuListProps {
   ariaLabel: string
   hrefPattern?: string
 }
+
+export interface Suggestion {
+  title: string
+  image: string
+}
