@@ -5,10 +5,12 @@ import debounce from 'lodash.debounce'
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { TbX, TbZoom, TbLoader2 } from 'react-icons/tb'
-import { motion as m } from 'framer-motion'
+import { motion as m, AnimatePresence } from 'framer-motion'
 import { Input } from '@/components/ui/input'
 import { Suggestion } from '@/interfaces/ui'
 import { shortenText } from '@/utils'
+import { cn } from '@/lib/utils'
+import styles from '@/styles/Search.module.scss'
 import config from '@/config'
 
 export const SearchInput = () => {
@@ -87,12 +89,15 @@ export const SearchInput = () => {
   }
 
   return (
-    <div ref={containerRef} className="flex flex-col gap-2 w-2/5 rounded-lg">
-      <form onSubmit={handleSubmit} className="relative">
+    <div ref={containerRef} className={styles.search}>
+      <form onSubmit={handleSubmit} className={styles.search__form}>
         <Input
           type="text"
           placeholder={config.search.placeholder}
-          className="bg-card px-8 focus-visible:ring-[2px] focus-visible:ring-[var(--accent)]"
+          className={cn(
+            'focus-visible:ring-[var(--accent)]',
+            styles.search__input
+          )}
           value={term}
           onChange={(e) => setTerm(e.target.value)}
           onFocus={() => {
@@ -101,29 +106,46 @@ export const SearchInput = () => {
             }
           }}
         />
-        {suggestions.length > 0 && (
-          <ul className="absolute z-10 top-[calc(100%+3px)] flex flex-col w-full bg-card border border-input rounded">
-            {suggestions.map((item, index) => (
-              <li
-                key={index}
-                onClick={() => {
-                  router.push(`/search?q=${encodeURIComponent(item.title)}`)
-                  setSuggestions([])
-                }}
-                className="flex items-center gap-3 p-3 text-sm hover:bg-muted cursor-pointer transition-all rounded hover:bg-[var(--secondary)]"
-              >
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  width={40}
-                  height={40}
-                  className="object-contain rounded"
-                />
-                <span>{shortenText(item.title, 80)}</span>
-              </li>
-            ))}
-          </ul>
-        )}
+        <AnimatePresence mode="wait">
+          {suggestions.length > 0 && (
+            <m.ul
+              animate={{
+                transition: {
+                  staggerChildren: 0.05,
+                  delayChildren: 0.6,
+                },
+              }}
+              exit={{ opacity: 0 }}
+              className={styles.search__suggestions}
+            >
+              {suggestions.map((item, index) => (
+                <m.li
+                  key={index}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2, delay: index * 0.05 }}
+                  whileHover={{
+                    backgroundColor: 'var(--secondary)',
+                  }}
+                  onClick={() => {
+                    router.push(`/search?q=${encodeURIComponent(item.title)}`)
+                    setSuggestions([])
+                  }}
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={40}
+                    height={40}
+                    className={styles.search__image}
+                  />
+                  <span>{shortenText(item.title, 80)}</span>
+                </m.li>
+              ))}
+            </m.ul>
+          )}
+        </AnimatePresence>
 
         <m.div
           key="clear-button"
@@ -135,12 +157,12 @@ export const SearchInput = () => {
           }
           transition={{ duration: 0.2 }}
           style={{ pointerEvents: term.length > 0 ? 'auto' : 'none' }}
-          className="absolute right-2 top-2 flex items-center"
+          className={styles.search__clear}
         >
           <button
             type="button"
             onClick={handleClear}
-            className="text-xl hover:text-[var(--primary)] cursor-pointer transition-all"
+            className={styles.search__clear__button}
           >
             <TbX />
           </button>
@@ -154,9 +176,9 @@ export const SearchInput = () => {
           }
           exit={{ opacity: 0, scale: 0.97 }}
           transition={{ duration: 0.1 }}
-          className="absolute left-2 top-2 text-xl text-muted-foreground"
+          className={styles.search__loader}
         >
-          {loading ? <TbLoader2 className="animate-spin" /> : <TbZoom />}
+          {loading ? <TbLoader2 /> : <TbZoom />}
         </m.div>
       </form>
     </div>

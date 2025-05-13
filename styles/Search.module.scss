@@ -1,0 +1,94 @@
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 25rem;
+  border-radius: var(--radius-lg);
+
+  &__form {
+    position: relative;
+  }
+
+  &__input {
+    background-color: var(--card);
+    padding-inline: 2rem;
+  }
+
+  &__suggestions {
+    position: absolute;
+    z-index: 10;
+    top: calc(100% + 3px);
+    flex-direction: column;
+    width: 100%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+
+    & > li {
+      display: flex;
+      align-items: center;
+      background-color: var(--card);
+      gap: 0.5rem;
+      padding: 0.5rem;
+      font-size: 0.875rem;
+      cursor: pointer;
+      border-left: 1px solid var(--input);
+      border-right: 1px solid var(--input);
+    }
+
+    & > li:first-child {
+      border-top-left-radius: var(--radius-lg);
+      border-top-right-radius: var(--radius-lg);
+      border-top: 1px solid var(--input);
+    }
+
+    & > li:last-child {
+      border-bottom-left-radius: var(--radius-lg);
+      border-bottom-right-radius: var(--radius-lg);
+      border-bottom: 1px solid var(--input);
+    }
+  }
+
+  &__clear {
+    position: absolute;
+    right: 0.4rem;
+    top: 0.5rem;
+    display: flex;
+    align-items: center;
+
+    & > button {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--foreground);
+      font-size: 1.3rem;
+
+      &:hover {
+        color: var(--primary);
+      }
+    }
+  }
+
+  &__loader {
+    position: absolute;
+    left: 0.4rem;
+    top: 0.5rem;
+    display: flex;
+    align-items: center;
+
+    & > svg {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--foreground);
+      font-size: 1.3rem;
+
+      &:hover {
+        color: var(--primary);
+      }
+    }
+  }
+
+  &__image {
+    object-fit: contain;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-lg);
+  }
+}
