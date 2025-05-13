@@ -12,7 +12,6 @@ import { Discover } from '@/components/tags'
 import { ScrapeProps } from '@/interfaces/emag'
 import { Toolbar } from '@/components/toolbar'
 import styles from '@/styles/Products.module.scss'
-import config from '@/config'
 
 const Card = dynamic(
   () => import('@/components/emag/card').then((mod) => mod.Card),
@@ -78,12 +77,6 @@ const SearchResults = () => {
       </div>
 
       {isLoading && <Loader />}
-
-      {data?.meta && currentPage >= data.meta.totalPages && (
-        <div className="mt-6 text-center text-muted">
-          {config.messages.endOfDeals}
-        </div>
-      )}
 
       {totalPages > 1 && (
         <Pagination
