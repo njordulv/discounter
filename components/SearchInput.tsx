@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { TbX } from 'react-icons/tb'
 import { Input } from '@/components/ui/input'
 import { Suggestion } from '@/interfaces/ui'
+import { shortenText } from '@/utils'
 import config from '@/config'
 
 export const SearchInput = () => {
@@ -88,23 +89,23 @@ export const SearchInput = () => {
 
         {suggestions.length > 0 && (
           <ul className="absolute z-10 top-[calc(100%+3px)] flex flex-col w-full bg-card border border-input rounded">
-            {suggestions.map((s, i) => (
+            {suggestions.map((item, index) => (
               <li
-                key={i}
+                key={index}
                 onClick={() => {
-                  router.push(`/search?q=${encodeURIComponent(s.title)}`)
+                  router.push(`/search?q=${encodeURIComponent(item.title)}`)
                   setSuggestions([])
                 }}
                 className="flex items-center gap-3 p-3 text-sm hover:bg-muted cursor-pointer transition-all rounded hover:bg-[var(--secondary)]"
               >
                 <Image
-                  src={s.image}
-                  alt={s.title}
+                  src={item.image}
+                  alt={item.title}
                   width={40}
                   height={40}
                   className="object-contain rounded"
                 />
-                <span>{s.title}</span>
+                <span>{shortenText(item.title, 80)}</span>
               </li>
             ))}
           </ul>
