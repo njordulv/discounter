@@ -10,7 +10,7 @@ export async function GET(request: Request) {
 
   const results = await Product.find(
     { $text: { $search: q } },
-    { title: 1, imageUrl: 1 }
+    { title: 1, imageUrl: 1, _id: 1 }
   )
     .limit(5)
     .sort({ score: { $meta: 'textScore' } })
@@ -19,6 +19,7 @@ export async function GET(request: Request) {
     results: results.map((item) => ({
       title: item.title,
       image: item.imageUrl,
+      _id: item._id.toString(),
     })),
   })
 }

@@ -63,4 +63,5 @@ export interface SidebarMenuListProps {
 export interface Suggestion {
   title: string
   image: string
+  _id: string
 }

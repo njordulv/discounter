@@ -137,7 +137,7 @@ export const SearchInput = () => {
                     },
                   }}
                   onClick={() => {
-                    router.push(`/search?q=${encodeURIComponent(item.title)}`)
+                    router.push(`/product/${item._id}`)
                     setSuggestions([])
                   }}
                 >
