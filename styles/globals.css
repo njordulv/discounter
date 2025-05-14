@@ -323,6 +323,16 @@ footer {
   color: var(--accent-foreground);
 }
 
+.modern {
+  background-color: var(--accent);
+  color: var(--sidebar-accent-foreground);
+}
+
+.modern:hover {
+  background-color: var(--background);
+  color: var(--sidebar-accent);
+}
+
 .text-destructive {
   color: rgba(255, 255, 255, 0.9);
 }
