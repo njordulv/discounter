@@ -71,7 +71,7 @@ export const SidebarContent = () => {
       className="aside-wrapper"
       animate={{ width: animate ? (open ? '253px' : '32px') : '253px' }}
     >
-      <Logo />
+      <Logo color="var(--sidebar-foreground)" height={32} width={162} />
       <div className="mt-8 flex flex-col gap-1">
         <SidebarMenu />
         <hr className="border-input my-1" />

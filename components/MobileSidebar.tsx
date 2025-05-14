@@ -25,14 +25,14 @@ const MobileSidebar = () => {
       <Drawer>
         <DrawerTrigger>
           <TbMenu2
-            size={30}
-            className="absolute right-2 top-4 z-10 cursor-pointer text-[var(--secondary-foreground)]"
+            size={36}
+            className="absolute right-2 top-2 z-10 rounded-md cursor-pointer bg-card p-1 text-[var(--base)]"
           />
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
             <DrawerTitle>
-              <Logo />
+              <Logo color="var(--base)" height={36} width={180} />
             </DrawerTitle>
             <DrawerDescription hidden>Menu Items</DrawerDescription>
             <SidebarMenu />

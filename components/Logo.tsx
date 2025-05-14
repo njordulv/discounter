@@ -2,10 +2,18 @@ import Link from 'next/link'
 import SVGIcon from '@/components/ui/SVGIcon'
 import config from '@/config'
 
-const Logo = () => {
+const Logo = ({
+  color,
+  height,
+  width,
+}: {
+  color: string
+  height: number
+  width: number
+}) => {
   return (
     <Link href="/" aria-label={config.site.logoLabel} rel={config.site.rel}>
-      <SVGIcon width={162} height={32} />
+      <SVGIcon width={width} height={height} color={color} />
     </Link>
   )
 }

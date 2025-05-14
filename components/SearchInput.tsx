@@ -95,7 +95,7 @@ export const SearchInput = () => {
           type="text"
           placeholder={config.search.placeholder}
           className={cn(
-            'focus-visible:ring-[var(--accent)]',
+            'focus-visible:ring-[var(--accent)] focus-visible:ring-[0px]',
             styles.search__input
           )}
           value={term}
@@ -109,13 +109,17 @@ export const SearchInput = () => {
         <AnimatePresence mode="wait">
           {suggestions.length > 0 && (
             <m.ul
+              initial={{ opacity: 0, y: -5, scale: 0.98 }}
               animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
                 transition: {
                   staggerChildren: 0.05,
                   delayChildren: 0.6,
                 },
               }}
-              exit={{ opacity: 0 }}
+              exit={{ opacity: 0, y: -5, scale: 0.98 }}
               className={styles.search__suggestions}
             >
               {suggestions.map((item, index) => (
@@ -127,6 +131,10 @@ export const SearchInput = () => {
                   transition={{ duration: 0.2, delay: index * 0.05 }}
                   whileHover={{
                     backgroundColor: 'var(--secondary)',
+                    scale: 1.02,
+                    transition: {
+                      duration: 0.2,
+                    },
                   }}
                   onClick={() => {
                     router.push(`/search?q=${encodeURIComponent(item.title)}`)
@@ -178,7 +186,7 @@ export const SearchInput = () => {
           transition={{ duration: 0.1 }}
           className={styles.search__loader}
         >
-          {loading ? <TbLoader2 /> : <TbZoom />}
+          {loading ? <TbLoader2 className="animate-spin" /> : <TbZoom />}
         </m.div>
       </form>
     </div>
