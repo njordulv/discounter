@@ -6,7 +6,7 @@ import { TbExternalLink } from 'react-icons/tb'
 import { connectDB } from '@/lib/mongo'
 import Product from '@/models/Product'
 import { FallbackImage } from '@/components/ui/FallbackImage'
-import { LinkToShop } from '@/components/emag/card/Details'
+import { StockStatus, LinkToShop } from '@/components/emag/card/Details'
 import type { ScrapeProps } from '@/interfaces/emag'
 import config from '@/config'
 
@@ -24,7 +24,7 @@ export default async function ProductPage(props: ProductPageProps) {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-4">
+      <div className="rounded-xl sm:p-5 sm:gap-6 md:p-5 p-2 gap-3 border bg-card grid grid-cols-1 sm:grid-cols-[auto_1fr]">
         <div>
           {product.imageUrl ? (
             <Image
@@ -41,8 +41,8 @@ export default async function ProductPage(props: ProductPageProps) {
             <FallbackImage />
           )}
         </div>
-        <div className="w-full flex flex-col justify-between gap-4 rounded-xl sm:p-6 p-3 border bg-card text-sm text-muted-foreground shadow">
-          <div>
+        <div className="w-full flex flex-col justify-between gap-4 text-sm sm:text-base text-muted-foreground shadow">
+          <div className="flex flex-col gap-1">
             <h1 className="md:text-2xl text-xl font-semibold text-card-foreground mb-4">
               {product.title}
             </h1>
@@ -51,11 +51,15 @@ export default async function ProductPage(props: ProductPageProps) {
                 {product.price} лв
               </span>
             </p>
-            {product.discount > 0 && (
-              <p className="text-accent font-semibold">
-                Скидка: {product.discount}%
-              </p>
-            )}
+            <StockStatus
+              stockInfo={{
+                stockOut: product.stockOut,
+                stockLimited: product.stockLimited,
+                toOrder: product.toOrder,
+                stock: product.stock,
+              }}
+            />
+            {product.discount > 0 && <p>Скидка: {product.discount}%</p>}
             <p>
               <LinkToShop store={product.store} />
             </p>
@@ -64,7 +68,7 @@ export default async function ProductPage(props: ProductPageProps) {
             href={product.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors border shadow-sm border-input h-9 px-4 py-2 modern"
+            className="product-link modern"
           >
             <span>Перейти в магазин</span>
             <TbExternalLink size={18} />

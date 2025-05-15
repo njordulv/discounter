@@ -105,7 +105,7 @@ export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
   const { stockOut, stockLimited, toOrder, stock } = stockInfo
 
   return (
-    <>
+    <span className="inline-flex gap-2">
       {stockOut && (
         <span className="rounded-md px-3 text-sm text-[var(--destructive-foreground)]">
           {stockOut}
@@ -126,7 +126,7 @@ export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
           {stock}
         </span>
       )}
-    </>
+    </span>
   )
 }
 
