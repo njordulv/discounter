@@ -4,21 +4,28 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { StockProps } from '@/interfaces/emag'
 import { formatPrice, shortenText } from '@/utils'
+import { cn } from '@/lib/utils'
 import { useStore } from '@/store'
 import config from '@/config'
 import styles from '@/styles/Products.module.scss'
 
-export const Heading = ({ title }: { title: string }) => {
+export const Heading = ({ title, _id }: { title: string; _id: string }) => {
   const { isGridView } = useStore()
   const MAX_TITLE_LENGTH = 60
 
   return (
     <h2
-      className={`text-foreground font-semibold ${
+      className={cn(
+        'text-foreground font-semibold',
         isGridView ? 'mb-1 text-sm' : 'mb-1 sm:mb-3 text-md'
-      }`}
+      )}
     >
-      {isGridView ? shortenText(title, MAX_TITLE_LENGTH) : title}
+      <Link
+        href={`/deals/${_id}`}
+        className="hover:text-[var(--accent)] transition"
+      >
+        {isGridView ? shortenText(title, MAX_TITLE_LENGTH) : title}
+      </Link>
     </h2>
   )
 }

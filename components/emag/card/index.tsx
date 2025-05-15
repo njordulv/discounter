@@ -20,6 +20,7 @@ import { motionCard } from '@/variants'
 import styles from '@/styles/Products.module.scss'
 
 export const Card: React.FC<ScrapeProps> = ({
+  _id,
   index,
   title,
   imageUrl,
@@ -60,7 +61,7 @@ export const Card: React.FC<ScrapeProps> = ({
 
       <div className={`${styles.card__content}`}>
         <div className={styles['card__content--top']}>
-          <Heading title={title} />
+          <Heading title={title} _id={_id} />
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             {price && <NewPrice price={price} />}
             {oldPrice && <OldPrice oldPrice={oldPrice} />}
