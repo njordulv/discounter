@@ -19,7 +19,7 @@ const Card = dynamic(
   { loading: () => <CardSkeleton /> }
 )
 
-function AllDeals({ slug }: { slug: string }) {
+function Deals({ slug }: { slug: string }) {
   const {
     currentPage,
     setCurrentPage,
@@ -47,7 +47,7 @@ function AllDeals({ slug }: { slug: string }) {
   }, [slug, currentPage, perPage, sortOrder, search])
 
   const { data, error, isLoading } = useFetcher({
-    url: `/api/emag/all-deals?${queryParams}`,
+    url: `/api/emag/deals?${queryParams}`,
   })
 
   useEffect(() => {
@@ -95,4 +95,4 @@ function AllDeals({ slug }: { slug: string }) {
   )
 }
 
-export default AllDeals
+export default Deals

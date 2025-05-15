@@ -48,7 +48,7 @@ function SmartDeals() {
                 variant="outline"
                 text="All Deals"
                 className="!w-fit"
-                onClick={() => window.open('/all-deals', '_self')}
+                onClick={() => window.open('/deals', '_self')}
               />
             </div>
           )}

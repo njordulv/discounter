@@ -137,7 +137,7 @@ export const SearchInput = () => {
                     },
                   }}
                   onClick={() => {
-                    router.push(`/product/${item._id}`)
+                    router.push(`/deals/${item._id}`)
                     setSuggestions([])
                   }}
                 >

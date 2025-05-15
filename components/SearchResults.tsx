@@ -45,7 +45,7 @@ const SearchResults = () => {
   }, [currentPage, perPage, sortOrder, query])
 
   const { data, error, isLoading } = useFetcher({
-    url: `/api/emag/all-deals?${queryParams}`,
+    url: `/api/emag/deals?${queryParams}`,
   })
 
   useEffect(() => {

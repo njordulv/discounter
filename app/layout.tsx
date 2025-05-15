@@ -1,8 +1,8 @@
 import { Noto_Sans } from 'next/font/google'
 import type { Metadata } from 'next'
-import Decor from '@/components/ui/Decor'
 import ThemeProvider from '@/providers/theme'
 import { Content } from '@/components/Content'
+import Decor from '@/components/ui/Decor'
 import '@/styles/globals.css'
 
 const notoSans = Noto_Sans({

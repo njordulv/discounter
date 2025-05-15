@@ -23,9 +23,9 @@ const config = {
       icon: TbHome,
       scrapeUrl: '',
     },
-    allDeals: {
+    deals: {
       name: 'All Deals',
-      slug: '/all-deals',
+      slug: '/deals',
       icon: TbTag,
       scrapeUrl: '',
     },

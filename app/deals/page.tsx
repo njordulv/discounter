@@ -1,4 +1,4 @@
-import AllDeals from '@/components/emag/AllDeals'
+import Deals from '@/components/emag/Deals'
 
 export default function Page() {
   return (
@@ -6,7 +6,7 @@ export default function Page() {
       <h1 className="w-full sm:text-4xl text-2xl text-left font-medium text-foreground">
         All Deals
       </h1>
-      <AllDeals slug="" />
+      <Deals slug="" />
     </>
   )
 }

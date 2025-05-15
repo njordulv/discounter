@@ -1,27 +1,11 @@
-export const dynamic = 'force-dynamic'
-
 import Image from 'next/image'
-import { notFound } from 'next/navigation'
 import { TbExternalLink } from 'react-icons/tb'
-import { connectDB } from '@/lib/mongo'
-import Product from '@/models/Product'
+import { ScrapeProps } from '@/interfaces/emag'
 import { FallbackImage } from '@/components/ui/FallbackImage'
 import { StockStatus, LinkToShop } from '@/components/emag/card/Details'
-import type { ScrapeProps } from '@/interfaces/emag'
 import config from '@/config'
 
-interface ProductPageProps {
-  params: Promise<{ id: string }>
-}
-
-export default async function ProductPage(props: ProductPageProps) {
-  const params = await props.params
-  await connectDB()
-
-  const product = await Product.findById(params.id).lean<ScrapeProps>()
-
-  if (!product) return notFound()
-
+export const Deal = (product: ScrapeProps) => {
   return (
     <>
       <div className="rounded-xl sm:p-5 sm:gap-6 md:p-5 p-2 gap-3 border bg-card grid grid-cols-1 sm:grid-cols-[auto_1fr]">
