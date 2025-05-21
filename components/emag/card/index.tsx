@@ -6,7 +6,6 @@ import { useLazyLoad } from '@/hooks/useLazyLoad'
 import {
   Heading,
   Discount,
-  Genius,
   Img,
   NewPrice,
   OldPrice,
@@ -46,8 +45,7 @@ export const Card: React.FC<ScrapeProps> = ({
       ref={ref}
       className={`${styles.card__item}`}
     >
-      {discount && <Discount discount={discount} isGenius={isGenius} />}
-      {isGenius && !discount && <Genius />}
+      <Discount discount={discount} isGenius={isGenius} />
       {!imageUrl || imageUrl.startsWith('https:https://') ? (
         <FallbackImage />
       ) : (

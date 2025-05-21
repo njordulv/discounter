@@ -37,6 +37,17 @@ export const Discount = ({
   discount: number
   isGenius: boolean | undefined
 }) => {
+  if (isGenius && discount === 0) {
+    return (
+      <span
+        className={`${styles.card__discount} bg-gradient-genius`}
+        title="Genius Deals"
+      >
+        <b>Genius</b>
+      </span>
+    )
+  }
+
   return (
     <span
       className={`${styles.card__discount} ${
