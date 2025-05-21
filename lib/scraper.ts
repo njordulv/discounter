@@ -43,6 +43,7 @@ const parseProductData = (
   if (!title || !price) return null
 
   return {
+    _id: '',
     title,
     price,
     oldPrice,

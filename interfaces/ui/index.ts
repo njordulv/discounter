@@ -13,6 +13,8 @@ export interface BaseButtonProps
 }
 
 export interface StoreProps {
+  theme: 'dark' | 'light'
+  setTheme: (theme: 'dark' | 'light') => void
   currentPage: number
   setCurrentPage: (page: number) => void
   totalPages: number

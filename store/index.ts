@@ -6,6 +6,8 @@ import { StoreProps } from '@/interfaces/ui'
 export const useStore = create<StoreProps>()(
   persist(
     (set) => ({
+      theme: 'dark',
+      setTheme: (theme: 'dark' | 'light') => set({ theme }),
       currentPage: 1,
       setCurrentPage: (page: number) => set({ currentPage: page }),
       totalPages: 1,
