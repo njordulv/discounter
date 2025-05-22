@@ -1,24 +1,18 @@
-import { scrapeAndSaveEmag } from '@/lib/scraper'
+import { runAllScrapers } from '@/lib/scraper'
 import { connectDB } from '@/lib/mongo'
-import { catsConfig } from '@/config/categories'
 
-async function testMongo() {
+async function main() {
   try {
     await connectDB()
     console.log('✅ MongoDB connected successfully')
+
+    await runAllScrapers()
+    console.log('✅ Scraping completed')
   } catch (error) {
-    console.error('❌ MongoDB connection failed:', error)
+    console.error('❌ Error during scraping:', error)
+  } finally {
+    process.exit(0)
   }
 }
 
-testMongo()
-;(async () => {
-  const cats = Object.values(catsConfig).map((tag) => ({
-    name: tag.slug,
-    url: tag.scrapeUrl,
-  }))
-
-  await scrapeAndSaveEmag(cats)
-
-  process.exit(0)
-})()
+main()
