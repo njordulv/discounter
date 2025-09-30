@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { PAGINATION } from '@/config/constants'
-import { StoreProps } from '@/interfaces/ui'
+import type { StoreProps } from '@/interfaces/ui'
 
 export const useStore = create<StoreProps>()(
   persist(

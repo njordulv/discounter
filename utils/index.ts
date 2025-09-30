@@ -46,7 +46,7 @@ export const parsePrice = (priceText: string): number | null => {
   const normalizedPrice = cleanText.replace(',', '.')
   const price = parseFloat(normalizedPrice)
 
-  return isNaN(price) ? null : price
+  return Number.isNaN(price) ? null : price
 }
 
 // Format price output
@@ -63,5 +63,5 @@ export const formatPrice = (price: number): string => {
 export const shortenText = (str: string, length: number) => {
   if (!str) return str
   if (str.length <= length) return str
-  return str.slice(0, length) + '...'
+  return `${str.slice(0, length)}...`
 }

@@ -1,12 +1,13 @@
 {
   "name": "discounter",
-  "version": "1.21.1",
+  "version": "1.21.2",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "biome lint",
+    "format": "biome format --write",
     "scrape": "tsx scripts/scraper.ts"
   },
   "dependencies": {
@@ -42,14 +43,12 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
+    "@biomejs/biome": "^2.2.4",
     "@types/cheerio": "^0.22.35",
     "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20.19.18",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",
-    "eslint": "^9.36.0",
-    "eslint-config-next": "15.1.7",
     "sass": "^1.93.2",
     "tsx": "^4.20.6",
     "typescript": "^5.9.2"
