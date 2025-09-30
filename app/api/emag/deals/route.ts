@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { SortOrder, FilterQuery } from 'mongoose'
 import { connectDB } from '@/lib/mongo'
-import { getAsync, redisClient } from '@/lib/redis'
+import { initRedis } from '@/lib/redis'
 import { CACHE_EXPIRATION, PAGINATION } from '@/config/constants'
 import Product from '@/models/Product'
 
@@ -21,8 +21,9 @@ export async function GET(request: Request) {
 
   try {
     // 1. Reading cached data
-    const cachedPage = await getAsync(cacheKey)
-    const cachedCount = await getAsync(countKey)
+    const redisClient = await initRedis()
+    const cachedPage = await redisClient.get(cacheKey)
+    const cachedCount = await redisClient.get(countKey)
 
     if (cachedPage && cachedCount) {
       console.log(`✅ Loaded page ${page} from Redis`)
@@ -67,18 +68,14 @@ export async function GET(request: Request) {
       .limit(perPage)
 
     // 3. Cache result
-    await redisClient.setex(
-      cacheKey,
-      CACHE_EXPIRATION.DEFAULT,
-      JSON.stringify(products)
-    )
+    await redisClient.set(cacheKey, JSON.stringify(products), {
+      EX: CACHE_EXPIRATION.DEFAULT,
+    })
 
     if (!cachedCount) {
-      await redisClient.setex(
-        countKey,
-        CACHE_EXPIRATION.DEFAULT,
-        totalItems.toString()
-      )
+      await redisClient.set(countKey, totalItems.toString(), {
+        EX: CACHE_EXPIRATION.DEFAULT,
+      })
     }
 
     return NextResponse.json({

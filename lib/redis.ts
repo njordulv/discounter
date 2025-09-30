@@ -1,11 +1,20 @@
-import redis from 'ioredis'
-import { promisify } from 'util'
+import { createClient, RedisClientType } from 'redis'
 import databaseConfig from '@/config/database'
 
-const redisClient = new redis(databaseConfig.redis.url)
+let redisClient: RedisClientType
 
-// Transform redis methods into promises
-const getAsync = promisify(redisClient.get).bind(redisClient)
-const setAsync = promisify(redisClient.set).bind(redisClient)
+export async function initRedis(): Promise<RedisClientType> {
+  if (!redisClient) {
+    redisClient = createClient({
+      url: databaseConfig.redis.url,
+    })
 
-export { redisClient, getAsync, setAsync }
+    redisClient.on('error', (err) => {
+      console.error('Redis Client Error', err)
+    })
+
+    await redisClient.connect()
+  }
+
+  return redisClient
+}

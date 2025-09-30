@@ -10,7 +10,7 @@ import {
   processLink,
 } from '@/utils'
 import { connectDB } from '@/lib/mongo'
-import { redisClient } from '@/lib/redis'
+import { initRedis } from '@/lib/redis'
 import { EmagCats, ScrapeProps } from '@/interfaces/emag'
 import { CACHE_EXPIRATION, SCRAPER } from '@/config/constants'
 
@@ -134,6 +134,7 @@ const scrapeAndSave = async (categories: EmagCats[]) => {
   for (const category of categories) {
     try {
       console.log(`🔄 eMag: ${category.name}`)
+      const redisClient = await initRedis()
       await redisClient.del(`products_${category.name}`)
 
       await Product.updateMany(
@@ -168,10 +169,12 @@ const scrapeAndSave = async (categories: EmagCats[]) => {
           `✅ eMag ${category.name}: Saved ${products.length}, Removed ${deletedCount}`
         )
 
-        await redisClient.setex(
+        await redisClient.set(
           `products_${category.name}`,
-          CACHE_EXPIRATION.DEFAULT,
-          JSON.stringify(products)
+          JSON.stringify(products),
+          {
+            EX: CACHE_EXPIRATION.DEFAULT,
+          }
         )
       } else {
         console.warn(`⚠️ No products found for ${category.name}`)

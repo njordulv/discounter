@@ -93,6 +93,7 @@ export const SearchInput = () => {
       <form onSubmit={handleSubmit} className={styles.search__form}>
         <Input
           type="text"
+          name="search-input"
           placeholder={config.search.placeholder}
           className={cn(
             'focus-visible:ring-[var(--accent)] focus-visible:ring-[0px]',
