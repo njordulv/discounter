@@ -11,8 +11,8 @@ import {
 } from '@/utils'
 import { connectDB } from '@/lib/mongo'
 import { initRedis } from '@/lib/redis'
-import { EmagCats, ScrapeProps } from '@/interfaces/emag'
 import { CACHE_EXPIRATION, SCRAPER } from '@/config/constants'
+import type { EmagCats, ScrapeProps } from '@/interfaces/emag'
 
 puppeteer.use(StealthPlugin())
 

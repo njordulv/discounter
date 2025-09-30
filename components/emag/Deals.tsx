@@ -9,8 +9,8 @@ import { Discover } from '@/components/tags'
 import { useStore } from '@/store'
 import { Pagination } from '@/components/emag/Pagination'
 import { CardSkeleton } from '@/components/ui/Skeletons'
-import { ScrapeProps } from '@/interfaces/emag'
 import { Toolbar } from '@/components/toolbar'
+import type { ScrapeProps } from '@/interfaces/emag'
 import styles from '@/styles/Products.module.scss'
 import config from '@/config'
 
@@ -71,7 +71,7 @@ function Deals({ slug }: { slug: string }) {
         }`}
       >
         {accumulatedData.map((product, index) => (
-          <Card key={index} {...product} index={index} />
+          <Card key={product._id} {...product} index={index} />
         ))}
       </div>
 

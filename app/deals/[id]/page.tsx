@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
 import { connectDB } from '@/lib/mongo'
 import Product from '@/models/Product'
-import type { ScrapeProps } from '@/interfaces/emag'
 import { Deal } from '@/components/emag/Deal'
+import type { ScrapeProps } from '@/interfaces/emag'
 
 interface ProductPageProps {
   params: Promise<{ id: string }>

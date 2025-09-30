@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import { TbExternalLink } from 'react-icons/tb'
-import { ScrapeProps } from '@/interfaces/emag'
 import { FallbackImage } from '@/components/ui/FallbackImage'
 import { StockStatus, LinkToShop } from '@/components/emag/card/Details'
+import type { ScrapeProps } from '@/interfaces/emag'
 import config from '@/config'
 
 export const Deal = (product: ScrapeProps) => {

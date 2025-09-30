@@ -5,9 +5,9 @@ import { useMemo } from 'react'
 import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/ui/Loader'
 import { ItemSkeleton } from '@/components/ui/Skeletons'
-import { DealProps } from '@/interfaces/emag'
 import { Button } from '@/components/ui/Button'
 import { LoadFailed } from '@/components/ui/Errors'
+import type { DealProps } from '@/interfaces/emag'
 
 const Item = dynamic(
   () => import('@/components/emag/Item').then((mod) => mod.Item),
@@ -31,9 +31,9 @@ function SmartDeals() {
       {deals && (
         <>
           <div className="grid grid-cols-2 gap-3 mt-8">
-            {deals.map((deal: DealProps, index: number) => (
+            {deals.map((deal: DealProps) => (
               <Item
-                key={index}
+                key={deal.id}
                 name={deal.name}
                 image={deal.image}
                 url={deal.url}

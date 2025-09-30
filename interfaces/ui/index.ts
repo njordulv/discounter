@@ -67,3 +67,8 @@ export interface Suggestion {
   image: string
   _id: string
 }
+
+export interface HeadingProps {
+  title: string
+  _id?: string
+}

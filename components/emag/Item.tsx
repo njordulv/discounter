@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import { TbExternalLink } from 'react-icons/tb'
-import { DealProps } from '@/interfaces/emag'
 import { FallbackImage } from '@/components/ui/FallbackImage'
 import { useLazyLoad } from '@/hooks/useLazyLoad'
 import { ItemSkeleton } from '@/components/ui/Skeletons'
 import { Button } from '@/components/ui/Button'
+import type { DealProps } from '@/interfaces/emag'
 import config from '@/config'
 
 export const Item: React.FC<DealProps> = ({ name, image, url, offer }) => {

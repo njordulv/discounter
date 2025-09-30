@@ -1,6 +1,5 @@
 import { motion as m } from 'framer-motion'
 import { TbExternalLink } from 'react-icons/tb'
-import { ScrapeProps } from '@/interfaces/emag'
 import { FallbackImage } from '@/components/ui/FallbackImage'
 import { useLazyLoad } from '@/hooks/useLazyLoad'
 import {
@@ -16,6 +15,7 @@ import { Button } from '@/components/ui/Button'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { useStore } from '@/store'
 import { motionCard } from '@/variants'
+import type { ScrapeProps } from '@/interfaces/emag'
 import styles from '@/styles/Products.module.scss'
 
 export const Card: React.FC<ScrapeProps> = ({

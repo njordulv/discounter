@@ -1,4 +1,4 @@
-import { MotionCardVariants } from '@/interfaces/ui'
+import type { MotionCardVariants } from '@/interfaces/ui'
 
 export const motionCard = (index: number): MotionCardVariants => ({
   initial: { opacity: 0, scale: 0.95, y: 20 },

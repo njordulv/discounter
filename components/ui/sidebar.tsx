@@ -7,9 +7,9 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { catsConfig } from '@/config/categories'
 import { useStore } from '@/store'
-import { SidebarMenuListProps } from '@/interfaces/ui'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import Logo from '@/components/Logo'
+import type { SidebarMenuListProps } from '@/interfaces/ui'
 import config from '@/config'
 
 interface SidebarUIContextProps {

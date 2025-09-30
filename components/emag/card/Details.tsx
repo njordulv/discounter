@@ -2,14 +2,15 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { StockProps } from '@/interfaces/emag'
 import { formatPrice, shortenText } from '@/utils'
 import { cn } from '@/lib/utils'
 import { useStore } from '@/store'
+import type { HeadingProps } from '@/interfaces/ui'
+import type { StockProps } from '@/interfaces/emag'
 import config from '@/config'
 import styles from '@/styles/Products.module.scss'
 
-export const Heading = ({ title, _id }: { title: string; _id: string }) => {
+export const Heading: React.FC<HeadingProps> = ({ title, _id }) => {
   const { isGridView } = useStore()
   const MAX_TITLE_LENGTH = 60
 

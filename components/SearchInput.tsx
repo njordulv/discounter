@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation'
 import { TbX, TbZoom, TbLoader2 } from 'react-icons/tb'
 import { motion as m, AnimatePresence } from 'framer-motion'
 import { Input } from '@/components/ui/input'
-import { Suggestion } from '@/interfaces/ui'
 import { shortenText } from '@/utils'
 import { cn } from '@/lib/utils'
+import type { Suggestion } from '@/interfaces/ui'
 import styles from '@/styles/Search.module.scss'
 import config from '@/config'
 
@@ -125,7 +125,7 @@ export const SearchInput = () => {
             >
               {suggestions.map((item, index) => (
                 <m.li
-                  key={index}
+                  key={item._id}
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}

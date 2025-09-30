@@ -2,7 +2,7 @@
 
 import { TbChevronLeft, TbChevronRight } from 'react-icons/tb'
 import { Button } from '@/components/ui/Button'
-import { PaginationProps } from '@/interfaces/emag'
+import type { PaginationProps } from '@/interfaces/emag'
 import config from '@/config'
 
 export const Pagination: React.FC<PaginationProps> = ({

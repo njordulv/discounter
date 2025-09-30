@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 import { twMerge } from 'tailwind-merge'
-import { BaseButtonProps } from '@/interfaces/ui'
+import type { BaseButtonProps } from '@/interfaces/ui'
 
 export const buttonVariants = cva('button', {
   variants: {
