@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 's13emagst.akamaized.net',
+        hostname: '*.emagst.akamaized.net',
         pathname: '/products/**',
       },
     ],
