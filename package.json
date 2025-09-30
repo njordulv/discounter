@@ -1,6 +1,6 @@
 {
   "name": "discounter",
-  "version": "1.21.5",
+  "version": "1.21.6",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "biome lint",
     "format": "biome format --write",
-    "scrape": "tsx scripts/scraper.ts"
+    "scrape": "tsx scripts/scraper.ts",
+    "check": "tsx scripts/check.ts"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.7",
