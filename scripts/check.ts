@@ -1,6 +1,7 @@
 import { connectDB } from '@/lib/mongo'
 import Product from '@/models/Product'
 
+// Check actual products in MongoDB after scraping data
 async function main() {
   try {
     await connectDB()

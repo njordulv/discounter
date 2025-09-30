@@ -1,6 +1,7 @@
 import { runAllScrapers } from '@/lib/scraper'
 import { connectDB } from '@/lib/mongo'
 
+// Scrape runner
 async function main() {
   try {
     await connectDB()
