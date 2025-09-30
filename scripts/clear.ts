@@ -4,6 +4,12 @@ import { initRedis } from '@/lib/redis'
 async function main() {
   try {
     const redis = await initRedis()
+
+    if (!redis) {
+      console.warn('⚠️ Redis не инициализирован, кэш не очищен')
+      return
+    }
+
     const keys = await redis.keys('products_*')
 
     if (keys.length > 0) {
