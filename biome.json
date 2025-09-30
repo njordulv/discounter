@@ -1,13 +1,8 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.2.4/schema.json",
   "files": {
-    "includes": [
-      "app/**/*.{js,jsx,ts,tsx}",
-      "components/**/*.{js,jsx,ts,tsx}",
-      "hooks/**/*.{js,jsx,ts,tsx}",
-      "lib/**/*.{js,jsx,ts,tsx}"
-    ],
-    "ignoreUnknown": true
+    "ignoreUnknown": true,
+    "experimentalScannerIgnores": ["node_modules", ".next", "dist", "*.d.ts"]
   },
   "formatter": {
     "enabled": true,

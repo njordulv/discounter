@@ -18,10 +18,9 @@ const ProductSchema = new mongoose.Schema(
     outdated: { type: Boolean, default: false },
     timestamp: { type: Number, default: () => Date.now() },
   },
-  { versionKey: false }
+  { versionKey: false },
 )
 
 ProductSchema.index({ title: 'text' })
 
-export default mongoose.models.Product ||
-  mongoose.model('Product', ProductSchema)
+export default mongoose.models.Product || mongoose.model('Product', ProductSchema)

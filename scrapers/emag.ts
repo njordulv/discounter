@@ -3,12 +3,7 @@ import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import config from '@/config'
 import Product from '@/models/Product'
-import {
-  normalizeImageUrl,
-  parsePrice,
-  randomDelay,
-  processLink,
-} from '@/utils'
+import { normalizeImageUrl, parsePrice, randomDelay, processLink } from '@/utils'
 import { connectDB } from '@/lib/mongo'
 import { initRedis } from '@/lib/redis'
 import { CACHE_EXPIRATION, SCRAPER } from '@/config/constants'
@@ -16,26 +11,16 @@ import type { EmagCats, ScrapeProps } from '@/interfaces/emag'
 
 puppeteer.use(StealthPlugin())
 
-const extractText = (
-  $: cheerio.Root,
-  element: cheerio.Element,
-  selector: string
-): string => $(element).find(selector).text().trim() || ''
+const extractText = ($: cheerio.Root, element: cheerio.Element, selector: string): string =>
+  $(element).find(selector).text().trim() || ''
 
-const parseProductData = (
-  $: cheerio.Root,
-  element: cheerio.Element
-): ScrapeProps | null => {
+const parseProductData = ($: cheerio.Root, element: cheerio.Element): ScrapeProps | null => {
   const title = extractText($, element, '.card-v2-title')
   const rawPrice = extractText($, element, '.product-new-price')
   const price = parsePrice(rawPrice)
   const rawOldPrice = extractText($, element, '.pricing s')
   const oldPrice = parsePrice(rawOldPrice)
-  const discountText = extractText(
-    $,
-    element,
-    '.card-v2-badge.badge-discount'
-  ).trim()
+  const discountText = extractText($, element, '.card-v2-badge.badge-discount').trim()
   const discountMatch = discountText.match(/-?(\d+(\.\d+)?)%?/)
 
   if (!title || !price) return null
@@ -48,15 +33,9 @@ const parseProductData = (
     isGenius: $(element).find('.badge-genius').length > 0,
     stock: extractText($, element, '.text-availability-in_stock') || null,
     stockOut: extractText($, element, '.text-availability-out_of_stock'),
-    stockLimited: extractText(
-      $,
-      element,
-      '.text-availability-limited_stock_qty'
-    ),
+    stockLimited: extractText($, element, '.text-availability-limited_stock_qty'),
     toOrder: extractText($, element, '.text-availability-to_order'),
-    imageUrl: normalizeImageUrl(
-      $(element).find('.img-component img').attr('src') || ''
-    ),
+    imageUrl: normalizeImageUrl($(element).find('.img-component img').attr('src') || ''),
     link: processLink($(element).find('a.js-product-url').attr('href') || ''),
     timestamp: Date.now(),
     store: config.emag.title,
@@ -75,7 +54,7 @@ const scrapeCategory = async (categoryUrl: string): Promise<ScrapeProps[]> => {
 
   try {
     await page.setUserAgent(
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
     )
     await page.setExtraHTTPHeaders({
       'Accept-Language': 'en-US,en;q=0.9',
@@ -85,8 +64,7 @@ const scrapeCategory = async (categoryUrl: string): Promise<ScrapeProps[]> => {
     while (currentPage <= maxPages) {
       await randomDelay()
 
-      const url =
-        currentPage > 1 ? `${categoryUrl}/p${currentPage}` : categoryUrl
+      const url = currentPage > 1 ? `${categoryUrl}/p${currentPage}` : categoryUrl
 
       const response = await page.goto(url, {
         waitUntil: 'domcontentloaded',
@@ -137,10 +115,7 @@ const scrapeAndSave = async (categories: EmagCats[]) => {
       const redisClient = await initRedis()
       await redisClient.del(`products_${category.name}`)
 
-      await Product.updateMany(
-        { category: category.name },
-        { $set: { outdated: true } }
-      )
+      await Product.updateMany({ category: category.name }, { $set: { outdated: true } })
 
       const products = await scrapeCategory(category.url)
 
@@ -165,17 +140,11 @@ const scrapeAndSave = async (categories: EmagCats[]) => {
           outdated: true,
         })
 
-        console.log(
-          `✅ eMag ${category.name}: Saved ${products.length}, Removed ${deletedCount}`
-        )
+        console.log(`✅ eMag ${category.name}: Saved ${products.length}, Removed ${deletedCount}`)
 
-        await redisClient.set(
-          `products_${category.name}`,
-          JSON.stringify(products),
-          {
-            EX: CACHE_EXPIRATION.DEFAULT,
-          }
-        )
+        await redisClient.set(`products_${category.name}`, JSON.stringify(products), {
+          EX: CACHE_EXPIRATION.DEFAULT,
+        })
       } else {
         console.warn(`⚠️ No products found for ${category.name}`)
       }

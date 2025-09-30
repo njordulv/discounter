@@ -1,21 +1,13 @@
+import type { DatabaseConfig } from '@/interfaces/ui'
 import 'dotenv/config'
 
-interface DatabaseConfig {
-  mongo: {
-    url: string
-    defaultDb: string
-    collections: {
-      products: string
-    }
-  }
-  redis: {
-    url: string
-  }
+if (!process.env.MONGODB_URI) {
+  throw new Error('MONGODB_URI is not defined in environment variables')
 }
 
 const databaseConfig: DatabaseConfig = {
   mongo: {
-    url: process.env.MONGODB_URI!,
+    url: process.env.MONGODB_URI,
     defaultDb: 'discounter',
     collections: {
       products: 'products',

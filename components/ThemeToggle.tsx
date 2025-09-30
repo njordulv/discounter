@@ -49,7 +49,7 @@ export const ThemeToggle = () => {
           {config.theme.light}
         </button>
         <button
-         type="button"
+          type="button"
           className={cn(toggleClass, isDark ? 'text-secondary' : ' text-muted-foreground')}
           onClick={handleClick}
           aria-label={config.theme.switchToLight}

@@ -3,5 +3,5 @@ node_modules/
 dist/
 build/
 .turbo/
-next-env.d.ts
 *.d.ts
+next-env.d.ts

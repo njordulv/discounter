@@ -1,10 +1,8 @@
-import { ButtonHTMLAttributes } from 'react'
-import { type VariantProps } from 'class-variance-authority'
-import { buttonVariants } from '@/components/ui/Button'
+import type { ButtonHTMLAttributes } from 'react'
+import type { VariantProps } from 'class-variance-authority'
+import type { buttonVariants } from '@/components/ui/Button'
 
-export interface BaseButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+export interface BaseButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   icon?: React.ReactNode
   text?: string | number
   disabled?: boolean
@@ -71,4 +69,17 @@ export interface Suggestion {
 export interface HeadingProps {
   title: string
   _id?: string
+}
+
+export interface DatabaseConfig {
+  mongo: {
+    url: string
+    defaultDb: string
+    collections: {
+      products: string
+    }
+  }
+  redis: {
+    url: string
+  }
 }

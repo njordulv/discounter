@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer theme {
@@ -261,12 +261,12 @@ footer {
   border-color: var(--input);
 }
 
-.data-\[state\=checked\]\:bg-primary[data-state='checked'] {
+.data-\[state\=checked\]\:bg-primary[data-state="checked"] {
   background-color: var(--primary);
   border-color: var(--primary);
 }
 
-.data-\[state\=unchecked\]\:bg-input[data-state='unchecked'] {
+.data-\[state\=unchecked\]\:bg-input[data-state="unchecked"] {
   background-color: var(--input);
 }
 

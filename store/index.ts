@@ -30,6 +30,6 @@ export const useStore = create<StoreProps>()(
         perPage: state.perPage,
         sortOrder: state.sortOrder,
       }),
-    }
-  )
+    },
+  ),
 )

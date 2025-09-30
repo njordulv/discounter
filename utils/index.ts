@@ -26,14 +26,11 @@ export const randomDelay = () => sleep(3000 + Math.random() * 7000)
 
 // Link processing function
 export const processLink = (link: string): string => {
-  return link.startsWith('http')
-    ? link
-    : new URL(link, config.emag.url).toString()
+  return link.startsWith('http') ? link : new URL(link, config.emag.url).toString()
 }
 
 // Get full month
-export const getMonth = () =>
-  new Date().toLocaleString('en-US', { month: 'long' })
+export const getMonth = () => new Date().toLocaleString('en-US', { month: 'long' })
 
 // Get full year
 export const getYear = () => new Date().getFullYear()
@@ -53,8 +50,7 @@ export const parsePrice = (priceText: string): number | null => {
 export const formatPrice = (price: number): string => {
   const [intPart, decimalPart = '00'] = price.toString().split('.')
 
-  const formattedDecimal =
-    decimalPart.length === 1 ? `${decimalPart}0` : decimalPart
+  const formattedDecimal = decimalPart.length === 1 ? `${decimalPart}0` : decimalPart
 
   return `${intPart},${formattedDecimal}`
 }
