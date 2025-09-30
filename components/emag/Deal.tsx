@@ -7,7 +7,6 @@ import config from '@/config'
 
 export const Deal = (product: ScrapeProps) => {
   return (
-    <>
       <div className="rounded-xl sm:p-5 sm:gap-6 md:p-5 p-2 gap-3 border bg-card grid grid-cols-1 sm:grid-cols-[auto_1fr]">
         <div>
           {product.imageUrl ? (
@@ -27,9 +26,7 @@ export const Deal = (product: ScrapeProps) => {
         </div>
         <div className="w-full flex flex-col justify-between gap-4 text-sm sm:text-base text-muted-foreground shadow">
           <div className="flex flex-col gap-1">
-            <h1 className="md:text-2xl text-xl font-semibold text-card-foreground mb-4">
-              {product.title}
-            </h1>
+            <h1 className="md:text-2xl text-xl font-semibold text-card-foreground mb-4">{product.title}</h1>
             <p>
               <span className="text-3xl font-semibold bg-gradient inline !bg-clip-text text-transparent">
                 {product.price} лв
@@ -48,17 +45,11 @@ export const Deal = (product: ScrapeProps) => {
               <LinkToShop store={product.store} />
             </p>
           </div>
-          <a
-            href={product.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="product-link modern"
-          >
+          <a href={product.link} target="_blank" rel="noopener noreferrer" className="product-link modern">
             <span>Перейти в магазин</span>
             <TbExternalLink size={18} />
           </a>
         </div>
       </div>
-    </>
   )
 }

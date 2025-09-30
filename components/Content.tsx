@@ -10,9 +10,7 @@ export const Content = ({ children }: { children: React.ReactNode }) => {
       <main className="relative w-full overflow-auto flex-1 flex flex-col min-h-[calc(100vh-3rem)]">
         <MobileSidebar />
         <Header />
-        <section className="max-w-5xl w-full h-auto mx-auto flex flex-col sm:py-16 py-2 px-2 gap-2">
-          {children}
-        </section>
+        <section className="max-w-5xl w-full h-auto mx-auto flex flex-col sm:py-16 py-2 px-2 gap-2">{children}</section>
       </main>
       <Footer />
     </div>

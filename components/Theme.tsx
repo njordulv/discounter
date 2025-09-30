@@ -18,15 +18,8 @@ export const ThemeToggle = () => {
 
   return (
     <div className="flex items-center gap-4 transition-colors duration-300">
-      <Switch
-        id="theme-toggle"
-        checked={checked}
-        onCheckedChange={handleChange}
-      />
-      <Label
-        htmlFor="theme-toggle"
-        className="text-[var(--muted-foreground)] transition-colors duration-300"
-      >
+      <Switch id="theme-toggle" checked={checked} onCheckedChange={handleChange} />
+      <Label htmlFor="theme-toggle" className="text-[var(--muted-foreground)] transition-colors duration-300">
         {checked ? 'Dark' : 'Light'} Mode
       </Label>
     </div>

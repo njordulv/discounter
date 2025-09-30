@@ -6,13 +6,10 @@ const SVGIcon = (props: React.SVGProps<SVGSVGElement>) => (
     height="202pt"
     viewBox="0 0 1020 202"
     preserveAspectRatio="xMidYMid meet"
+    aria-hidden="true"
     {...props}
   >
-    <g
-      transform="translate(0,202) scale(0.100000,-0.100000)"
-      fill="currentColor"
-      stroke="none"
-    >
+    <g transform="translate(0,202) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
       <path
         d="M145 1961 c-50 -22 -91 -69 -105 -119 -14 -51 -14 -1593 0 -1644 14
 -48 53 -94 101 -118 37 -19 64 -20 849 -20 785 0 812 1 849 20 49 25 88 70

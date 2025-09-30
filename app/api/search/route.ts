@@ -9,10 +9,9 @@ export async function GET(request: Request) {
 
   await connectDB()
 
-  const products = await Product.find(
-    { $text: { $search: q } },
-    { score: { $meta: 'textScore' } }
-  ).sort({ score: { $meta: 'textScore' } })
+  const products = await Product.find({ $text: { $search: q } }, { score: { $meta: 'textScore' } }).sort({
+    score: { $meta: 'textScore' },
+  })
 
   return NextResponse.json({ data: products })
 }

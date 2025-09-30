@@ -14,22 +14,13 @@ import type { ScrapeProps } from '@/interfaces/emag'
 import styles from '@/styles/Products.module.scss'
 import config from '@/config'
 
-const Card = dynamic(
-  () => import('@/components/emag/card').then((mod) => mod.Card),
-  { loading: () => <CardSkeleton /> }
-)
+const Card = dynamic(() => import('@/components/emag/card').then((mod) => mod.Card), {
+  loading: () => <CardSkeleton />,
+})
 
 function Deals({ slug }: { slug: string }) {
-  const {
-    currentPage,
-    setCurrentPage,
-    totalPages,
-    setTotalPages,
-    setTagProducts,
-    isGridView,
-    perPage,
-    sortOrder,
-  } = useStore()
+  const { currentPage, setCurrentPage, totalPages, setTotalPages, setTagProducts, isGridView, perPage, sortOrder } =
+    useStore()
   const [accumulatedData, setAccumulatedData] = useState<ScrapeProps[]>([])
   const searchParams = useSearchParams()
   const search = searchParams.get('search') || ''
@@ -52,9 +43,7 @@ function Deals({ slug }: { slug: string }) {
 
   useEffect(() => {
     if (!data?.data) return
-    setAccumulatedData((prev) =>
-      currentPage === 1 ? data.data : [...prev, ...data.data]
-    )
+    setAccumulatedData((prev) => (currentPage === 1 ? data.data : [...prev, ...data.data]))
     setTotalPages(data.meta.totalPages)
     setTagProducts(data.meta.totalItems)
   }, [data, currentPage, setTagProducts, setTotalPages])
@@ -66,9 +55,7 @@ function Deals({ slug }: { slug: string }) {
       <Discover slug={slug} />
       <Toolbar />
       <div
-        className={`${styles.card__items} ${
-          isGridView ? styles['card__items--grid'] : styles['card__items--list']
-        }`}
+        className={`${styles.card__items} ${isGridView ? styles['card__items--grid'] : styles['card__items--list']}`}
       >
         {accumulatedData.map((product, index) => (
           <Card key={product._id} {...product} index={index} />
@@ -78,9 +65,7 @@ function Deals({ slug }: { slug: string }) {
       {isLoading && <Loader />}
 
       {data?.meta && currentPage >= data.meta.totalPages && (
-        <div className="mt-6 text-center text-muted">
-          {config.messages.endOfDeals}
-        </div>
+        <div className="mt-6 text-center text-muted">{config.messages.endOfDeals}</div>
       )}
 
       {totalPages > 1 && (

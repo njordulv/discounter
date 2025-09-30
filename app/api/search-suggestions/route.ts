@@ -8,10 +8,7 @@ export async function GET(request: Request) {
 
   await connectDB()
 
-  const results = await Product.find(
-    { $text: { $search: q } },
-    { title: 1, imageUrl: 1, _id: 1 }
-  )
+  const results = await Product.find({ $text: { $search: q } }, { title: 1, imageUrl: 1, _id: 1 })
     .limit(5)
     .sort({ score: { $meta: 'textScore' } })
 

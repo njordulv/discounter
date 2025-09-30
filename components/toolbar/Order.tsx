@@ -24,10 +24,7 @@ export function Order() {
   }
 
   return (
-    <Select
-      onValueChange={handleSortOrder}
-      defaultValue={sortOrder || 'default'}
-    >
+    <Select onValueChange={handleSortOrder} defaultValue={sortOrder || 'default'}>
       <SelectTrigger className="w-44">
         <SelectValue placeholder={sortOrder} />
       </SelectTrigger>

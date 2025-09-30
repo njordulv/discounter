@@ -23,19 +23,9 @@ export const buttonVariants = cva('button', {
   },
 })
 
-export const Button: React.FC<BaseButtonProps> = ({
-  variant,
-  size,
-  icon,
-  text,
-  className,
-  ...props
-}) => {
+export const Button: React.FC<BaseButtonProps> = ({ variant, size, icon, text, className, ...props }) => {
   return (
-    <button
-      className={twMerge(className, buttonVariants({ variant, size }))}
-      {...props}
-    >
+    <button className={twMerge(className, buttonVariants({ variant, size }))} {...props}>
       {text}
       {icon ? <span>{icon}</span> : null}
     </button>

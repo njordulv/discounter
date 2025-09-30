@@ -9,8 +9,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const category = searchParams.get('category') || ''
   const page = Number(searchParams.get('page')) || 1
-  const perPage =
-    Number(searchParams.get('perPage')) || PAGINATION.PER_PAGE_DEFAULT
+  const perPage = Number(searchParams.get('perPage')) || PAGINATION.PER_PAGE_DEFAULT
   const sort = searchParams.get('sort')
   const search = searchParams.get('search') || ''
 
@@ -57,9 +56,7 @@ export async function GET(request: Request) {
     const projection = search ? { score: { $meta: 'textScore' } } : {}
 
     // Count items
-    const totalItems = cachedCount
-      ? Number(cachedCount)
-      : await Product.countDocuments(query)
+    const totalItems = cachedCount ? Number(cachedCount) : await Product.countDocuments(query)
 
     // Fetch sorted and paginated products
     const products = await Product.find(query, projection)

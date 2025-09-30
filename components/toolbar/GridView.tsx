@@ -13,17 +13,10 @@ export const GridView = () => {
 
   return (
     <div className="flex items-center space-x-2">
-      <Label
-        htmlFor="grid-mode"
-        className="text-muted-foreground cursor-pointer"
-      >
+      <Label htmlFor="grid-mode" className="text-muted-foreground cursor-pointer">
         {isGridView ? <TbLayoutGrid size={24} /> : <TbListDetails size={24} />}
       </Label>
-      <Switch
-        id="grid-mode"
-        checked={isGridView}
-        onCheckedChange={setIsGridView}
-      />
+      <Switch id="grid-mode" checked={isGridView} onCheckedChange={setIsGridView} />
     </div>
   )
 }

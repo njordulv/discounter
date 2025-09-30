@@ -13,22 +13,13 @@ import type { ScrapeProps } from '@/interfaces/emag'
 import { Toolbar } from '@/components/toolbar'
 import styles from '@/styles/Products.module.scss'
 
-const Card = dynamic(
-  () => import('@/components/emag/card').then((mod) => mod.Card),
-  { loading: () => <CardSkeleton /> }
-)
+const Card = dynamic(() => import('@/components/emag/card').then((mod) => mod.Card), {
+  loading: () => <CardSkeleton />,
+})
 
 const SearchResults = () => {
-  const {
-    currentPage,
-    setCurrentPage,
-    totalPages,
-    setTotalPages,
-    setTagProducts,
-    isGridView,
-    perPage,
-    sortOrder,
-  } = useStore()
+  const { currentPage, setCurrentPage, totalPages, setTotalPages, setTagProducts, isGridView, perPage, sortOrder } =
+    useStore()
   const [accumulatedData, setAccumulatedData] = useState<ScrapeProps[]>([])
   const searchParams = useSearchParams()
   const query = searchParams.get('q') || ''
@@ -50,9 +41,7 @@ const SearchResults = () => {
 
   useEffect(() => {
     if (!data?.data) return
-    setAccumulatedData((prev) =>
-      currentPage === 1 ? data.data : [...prev, ...data.data]
-    )
+    setAccumulatedData((prev) => (currentPage === 1 ? data.data : [...prev, ...data.data]))
     setTotalPages(data.meta.totalPages)
     setTagProducts(data.meta.totalItems)
   }, [data, currentPage, setTotalPages, setTagProducts])
@@ -67,9 +56,7 @@ const SearchResults = () => {
       {isLoading ? <DiscoverSkeleton /> : <Discover slug={query} />}
       <Toolbar />
       <div
-        className={`${styles.card__items} ${
-          isGridView ? styles['card__items--grid'] : styles['card__items--list']
-        }`}
+        className={`${styles.card__items} ${isGridView ? styles['card__items--grid'] : styles['card__items--list']}`}
       >
         {accumulatedData.map((product, index) => (
           <Card key={product._id} {...product} index={index} />

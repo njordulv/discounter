@@ -12,7 +12,7 @@ export const useLazyLoad = () => {
           obs.unobserve(entry.target)
         }
       },
-      { rootMargin: '200px', threshold: 0.2 }
+      { rootMargin: '200px', threshold: 0.2 },
     )
 
     if (ref.current) {

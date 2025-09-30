@@ -11,8 +11,7 @@ export const Discover = ({ slug }: { slug: string }) => {
     <p className="w-full flex sm:flex-row flex-col gap-1 mb-4 text-foreground">
       {tagProducts > 0 && (
         <span>
-          <b>{tagProducts}</b>{' '}
-          {tagProducts === 1 ? 'deal and offer' : 'deals and offers'}.
+          <b>{tagProducts}</b> {tagProducts === 1 ? 'deal and offer' : 'deals and offers'}.
         </span>
       )}
 

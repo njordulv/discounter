@@ -41,13 +41,7 @@ export const Pagination: React.FC<PaginationProps> = ({
     <div className="fixed bottom-0 left-0 right-0 p-2 bg-card text-card-foreground border border-t-1">
       <div className="m-auto w-full max-w-2xl flex items-center justify-between gap-3">
         <div className="flex items-end gap-2">
-          <Button
-            size="sm"
-            variant="outline"
-            text="1"
-            onClick={handleFirstPage}
-            disabled={currentPage === 1}
-          />
+          <Button size="sm" variant="outline" text="1" onClick={handleFirstPage} disabled={currentPage === 1} />
           <span className="text-muted-foreground tracking-wide">...</span>
         </div>
         <div className="flex items-center sm:gap-4 gap-2 text-sm text-muted-foreground">

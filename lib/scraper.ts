@@ -7,12 +7,10 @@ export const runAllScrapers = async () => {
 
     if (!scraper) continue
 
-    const categoriesToScrape = Object.entries(store.categories).map(
-      ([catSlug, url]) => ({
-        name: catSlug,
-        url,
-      })
-    )
+    const categoriesToScrape = Object.entries(store.categories).map(([catSlug, url]) => ({
+      name: catSlug,
+      url,
+    }))
 
     await scraper.scrapeAndSave(categoriesToScrape)
   }

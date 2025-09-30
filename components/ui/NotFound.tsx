@@ -5,7 +5,6 @@ import config from '@/config'
 
 const NotFound = () => {
   return (
-    <>
       <Button
         size="md"
         variant="outline"
@@ -13,7 +12,6 @@ const NotFound = () => {
         className="!w-fit"
         onClick={() => window.open('/', '_self')}
       />
-    </>
   )
 }
 

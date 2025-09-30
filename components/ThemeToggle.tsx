@@ -32,22 +32,16 @@ export const ThemeToggle = () => {
 
   return (
     <div className="flex items-center gap-2 p-1">
-      {theme === 'dark' ? (
-        <IoMoonOutline size={20} className="w-6" />
-      ) : (
-        <IoSunnyOutline size={20} className="w-6" />
-      )}
+      {theme === 'dark' ? <IoMoonOutline size={20} className="w-6" /> : <IoSunnyOutline size={20} className="w-6" />}
       <div
         className={cn(
           'relative flex items-center border-0 rounded-full transition-all',
-          isLight ? 'bg-input' : 'bg-gray-950'
+          isLight ? 'bg-input' : 'bg-gray-950',
         )}
       >
         <button
-          className={cn(
-            toggleClass,
-            isLight ? 'text-secondary-foreground' : ' text-muted-foreground'
-          )}
+          type="button"
+          className={cn(toggleClass, isLight ? 'text-secondary-foreground' : ' text-muted-foreground')}
           onClick={handleClick}
           aria-label={config.theme.switchToDark}
           title={config.theme.labelLight}
@@ -55,22 +49,15 @@ export const ThemeToggle = () => {
           {config.theme.light}
         </button>
         <button
-          className={cn(
-            toggleClass,
-            isDark ? 'text-secondary' : ' text-muted-foreground'
-          )}
+         type="button"
+          className={cn(toggleClass, isDark ? 'text-secondary' : ' text-muted-foreground')}
           onClick={handleClick}
           aria-label={config.theme.switchToLight}
           title={config.theme.labelDark}
         >
           {config.theme.dark}
         </button>
-        <div
-          className={cn(
-            'absolute inset-0 z-0 flex',
-            isDark ? 'justify-end' : 'justify-start'
-          )}
-        >
+        <div className={cn('absolute inset-0 z-0 flex', isDark ? 'justify-end' : 'justify-start')}>
           <motion.span
             layout
             animate={{

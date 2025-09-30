@@ -6,13 +6,10 @@ const SVGLogo = (props: React.SVGProps<SVGSVGElement>) => (
     height="512pt"
     viewBox="0 0 512 512"
     preserveAspectRatio="xMidYMid meet"
+    aria-hidden="true"
     {...props}
   >
-    <g
-      transform="translate(0,512) scale(0.100000,-0.100000)"
-      fill="currentColor"
-      stroke="none"
-    >
+    <g transform="translate(0,512) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
       <path
         d="M415 5110 c-183 -38 -330 -170 -391 -350 -18 -53 -19 -134 -19 -2200
 0 -2066 1 -2147 19 -2200 52 -154 168 -274 322 -332 l59 -23 2155 0 2155 0 59

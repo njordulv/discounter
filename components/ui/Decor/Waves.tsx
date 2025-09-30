@@ -11,6 +11,7 @@ export const WaveOne = () => {
         viewBox="0 0 5120 440"
         preserveAspectRatio="none"
         className={styles.decor__vector}
+        aria-hidden="true"
       >
         <path
           fill="var(--accent)"
@@ -44,6 +45,7 @@ export const WaveTwo = () => {
         viewBox="0 0 5120 440"
         preserveAspectRatio="none"
         className={styles.decor__vector}
+        aria-hidden="true"
       >
         <path
           fill="var(--background)"

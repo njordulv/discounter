@@ -18,9 +18,7 @@ interface SidebarUIContextProps {
   animate: boolean
 }
 
-const SidebarUIContext = createContext<SidebarUIContextProps | undefined>(
-  undefined
-)
+const SidebarUIContext = createContext<SidebarUIContextProps | undefined>(undefined)
 
 export const useSidebar = () => {
   const context = useContext(SidebarUIContext)
@@ -32,30 +30,14 @@ export const useSidebar = () => {
   return context
 }
 
-export const SidebarProvider = ({
-  children,
-  animate = true,
-}: {
-  children: React.ReactNode
-  animate?: boolean
-}) => {
+export const SidebarProvider = ({ children, animate = true }: { children: React.ReactNode; animate?: boolean }) => {
   const open = useStore((state) => state.openSidebar)
   const setOpen = useStore((state) => state.setOpenSidebar)
 
-  return (
-    <SidebarUIContext.Provider value={{ open, setOpen, animate }}>
-      {children}
-    </SidebarUIContext.Provider>
-  )
+  return <SidebarUIContext.Provider value={{ open, setOpen, animate }}>{children}</SidebarUIContext.Provider>
 }
 
-export const Sidebar = ({
-  children,
-  animate,
-}: {
-  children: React.ReactNode
-  animate?: boolean
-}) => {
+export const Sidebar = ({ children, animate }: { children: React.ReactNode; animate?: boolean }) => {
   return <SidebarProvider animate={animate}>{children}</SidebarProvider>
 }
 
@@ -67,10 +49,7 @@ export const SidebarContent = () => {
   const { open, animate } = useSidebar()
 
   return (
-    <motion.div
-      className="aside-wrapper"
-      animate={{ width: animate ? (open ? '253px' : '32px') : '253px' }}
-    >
+    <motion.div className="aside-wrapper" animate={{ width: animate ? (open ? '253px' : '32px') : '253px' }}>
       <Logo color="var(--sidebar-foreground)" height={32} width={162} />
       <div className="mt-8 flex flex-col gap-1">
         <SidebarMenu />
@@ -85,18 +64,14 @@ export const SidebarContent = () => {
   )
 }
 
-export const DesktopSidebar = ({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof motion.div>) => {
+export const DesktopSidebar = ({ className, children, ...props }: React.ComponentProps<typeof motion.div>) => {
   const { open, setOpen, animate } = useSidebar()
 
   return (
     <motion.aside
       className={cn(
         'h-full hidden md:flex md:flex-col bg-card w-[47px] bg-card p-2 border-input border-r shrink-0',
-        className
+        className,
       )}
       animate={{ width: animate ? (open ? '268px' : '47px') : '268px' }}
       onMouseEnter={() => setOpen(true)}
@@ -108,11 +83,7 @@ export const DesktopSidebar = ({
   )
 }
 
-export const SidebarMenuList = ({
-  items,
-  ariaLabel,
-  hrefPattern = '/{slug}',
-}: SidebarMenuListProps) => {
+export const SidebarMenuList = ({ items, ariaLabel, hrefPattern = '/{slug}' }: SidebarMenuListProps) => {
   const pathname = usePathname()
 
   return (
@@ -128,16 +99,8 @@ export const SidebarMenuList = ({
                 href={href}
                 className="flex items-center gap-2 px-1 py-2 rounded-sm transition-all hover:bg-[var(--accent)] hover:text-sidebar-accent-foreground"
               >
-                <Icon
-                  size={23}
-                  className={cn(
-                    'shrink-0',
-                    isActive ? 'text-primary' : 'text-secondary'
-                  )}
-                />
-                <span className="text-sm whitespace-nowrap overflow-hidden text-ellipsis">
-                  {name}
-                </span>
+                <Icon size={23} className={cn('shrink-0', isActive ? 'text-primary' : 'text-secondary')} />
+                <span className="text-sm whitespace-nowrap overflow-hidden text-ellipsis">{name}</span>
               </Link>
             </li>
           )
@@ -148,17 +111,9 @@ export const SidebarMenuList = ({
 }
 
 export const SidebarMenu = () => (
-  <SidebarMenuList
-    items={Object.values(config.mainMenu)}
-    ariaLabel="Main menu"
-    hrefPattern="{slug}"
-  />
+  <SidebarMenuList items={Object.values(config.mainMenu)} ariaLabel="Main menu" hrefPattern="{slug}" />
 )
 
 export const CategoryMenu = () => (
-  <SidebarMenuList
-    items={Object.values(catsConfig)}
-    ariaLabel="Categories"
-    hrefPattern="/tag/{slug}"
-  />
+  <SidebarMenuList items={Object.values(catsConfig)} ariaLabel="Categories" hrefPattern="/tag/{slug}" />
 )
