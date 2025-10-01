@@ -7,8 +7,8 @@ import config from '@/config'
 
 export const Deal = (product: ScrapeProps) => {
   return (
-    <div className="rounded-xl sm:p-5 sm:gap-6 md:p-5 p-2 gap-3 border bg-card grid grid-cols-1 sm:grid-cols-[auto_1fr]">
-      <div>
+    <div className="rounded-xl sm:p-5 sm:gap-6 md:p-5 p-2 gap-3 border bg-card flex flex-col md:flex-row">
+      <div className="max-w-96 flex-shrink-0 relative overflow-hidden rounded-lg">
         {product.imageUrl ? (
           <Image
             src={product.imageUrl}
@@ -24,9 +24,9 @@ export const Deal = (product: ScrapeProps) => {
           <FallbackImage />
         )}
       </div>
-      <div className="w-full flex flex-col justify-between gap-4 text-sm sm:text-base text-muted-foreground shadow">
+      <div className="flex-1 min-w-0 flex-col justify-between gap-4 text-sm sm:text-base text-muted-foreground shadow">
         <div className="flex flex-col gap-1">
-          <h1 className="md:text-2xl text-xl font-semibold text-card-foreground mb-4">
+          <h1 className="md:text-2xl text-lg font-semibold text-card-foreground mb-4">
             {product.title}
           </h1>
           <p>
