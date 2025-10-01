@@ -14,7 +14,7 @@ export const useStore = create<StoreProps>()(
       setTotalPages: (page: number) => set({ totalPages: page }),
       tagProducts: 0,
       setTagProducts: (products: number) => set({ tagProducts: products }),
-      isGridView: false,
+      isGridView: true,
       setIsGridView: (value: boolean) => set({ isGridView: value }),
       perPage: PAGINATION.PER_PAGE_DEFAULT,
       setPerPage: (page: number) => set({ perPage: page }),
@@ -30,6 +30,6 @@ export const useStore = create<StoreProps>()(
         perPage: state.perPage,
         sortOrder: state.sortOrder,
       }),
-    },
-  ),
+    }
+  )
 )

@@ -33,14 +33,14 @@ export const Item: React.FC<DealProps> = ({ name, image, url, offer }) => {
       )}
       <div className="flex flex-col gap-4 justify-between">
         <div className="flex flex-col gap-2">
-          <h2 className="text-md text-foreground font-semibold sm:mb-3">
+          <h2 className="sm:text-[15px] text-xs text-foreground font-semibold">
             {name}
           </h2>
           <div className="flex gap-2 items-center text-cyan-400">
-            <span className="text-xl font-semibold bg-gradient inline !bg-clip-text text-transparent">
+            <span className="md:text-xl text-xs font-semibold bg-gradient inline !bg-clip-text text-transparent">
               {offer.price.current} {offer.price.currency.name.default}
             </span>
-            <span className="text-md line-through text-muted-foreground">
+            <span className="md:text-md text-xs line-through text-muted-foreground">
               {offer.price.lowest_price_30_days.amount} BGN
             </span>
             <span className="text-xs text-primary-foreground font-medium bg-gradient py-1 px-2 rounded-lg">{`-${offer.price.discount.percent}%`}</span>

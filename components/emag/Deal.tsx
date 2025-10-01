@@ -25,7 +25,7 @@ export const Deal = (product: ScrapeProps) => {
           <FallbackImage />
         )}
       </div>
-      <div className="flex-1 min-w-0 flex-col justify-between gap-4 text-sm sm:text-base text-muted-foreground shadow">
+      <div className="flex flex-col justify-between gap-4 text-sm sm:text-base text-muted-foreground">
         <div className="flex flex-col gap-1">
           <h1 className="md:text-2xl text-lg font-semibold text-card-foreground mb-4">
             {product.title}

@@ -10,28 +10,32 @@ A web service that aggregates discount deals and promo codes from various source
 - **SSR with Next.js**: Fetches data on the server-side to improve SEO and initial load speed.
 - **Dynamic Routing**: Supports navigation through different categories and product details.
 - **Database**: Integrated with MongoDB to store product data and Redis for caching.
-- **Responsive UI**: Designed with Tailwind CSS for a mobile-friendly and modern interface.
+- **Responsive UI**: Designed with Shadcn UI & Tailwind CSS for a mobile-friendly and modern interface.
 - **Theme Switching**: Swithing between dark & light themes.
 
 ## 🛠 Tech Stack
 
 - **Frontend**: Next.js, React, TypeScript, Tailwind CSS
-- **Backend**: Node.js, Cheerio (for scraping), Redis (for caching), MongoDB (for data storage)
+- **Backend**: Node.js, Cheerio/Puppeter (for scraping data), Redis (for caching), MongoDB (for data storage)
 - **State Management**: Zustand
 - **Design System**: Shadcn UI
 - **Animations**: Framer Motion
 - **Programming Language**: TypeScript
-- **Hosting**: Vercel (in the future)
+- **Hosting**: Vercel
 
 ## 📂 Project Structure
 
 ```
 📦 project-root
+├── 📂 app             # api routes, layout, pages, etc.
 ├── 📂 components      # UI components (buttons, cards, loaders, etc.)
 ├── 📂 hooks           # Custom React hooks
 ├── 📂 pages           # Next.js pages
+├── 📂 models          # Product schemas
 ├── 📂 public          # Static assets
-├── 📂 styles          # Global styles
+├── 📂 scripts         # Scraper scripts
+├── 📂 styles          # Global & module styles
+├── 📂 lib             # Main script functions
 ├── 📂 utils           # Utility functions
 ├── 📂 config          # App configuration
 └── next.config.js    # Next.js configuration
@@ -77,6 +81,10 @@ A web service that aggregates discount deals and promo codes from various source
 - [ ] Add user notifications for new discounts
 - [ ] Improve data fetching performance
 - [ ] Enhance accessibility (a11y improvements)
+
+## Screenshot
+
+![Discounter Screenshot](./public/screenshot.jpg)
 
 ## 📜 License
 
