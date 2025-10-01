@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { TbExternalLink } from 'react-icons/tb'
 import { FallbackImage } from '@/components/ui/FallbackImage'
 import { StockStatus, LinkToShop } from '@/components/emag/card/Details'
+import { cleanUrl } from '@/utils'
 import type { ScrapeProps } from '@/interfaces/emag'
 import config from '@/config'
 
@@ -11,7 +12,7 @@ export const Deal = (product: ScrapeProps) => {
       <div className="max-w-96 flex-shrink-0 relative overflow-hidden rounded-lg">
         {product.imageUrl ? (
           <Image
-            src={product.imageUrl}
+            src={cleanUrl(product.imageUrl)}
             alt={product.title}
             width={384}
             height={384}

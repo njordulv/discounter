@@ -1,6 +1,6 @@
 {
   "name": "discounter",
-  "version": "1.22.8",
+  "version": "1.22.9",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
