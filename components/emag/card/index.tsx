@@ -2,7 +2,16 @@ import { motion as m } from 'framer-motion'
 import { TbExternalLink } from 'react-icons/tb'
 import { FallbackImage } from '@/components/ui/FallbackImage'
 import { useLazyLoad } from '@/hooks/useLazyLoad'
-import { Heading, Discount, Img, NewPrice, OldPrice, StockStatus, LinkToShop } from '@/components/emag/card/Details'
+import {
+  Heading,
+  Discount,
+  Img,
+  NewPrice,
+  OldPrice,
+  StockStatus,
+  LinkToShop,
+} from '@/components/emag/card/Details'
+import { cleanUrl } from '@/utils'
 import { Button } from '@/components/ui/Button'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { useStore } from '@/store'
@@ -32,12 +41,21 @@ export const Card: React.FC<ScrapeProps> = ({
   if (!isVisible) return <CardSkeleton ref={ref} />
 
   return (
-    <m.div {...motionCard(index ?? 0)} ref={ref} className={`${styles.card__item}`}>
+    <m.div
+      {...motionCard(index ?? 0)}
+      ref={ref}
+      className={`${styles.card__item}`}
+    >
       <Discount discount={discount} isGenius={isGenius} />
       {!imageUrl || imageUrl.startsWith('https:https://') ? (
         <FallbackImage />
       ) : (
-        <Img imageUrl={imageUrl} title={title} width={isGridView ? 216 : 176} height={isGridView ? 216 : 176} />
+        <Img
+          imageUrl={imageUrl}
+          title={title}
+          width={isGridView ? 216 : 176}
+          height={isGridView ? 216 : 176}
+        />
       )}
 
       <div className={`${styles.card__content}`}>
@@ -46,11 +64,17 @@ export const Card: React.FC<ScrapeProps> = ({
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             {price && <NewPrice price={price} />}
             {oldPrice && <OldPrice oldPrice={oldPrice} />}
-            <StockStatus stockInfo={{ stockOut, stockLimited, toOrder, stock }} />
+            <StockStatus
+              stockInfo={{ stockOut, stockLimited, toOrder, stock }}
+            />
             <LinkToShop store={store} />
           </div>
         </div>
-        <div className={`${styles['card__content--bottom']} ${isGridView ? 'w-full' : 'sm:max-w-52'}`}>
+        <div
+          className={`${styles['card__content--bottom']} ${
+            isGridView ? 'w-full' : 'sm:max-w-52'
+          }`}
+        >
           <Button
             size="md"
             variant="default"

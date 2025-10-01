@@ -33,7 +33,9 @@ export const Item: React.FC<DealProps> = ({ name, image, url, offer }) => {
       )}
       <div className="flex flex-col gap-4 justify-between">
         <div className="flex flex-col gap-2">
-          <h2 className="text-md text-foreground font-semibold sm:mb-3">{name}</h2>
+          <h2 className="text-md text-foreground font-semibold sm:mb-3">
+            {name}
+          </h2>
           <div className="flex gap-2 items-center text-cyan-400">
             <span className="text-xl font-semibold bg-gradient inline !bg-clip-text text-transparent">
               {offer.price.current} {offer.price.currency.name.default}
@@ -47,7 +49,9 @@ export const Item: React.FC<DealProps> = ({ name, image, url, offer }) => {
         <Button
           size="sm"
           text="Get Deal"
-          onClick={() => window.open(`${url.desktop_base}${url.path}`, '_blank')}
+          onClick={() =>
+            window.open(`${url.desktop_base}${url.path}`, '_blank')
+          }
           icon={<TbExternalLink size={18} />}
         />
       </div>

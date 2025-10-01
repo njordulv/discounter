@@ -2,7 +2,6 @@ import Image from 'next/image'
 import { TbExternalLink } from 'react-icons/tb'
 import { FallbackImage } from '@/components/ui/FallbackImage'
 import { StockStatus, LinkToShop } from '@/components/emag/card/Details'
-import { cleanUrl } from '@/utils'
 import type { ScrapeProps } from '@/interfaces/emag'
 import config from '@/config'
 
@@ -12,7 +11,7 @@ export const Deal = (product: ScrapeProps) => {
       <div>
         {product.imageUrl ? (
           <Image
-            src={cleanUrl(product.imageUrl)}
+            src={product.imageUrl}
             alt={product.title}
             width={384}
             height={384}

@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { formatPrice, shortenText } from '@/utils'
+import { formatPrice, shortenText, toInteger, cleanUrl } from '@/utils'
 import { cn } from '@/lib/utils'
 import { useStore } from '@/store'
 import type { HeadingProps } from '@/interfaces/ui'
@@ -58,7 +58,7 @@ export const Discount = ({
       }`}
       title={isGenius ? 'Genius Deals' : undefined}
     >
-      <b>-{discount}%</b>
+      <b>-{toInteger(discount)}%</b>
     </span>
   )
 }
@@ -94,7 +94,7 @@ export const Img = ({
           ? 'w-auto h-52 sm:w-full sm:h-auto'
           : 'w-24 h-24 sm:w-44 sm:h-44'
       }`}
-      src={imageUrl}
+      src={cleanUrl(imageUrl)}
       alt={title}
       width={width || 176}
       height={height || 176}
