@@ -11,7 +11,6 @@ import {
   StockStatus,
   LinkToShop,
 } from '@/components/emag/card/Details'
-import { cleanUrl } from '@/utils'
 import { Button } from '@/components/ui/Button'
 import { CardSkeleton } from '@/components/ui/Skeletons'
 import { useStore } from '@/store'
