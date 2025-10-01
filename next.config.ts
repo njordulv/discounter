@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: '**.akamaized.net',
-        pathname: '/products/**/images/**',
+        pathname: '/products/**',
       },
     ],
   },

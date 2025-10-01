@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { formatPrice, shortenText, toInteger } from '@/utils'
+import { formatPrice, shortenText } from '@/utils'
 import { cn } from '@/lib/utils'
 import { useStore } from '@/store'
 import type { HeadingProps } from '@/interfaces/ui'
@@ -38,8 +38,6 @@ export const Discount = ({
   discount: number
   isGenius: boolean | undefined
 }) => {
-  const discountValue = toInteger(discount)
-
   if (isGenius && discount === 0) {
     return (
       <span
@@ -60,7 +58,7 @@ export const Discount = ({
       }`}
       title={isGenius ? 'Genius Deals' : undefined}
     >
-      <b>{`-${toInteger(discountValue)}%`}</b>
+      <b>-{discount}%</b>
     </span>
   )
 }

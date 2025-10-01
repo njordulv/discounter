@@ -68,3 +68,13 @@ export const shortenText = (str: string, length: number) => {
 
 // Convert number to integer
 export const toInteger = (value: number) => Math.round(value)
+
+// Clean URL (remove query params and hash)
+export const cleanUrl = (url: string) => {
+  try {
+    const u = new URL(url)
+    return `${u.origin}${u.pathname}`
+  } catch {
+    return url
+  }
+}
