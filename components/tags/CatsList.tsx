@@ -8,7 +8,7 @@ export const CatsList = () => {
   if (!cats) return null
 
   return (
-    <ul className="grid grid-cols-5 sm:grid-cols-8 lg:grid-cols-10 gap-4 sm:gap-6 pb-6">
+    <ul className="grid grid-cols-4 sm:grid-cols-8 gap-4 sm:gap-6 pb-6">
       {Object.values(cats).map((item) => (
         <li key={item.slug}>
           <a
