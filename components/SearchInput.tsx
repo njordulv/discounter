@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { TbX, TbZoom, TbLoader2 } from 'react-icons/tb'
 import { motion as m, AnimatePresence } from 'framer-motion'
 import { Input } from '@/components/ui/input'
-import { shortenText } from '@/utils'
+import { shortenText, cleanUrl } from '@/utils'
 import { cn } from '@/lib/utils'
 import type { Suggestion } from '@/interfaces/ui'
 import styles from '@/styles/Search.module.scss'
@@ -59,7 +59,10 @@ export const SearchInput = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setSuggestions([])
         setLoading(false)
       }
@@ -92,7 +95,10 @@ export const SearchInput = () => {
           type="text"
           name="search-input"
           placeholder={config.search.placeholder}
-          className={cn('focus-visible:ring-[var(--accent)] focus-visible:ring-[0px]', styles.search__input)}
+          className={cn(
+            'focus-visible:ring-[var(--accent)] focus-visible:ring-[0px]',
+            styles.search__input
+          )}
           value={term}
           onChange={(e) => setTerm(e.target.value)}
           onFocus={() => {
@@ -136,7 +142,13 @@ export const SearchInput = () => {
                     setSuggestions([])
                   }}
                 >
-                  <Image src={item.image} alt={item.title} width={40} height={40} className={styles.search__image} />
+                  <Image
+                    src={cleanUrl(item.image)}
+                    alt={item.title}
+                    width={40}
+                    height={40}
+                    className={styles.search__image}
+                  />
                   <span>{shortenText(item.title, 80)}</span>
                 </m.li>
               ))}
@@ -147,12 +159,20 @@ export const SearchInput = () => {
         <m.div
           key="clear-button"
           initial={{ opacity: 0, scale: 0.9 }}
-          animate={term.length > 0 ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+          animate={
+            term.length > 0
+              ? { opacity: 1, scale: 1 }
+              : { opacity: 0, scale: 0.9 }
+          }
           transition={{ duration: 0.2 }}
           style={{ pointerEvents: term.length > 0 ? 'auto' : 'none' }}
           className={styles.search__clear}
         >
-          <button type="button" onClick={handleClear} className={styles.search__clear__button}>
+          <button
+            type="button"
+            onClick={handleClear}
+            className={styles.search__clear__button}
+          >
             <TbX />
           </button>
         </m.div>
@@ -160,12 +180,18 @@ export const SearchInput = () => {
         <m.div
           key="loader"
           initial={{ opacity: 1, scale: 0.97 }}
-          animate={loading ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 0.97 }}
+          animate={
+            loading ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 0.97 }
+          }
           exit={{ opacity: 0, scale: 0.97 }}
           transition={{ duration: 0.1 }}
           className={styles.search__loader}
         >
-          {loading ? <TbLoader2 className="animate-spin" /> : <TbZoom />}
+          {loading ? (
+            <TbLoader2 size={20} className="animate-spin" />
+          ) : (
+            <TbZoom />
+          )}
         </m.div>
       </form>
     </div>
