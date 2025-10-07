@@ -17,6 +17,7 @@
 
   .options {
     display: flex;
+    justify-content: space-between;
     gap: calc(var(--spacing) * 2);
   }
 
