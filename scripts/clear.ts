@@ -6,7 +6,7 @@ async function main() {
     const redis = await initRedis()
 
     if (!redis) {
-      console.warn('⚠️ Redis не инициализирован, кэш не очищен')
+      console.warn('⚠️ Redis do not initialized, cache not cleared')
       return
     }
 
