@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { TbExternalLink } from 'react-icons/tb'
 import { FallbackImage } from '@/components/ui/FallbackImage'
 import { StockStatus, LinkToShop } from '@/components/emag/card/Details'
-import { cleanUrl } from '@/utils'
+import { cleanUrl, formatPrice } from '@/utils'
 import type { ScrapeProps } from '@/interfaces/emag'
 import config from '@/config'
 
@@ -30,9 +30,12 @@ export const Deal = (product: ScrapeProps) => {
           <h1 className="md:text-2xl text-lg font-semibold text-card-foreground mb-4">
             {product.title}
           </h1>
-          <p>
+          <p className="flex gap-2 items-center">
             <span className="text-3xl font-semibold bg-gradient inline !bg-clip-text text-transparent">
-              {product.price} лв
+              {formatPrice(product.price)} {config.emag.currency}
+            </span>
+            <span className="text-xl line-through">
+              {formatPrice(product.oldPrice)} {config.emag.currency}
             </span>
           </p>
           <StockStatus
@@ -43,7 +46,7 @@ export const Deal = (product: ScrapeProps) => {
               stock: product.stock,
             }}
           />
-          {product.discount > 0 && <p>Скидка: {product.discount}%</p>}
+          {product.discount > 0 && <p>Спестяваш: {product.discount}%</p>}
           <p>
             <LinkToShop store={product.store} />
           </p>

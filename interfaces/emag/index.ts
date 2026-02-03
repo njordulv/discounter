@@ -46,7 +46,7 @@ export interface ScrapeProps {
   index?: number
   title: string
   price: number
-  oldPrice: number | null
+  oldPrice: number
   discount: number
   isGenius?: boolean
   stock: string | null

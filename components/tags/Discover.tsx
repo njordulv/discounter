@@ -1,5 +1,3 @@
-'use client'
-
 import { slugToName, getMonth, getYear } from '@/utils'
 import { useStore } from '@/store'
 import config from '@/config'

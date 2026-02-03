@@ -50,6 +50,7 @@
     height: calc(var(--spacing) * 20);
     rotate: -45deg;
     pointer-events: none;
+    z-index: 10;
 
     b {
       position: absolute;

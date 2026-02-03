@@ -18,7 +18,7 @@ export const Heading: React.FC<HeadingProps> = ({ title, _id }) => {
     <h2
       className={cn(
         'text-foreground font-semibold',
-        isGridView ? 'mb-1 text-sm' : 'mb-1 sm:mb-3 text-md'
+        isGridView ? 'mb-1 text-sm' : 'mb-1 sm:mb-3 text-md',
       )}
     >
       <Link

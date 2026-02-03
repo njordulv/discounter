@@ -13,14 +13,26 @@ import { Toolbar } from '@/components/toolbar'
 import type { ScrapeProps } from '@/interfaces/emag'
 import styles from '@/styles/Products.module.scss'
 import config from '@/config'
+// import { Card } from '@/components/emag/card'
 
-const Card = dynamic(() => import('@/components/emag/card').then((mod) => mod.Card), {
-  loading: () => <CardSkeleton />,
-})
+const Card = dynamic(
+  () => import('@/components/emag/card').then((mod) => mod.Card),
+  {
+    loading: () => <CardSkeleton />,
+  },
+)
 
 function Deals({ slug }: { slug: string }) {
-  const { currentPage, setCurrentPage, totalPages, setTotalPages, setTagProducts, isGridView, perPage, sortOrder } =
-    useStore()
+  const {
+    currentPage,
+    setCurrentPage,
+    totalPages,
+    setTotalPages,
+    setTagProducts,
+    isGridView,
+    perPage,
+    sortOrder,
+  } = useStore()
   const [accumulatedData, setAccumulatedData] = useState<ScrapeProps[]>([])
   const searchParams = useSearchParams()
   const search = searchParams.get('search') || ''
@@ -43,7 +55,9 @@ function Deals({ slug }: { slug: string }) {
 
   useEffect(() => {
     if (!data?.data) return
-    setAccumulatedData((prev) => (currentPage === 1 ? data.data : [...prev, ...data.data]))
+    setAccumulatedData((prev) =>
+      currentPage === 1 ? data.data : [...prev, ...data.data],
+    )
     setTotalPages(data.meta.totalPages)
     setTagProducts(data.meta.totalItems)
   }, [data, currentPage, setTagProducts, setTotalPages])
@@ -65,7 +79,9 @@ function Deals({ slug }: { slug: string }) {
       {isLoading && <Loader />}
 
       {data?.meta && currentPage >= data.meta.totalPages && (
-        <div className="mt-6 text-center text-muted">{config.messages.endOfDeals}</div>
+        <div className="mt-6 text-center text-muted">
+          {config.messages.endOfDeals}
+        </div>
       )}
 
       {totalPages > 1 && (

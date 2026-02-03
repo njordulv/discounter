@@ -46,6 +46,7 @@ export const Card: React.FC<ScrapeProps> = ({
       className={`${styles.card__item}`}
     >
       <Discount discount={discount} isGenius={isGenius} />
+
       {!imageUrl || imageUrl.startsWith('https:https://') ? (
         <FallbackImage />
       ) : (
