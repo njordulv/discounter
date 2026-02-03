@@ -61,9 +61,11 @@ export const Card: React.FC<ScrapeProps> = ({
       <div className={`${styles.card__content}`}>
         <div className={styles['card__content--top']}>
           <Heading title={title} _id={_id} />
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <div className="flex flex-wrap items-center gap-2">
             {price && <NewPrice price={price} />}
             {oldPrice && <OldPrice oldPrice={oldPrice} />}
+          </div>
+          <div className="flex flex-col gap-2">
             <StockStatus
               stockInfo={{ stockOut, stockLimited, toOrder, stock }}
             />

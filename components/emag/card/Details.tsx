@@ -18,7 +18,7 @@ export const Heading: React.FC<HeadingProps> = ({ title, _id }) => {
     <h2
       className={cn(
         'text-foreground font-semibold',
-        isGridView ? 'mb-1 text-sm' : 'mb-1 sm:mb-3 text-md',
+        isGridView ? 'text-sm' : 'text-md',
       )}
     >
       <Link
@@ -127,22 +127,22 @@ export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
     <span className="inline-flex gap-2">
       {stockOut && (
         <span className="rounded-md px-3 text-sm text-[var(--destructive-foreground)]">
-          {stockOut}
+          {config.text.outOfStock}
         </span>
       )}
       {stockLimited && (
         <span className="rounded-md px-3 text-sm bg-[var(--destructive)] text-destructive">
-          {stockLimited}
+          {config.text.limitedStock}
         </span>
       )}
       {toOrder && (
         <span className="rounded-md px-3 text-sm bg-muted text-card-foreground">
-          {toOrder}
+          {config.text.orderNow}
         </span>
       )}
       {stock && (
         <span className="rounded-md px-3 text-sm bg-accent text-primary-foreground">
-          {stock}
+          {config.text.inStock}
         </span>
       )}
     </span>
@@ -152,7 +152,7 @@ export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
 export const LinkToShop = ({ store }: { store: string }) => {
   return (
     <span className="text-sm sm:text-base text-muted-foreground">
-      {config.card.shop}
+      {config.text.availableAt}
       <Link
         className="text-sm hover:text-[var(--primary))] transition"
         href={config.emag.url}

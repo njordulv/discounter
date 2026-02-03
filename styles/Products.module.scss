@@ -72,6 +72,9 @@
     height: 100%;
 
     &--top {
+      display: flex;
+      flex-direction: column;
+      gap: calc(var(--spacing) * 1);
       text-align: unset;
     }
 

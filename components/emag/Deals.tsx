@@ -13,7 +13,6 @@ import { Toolbar } from '@/components/toolbar'
 import type { ScrapeProps } from '@/interfaces/emag'
 import styles from '@/styles/Products.module.scss'
 import config from '@/config'
-// import { Card } from '@/components/emag/card'
 
 const Card = dynamic(
   () => import('@/components/emag/card').then((mod) => mod.Card),

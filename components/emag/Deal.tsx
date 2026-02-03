@@ -49,7 +49,11 @@ export const Deal = (product: ScrapeProps) => {
                 stock: product.stock,
               }}
             />
-            {product.discount > 0 && <p>Спестяваш: {product.discount}%</p>}
+            {product.discount > 0 && (
+              <p>
+                {config.text.save}: {product.discount}%
+              </p>
+            )}
             <p>
               <LinkToShop store={product.store} />
             </p>
@@ -60,7 +64,7 @@ export const Deal = (product: ScrapeProps) => {
             rel="noopener noreferrer"
             className="product-link modern"
           >
-            <span>Перейти в магазин</span>
+            <span>{config.text.toShop}</span>
             <TbExternalLink size={18} />
           </a>
         </div>

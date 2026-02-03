@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import config from '@/config'
 
 export const BackBtn = () => {
   const router = useRouter()
@@ -11,7 +12,7 @@ export const BackBtn = () => {
 
   return (
     <button type="button" onClick={handleBack}>
-      Back
+      {config.text.back}
     </button>
   )
 }

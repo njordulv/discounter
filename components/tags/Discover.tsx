@@ -18,8 +18,8 @@ export const Discover = ({
       {showCount ? (
         <>
           <span>
-            {tagProducts || <span className="animate-pulse w-4">0</span>} deals
-            in {slugToName(slug) || ''} ·
+            {tagProducts || <span className="animate-pulse w-4">0</span>}{' '}
+            {config.text.dealsIn} {slugToName(slug) || ''} ·
           </span>
           <span>
             {config.site.locale} · {getMonth()} {getYear()}

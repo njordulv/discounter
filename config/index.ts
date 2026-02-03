@@ -50,6 +50,19 @@ const config = {
     endOfDeals: 'You have reached the end of the deals',
     failedToLoad: 'Failed to load deals. Please try again.',
   },
+  text: {
+    dealsIn: 'deals in',
+    deals: 'All Deals',
+    categories: 'All Categories',
+    save: 'You save',
+    back: 'Back',
+    toShop: 'Go to Shop',
+    availableAt: 'Available at: ',
+    outOfStock: 'Out of Stock',
+    limitedStock: 'Limited Stock',
+    orderNow: 'Order Now',
+    inStock: 'In Stock',
+  },
   pages: {
     notFound: {
       error: '404',
@@ -67,9 +80,6 @@ const config = {
     default: 'Popular',
     priceAsc: 'Lowest price',
     priceDesc: 'Highest price',
-  },
-  card: {
-    shop: 'Налично в: ',
   },
   search: {
     placeholder: 'Search deals...',
