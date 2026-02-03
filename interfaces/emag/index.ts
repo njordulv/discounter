@@ -57,6 +57,7 @@ export interface ScrapeProps {
   link: string
   timestamp: number
   store: string
+  category?: string
 }
 
 export interface StockProps {

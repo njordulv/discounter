@@ -10,6 +10,7 @@ interface ProductPageProps {
 
 export default async function ProductPage(props: ProductPageProps) {
   const params = await props.params
+
   await connectDB()
 
   const product = await Product.findById(params.id).lean<ScrapeProps>()

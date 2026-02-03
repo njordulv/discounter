@@ -9,6 +9,7 @@
   flex-direction: row;
   justify-content: space-between;
   padding: calc(var(--spacing) * 2);
+  min-height: 3.375rem;
 
   .filters {
     flex-grow: 1;
@@ -19,6 +20,27 @@
     display: flex;
     justify-content: space-between;
     gap: calc(var(--spacing) * 2);
+  }
+
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--spacing) * 2);
+    font-size: 0.875rem;
+    color: var(--foreground);
+    text-transform: capitalize;
+
+    a,
+    button {
+      cursor: pointer;
+      color: var(--foreground);
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+
+      &:hover {
+        color: var(--primary);
+      }
+    }
   }
 
   @media (width < 48rem) {
