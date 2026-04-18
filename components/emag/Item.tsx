@@ -9,6 +9,7 @@ import config from '@/config'
 
 export const Item: React.FC<DealProps> = ({ name, image, url, offer }) => {
   const { ref, isVisible } = useLazyLoad()
+  const imgUrl = image?.resized_images?.[0]?.url
 
   if (!isVisible) return <ItemSkeleton ref={ref} />
 
@@ -19,7 +20,7 @@ export const Item: React.FC<DealProps> = ({ name, image, url, offer }) => {
     >
       {image ? (
         <Image
-          src={image.resized_images[0].url}
+          src={imgUrl}
           alt={name}
           width={96}
           height={96}

@@ -68,7 +68,7 @@ export interface Suggestion {
 
 export interface HeadingProps {
   title: string
-  _id?: string
+  _id: string
 }
 
 export interface DatabaseConfig {

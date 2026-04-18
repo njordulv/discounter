@@ -113,10 +113,11 @@ export const NewPrice = ({ price }: { price?: number }) => (
 
 export const OldPrice = ({ oldPrice }: { oldPrice: number }) => (
   <span className="text-md line-through text-muted-foreground">
-    {oldPrice !== undefined ? formatPrice(oldPrice) : '—'}{' '}
+    {oldPrice != null ? formatPrice(oldPrice) : '—'}
     {config.emag.currency}
   </span>
 )
+
 
 export const StockStatus: React.FC<{ stockInfo: StockProps }> = ({
   stockInfo,

@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { useMemo } from 'react'
+import { useRouter } from 'next/navigation'
 import useFetcher from '@/hooks/useFetcher'
 import Loader from '@/components/ui/Loader'
 import { ItemSkeleton } from '@/components/ui/Skeletons'
@@ -17,6 +18,7 @@ const Item = dynamic(
 )
 
 function SmartDeals() {
+  const router = useRouter()
   const { data, error, isLoading } = useFetcher({
     url: '/api/emag/smart-deals',
   })
@@ -48,7 +50,7 @@ function SmartDeals() {
                 variant="outline"
                 text="All Deals"
                 className="!w-fit"
-                onClick={() => window.open('/deals', '_self')}
+                onClick={() => router.push('/deals')}
               />
             </div>
           )}

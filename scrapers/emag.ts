@@ -136,7 +136,10 @@ const scrapeAndSave = async (categories: EmagCats[]) => {
       console.log(`🔄 eMag: ${category.name}`)
       const redisClient = await initRedis()
       if (!redisClient) throw new Error('Redis client not initialized')
-      await redisClient.del(`products_${category.name}`)
+
+      // scraper: remove all keys by pattern
+      const keys = await redisClient.keys(`products_${category.name}*`)
+      if (keys.length > 0) await redisClient.del(keys)
 
       await Product.updateMany(
         { category: category.name },

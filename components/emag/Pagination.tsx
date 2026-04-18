@@ -12,7 +12,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   setCurrentPage,
 }) => {
   const handleFirstPage = () => {
-    if (currentPage >= 1) {
+    if (currentPage > 1) {
       setAccumulatedData([])
       setCurrentPage(1)
     }

@@ -30,10 +30,7 @@ export async function initRedis(): Promise<RedisClientType | null> {
 
     // Remove all error handlers to avoid spam
     redisClient.on('error', (err) => {
-      // Only one error to console, don't spam
-      if (!connectionAttempted) {
-        console.error('❌ Redis connection failed:', err.message)
-      }
+      console.error('❌ Redis error:', err.message)
     })
 
     await redisClient.connect()
