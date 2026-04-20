@@ -8,7 +8,7 @@ import Loader from '@/components/ui/Loader'
 import { Discover } from '@/components/tags'
 import { useStore } from '@/store'
 import { Pagination } from '@/components/emag/Pagination'
-import { CardSkeleton } from '@/components/ui/Skeletons'
+import { CardSkeleton, DiscoverSkeleton } from '@/components/ui/Skeletons'
 import { Toolbar } from '@/components/toolbar'
 import type { ScrapeProps } from '@/interfaces/emag'
 import styles from '@/styles/Products.module.scss'
@@ -65,7 +65,7 @@ function Deals({ slug }: { slug: string }) {
 
   return (
     <>
-      <Discover slug={slug} />
+      {isLoading ? <DiscoverSkeleton /> : <Discover slug={slug} />}
       <Toolbar />
       <div
         className={`${styles.card__items} ${isGridView ? styles['card__items--grid'] : styles['card__items--list']}`}

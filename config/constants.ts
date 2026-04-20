@@ -1,4 +1,5 @@
 export const PAGINATION = {
+  MAX_PER_PAGE: 100,
   PER_PAGE_DEFAULT: 24,
   PER_PAGE_OPTIONS: ['24', '48', '60'],
 } as const

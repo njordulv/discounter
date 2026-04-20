@@ -40,9 +40,8 @@ async function fetchFromDatabase(
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const category = searchParams.get('category') || ''
-  const page = Number(searchParams.get('page')) || 1
-  const perPage =
-    Number(searchParams.get('perPage')) || PAGINATION.PER_PAGE_DEFAULT
+  const perPage = Math.min(Number(searchParams.get('perPage')) || PAGINATION.PER_PAGE_DEFAULT, PAGINATION.MAX_PER_PAGE)
+  const page = Math.max(1, Number(searchParams.get('page')) || 1)
   const sort = searchParams.get('sort')
   const search = searchParams.get('search') || ''
 

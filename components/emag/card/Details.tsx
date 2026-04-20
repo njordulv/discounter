@@ -156,7 +156,7 @@ export const LinkToShop = ({ store }: { store: string }) => {
       {config.text.availableAt}
       <Link
         className="text-sm hover:text-[var(--primary))] transition"
-        href={config.emag.url}
+        href={config.emag.url} // the only one store for now
       >
         {store}
       </Link>

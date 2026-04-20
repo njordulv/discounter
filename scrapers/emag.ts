@@ -31,11 +31,13 @@ const parseProductData = (
   const price = parsePrice(rawPrice)
   const rawOldPrice = extractText($, element, '.pricing s')
   const oldPrice = parsePrice(rawOldPrice)
+
   const discountText = extractText(
     $,
     element,
     '.card-v2-badge.badge-discount'
   ).trim()
+
   const discountMatch = discountText.match(/-?(\d+(\.\d+)?)%?/)
 
   if (!title || !price) return null
@@ -68,6 +70,7 @@ const scrapeCategory = async (categoryUrl: string): Promise<ScrapeProps[]> => {
     ...config.browserConfig,
     headless: true,
   })
+
   const page = await browser.newPage()
   const allProducts: ScrapeProps[] = []
   const maxPages = SCRAPER.MAX_PAGES
@@ -75,8 +78,9 @@ const scrapeCategory = async (categoryUrl: string): Promise<ScrapeProps[]> => {
 
   try {
     await page.setUserAgent(
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/91.0.4472.124 Safari/537.36'
     )
+
     await page.setExtraHTTPHeaders({
       'Accept-Language': 'en-US,en;q=0.9',
       Referer: 'https://www.google.com/',
@@ -97,6 +101,7 @@ const scrapeCategory = async (categoryUrl: string): Promise<ScrapeProps[]> => {
 
       const content = await page.content()
       const $ = cheerio.load(content)
+
       const products: ScrapeProps[] = []
 
       $('.card-v2').each((_, element) => {
@@ -108,11 +113,11 @@ const scrapeCategory = async (categoryUrl: string): Promise<ScrapeProps[]> => {
 
       allProducts.push(...products)
 
+      // check for the next page
       const nextPageUrl = `${categoryUrl}/p${currentPage + 1}`
+
       const nextPageResponse = await page
-        .goto(nextPageUrl, {
-          timeout: 5000,
-        })
+        .goto(nextPageUrl, { timeout: 5000 })
         .catch(() => null)
 
       if (!nextPageResponse || nextPageResponse.status() === 404) break
@@ -122,25 +127,35 @@ const scrapeCategory = async (categoryUrl: string): Promise<ScrapeProps[]> => {
 
     return allProducts
   } finally {
-    if (browser.isConnected()) {
-      await browser.close()
-    }
+    await browser.close().catch(() => {})
   }
 }
 
 const scrapeAndSave = async (categories: EmagCats[]) => {
   await connectDB()
 
+  // ✅ Redis initialization only once
+  const redisClient = await initRedis()
+
+  if (!redisClient) {
+    console.warn('⚠️ Redis not available, continuing without cache')
+  }
+
   for (const category of categories) {
     try {
       console.log(`🔄 eMag: ${category.name}`)
-      const redisClient = await initRedis()
-      if (!redisClient) throw new Error('Redis client not initialized')
 
-      // scraper: remove all keys by pattern
-      const keys = await redisClient.keys(`products_${category.name}*`)
-      if (keys.length > 0) await redisClient.del(keys)
+      // 🧹 clear cache (without crashes)
+      if (redisClient) {
+        try {
+          const keys = await redisClient.keys(`products_${category.name}*`)
+          if (keys.length > 0) await redisClient.del(keys)
+        } catch (e) {
+          console.warn('⚠️ Redis delete failed:', e)
+        }
+      }
 
+      // mark old products
       await Product.updateMany(
         { category: category.name },
         { $set: { outdated: true } }
@@ -162,6 +177,7 @@ const scrapeAndSave = async (categories: EmagCats[]) => {
             upsert: true,
           },
         }))
+
         await Product.bulkWrite(bulkOps)
 
         const { deletedCount } = await Product.deleteMany({
@@ -173,13 +189,20 @@ const scrapeAndSave = async (categories: EmagCats[]) => {
           `✅ eMag ${category.name}: Saved ${products.length}, Removed ${deletedCount}`
         )
 
-        await redisClient.set(
-          `products_${category.name}`,
-          JSON.stringify(products),
-          {
-            EX: CACHE_EXPIRATION.DEFAULT,
+        // 💾 record to Redis (without risk of failure)
+        if (redisClient) {
+          try {
+            await redisClient.set(
+              `products_${category.name}`,
+              JSON.stringify(products),
+              {
+                EX: CACHE_EXPIRATION.DEFAULT,
+              }
+            )
+          } catch (e) {
+            console.warn('⚠️ Redis set failed:', e)
           }
-        )
+        }
       } else {
         console.warn(`⚠️ No products found for ${category.name}`)
       }

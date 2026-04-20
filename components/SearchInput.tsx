@@ -51,6 +51,10 @@ export const SearchInput = () => {
         setLoading(false)
       }
     }, 300)
+
+    return () => {
+      fetchSuggestionsRef.current?.cancel()
+    }
   }, [])
 
   useEffect(() => {
